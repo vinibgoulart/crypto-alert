@@ -4,19 +4,16 @@ import type { Env } from "hono";
 export const alertGet = (app: OpenAPIHono<Env, {}, "/">) => {
   const route = createRoute({
     method: "get",
-    path: "/alert",
+    path: "/alert/{id}",
     request: {
       params: z.object({
-        id: z
-          .string()
-          .min(3)
-          .openapi({
-            param: {
-              name: "id",
-              in: "path",
-            },
-            example: "123",
-          }),
+        id: z.string().openapi({
+          param: {
+            name: "id",
+            in: "path",
+          },
+          example: "123",
+        }),
       }),
     },
     responses: {
@@ -43,16 +40,41 @@ export const alertGet = (app: OpenAPIHono<Env, {}, "/">) => {
         },
         description: "Alert found",
       },
+      404: {
+        content: {
+          "application/json": {
+            schema: z.object({
+              message: z.string().openapi({
+                example: "Alert not found",
+              }),
+            }),
+          },
+        },
+        description: "Alert not found",
+      },
     },
   });
 
-  app.openapi(route, (c) => {
+  app.openapi(route, async (c) => {
     const { id } = c.req.valid("param");
-    return c.json({
-      id,
-      name: "Buy alert",
-      price: 42,
-      symbol: "BTC",
-    });
+
+    if (id !== "123") {
+      return c.json(
+        {
+          message: "Alert not found",
+        },
+        404
+      );
+    }
+
+    return c.json(
+      {
+        id,
+        name: "Buy alert",
+        price: 42,
+        symbol: "BTC",
+      },
+      200
+    );
   });
 };
