@@ -1,7 +1,7 @@
 import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
 import type { Env } from "hono";
 
-export const alertCreate = (app: OpenAPIHono<Env, {}, "/">) => {
+export const alertPost = (app: OpenAPIHono<Env, {}, "/">) => {
   const route = createRoute({
     method: "post",
     path: "/alert",

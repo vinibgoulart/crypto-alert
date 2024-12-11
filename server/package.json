@@ -8,7 +8,10 @@
     "@hono/node-server": "^1.13.7",
     "@hono/swagger-ui": "^0.5.0",
     "@hono/zod-openapi": "^0.18.3",
+    "@types/dotenv-safe": "^8.1.6",
+    "dotenv-safe": "^9.1.0",
     "hono": "^4.6.13",
+    "mongoose": "^8.8.4",
     "zod": "^3.23.8"
   },
   "devDependencies": {
