@@ -37,8 +37,8 @@ export const priceGet = async ({
   return {
     success: true,
     price: {
-      symbol: binancePrice.data.symbol,
-      price: binancePrice.data.price,
+      symbol: binancePrice.price.symbol,
+      price: binancePrice.price.price,
       date: new Date().toISOString(),
     },
   };

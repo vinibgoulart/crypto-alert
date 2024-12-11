@@ -1,15 +1,15 @@
 import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
 import type { Env } from "hono";
-import { userCreate } from "../userCreate.js";
+import { userCreate } from "../../userCreate.js";
 import { hashSync } from "bcrypt";
-import { sessionCookieGenerate } from "../../session/sessionCookieGenerate.js";
-import { SESSION_USER_COOKIE } from "../../session/sessionUserCookie.js";
-import { sessionCookieSet } from "../../session/sessionCookieSet.js";
+import { sessionCookieGenerate } from "../../../session/sessionCookieGenerate.js";
+import { SESSION_USER_COOKIE } from "../../../session/sessionUserCookie.js";
+import { sessionCookieSet } from "../../../session/sessionCookieSet.js";
 
-export const userRegisterPost = (app: OpenAPIHono<Env, {}, "/">) => {
+export const authRegisterPost = (app: OpenAPIHono<Env, {}, "/">) => {
   const route = createRoute({
     method: "post",
-    path: "/user/register",
+    path: "/auth/register",
     request: {
       body: {
         content: {
@@ -24,7 +24,7 @@ export const userRegisterPost = (app: OpenAPIHono<Env, {}, "/">) => {
                 .email({ message: "Email is invalid" })
                 .openapi({
                   example: "user@mail.com",
-                  description: "Email of the alert",
+                  description: "Email of the user",
                 }),
               password: z
                 .string({ message: "Password is required" })
@@ -44,29 +44,27 @@ export const userRegisterPost = (app: OpenAPIHono<Env, {}, "/">) => {
       200: {
         content: {
           "application/json": {
-            schema: z
-              .object({
-                _id: z.string().openapi({
-                  example: "123",
-                  description: "Id of the user",
-                }),
-                name: z.string().openapi({
-                  example: "John Due",
-                  description: "Name of the user",
-                }),
-                email: z.string().email().openapi({
-                  example: "user@mail.com",
-                  description: "Email of the alert",
-                }),
-                createdAt: z.string().openapi({
-                  example: "2021-07-01T00:00:00.000Z",
-                  description: "Date of creation",
-                }),
-              })
-              .openapi("User"),
+            schema: z.object({
+              _id: z.string().openapi({
+                example: "123",
+                description: "Id of the user",
+              }),
+              name: z.string().openapi({
+                example: "John Due",
+                description: "Name of the user",
+              }),
+              email: z.string().email().openapi({
+                example: "user@mail.com",
+                description: "Email of the user",
+              }),
+              createdAt: z.string().openapi({
+                example: "2021-07-01T00:00:00.000Z",
+                description: "Date of creation",
+              }),
+            }),
           },
         },
-        description: "Alert created",
+        description: "User created",
       },
       400: {
         content: {
@@ -86,8 +84,6 @@ export const userRegisterPost = (app: OpenAPIHono<Env, {}, "/">) => {
 
   app.openapi(route, async (c) => {
     const { name, email, password } = c.req.valid("json");
-
-    // const passwordHash = await hash(password, 10);
 
     const userCreateResponse = await userCreate({
       name,

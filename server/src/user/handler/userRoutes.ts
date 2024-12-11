@@ -1,7 +1,7 @@
-import type { Env } from "hono";
 import type { OpenAPIHono } from "@hono/zod-openapi";
-import { userRegisterPost } from "./userRegisterPost.js";
+import { meGet } from "./meGet.js";
+import type { Env } from "hono";
 
 export const userRoutes = (app: OpenAPIHono<Env, {}, "/">) => {
-  userRegisterPost(app);
+  meGet(app);
 };
