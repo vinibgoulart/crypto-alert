@@ -20,9 +20,10 @@ dotenvSafe.config({
   sample: root(".env.example"),
 });
 
-const { MONGO_URI, NODE_ENV } = process.env;
+const { MONGO_URI, NODE_ENV, JWT_SECRET } = process.env;
 
 export const config = {
   MONGO_URI,
   NODE_ENV,
+  JWT_SECRET,
 };

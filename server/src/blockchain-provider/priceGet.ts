@@ -12,7 +12,7 @@ type PriceGet = {
 
 type PriceGetSuccess = {
   success: true;
-  data: PriceGet;
+  price: PriceGet;
 };
 
 type PriceGetError = {
@@ -36,7 +36,7 @@ export const priceGet = async ({
 
   return {
     success: true,
-    data: {
+    price: {
       symbol: binancePrice.data.symbol,
       price: binancePrice.data.price,
       date: new Date().toISOString(),

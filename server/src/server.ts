@@ -4,6 +4,7 @@ import { swaggerUI } from "@hono/swagger-ui";
 import { alertRoutes } from "./alert/handler/alertRoutes.js";
 import { criptoRoutes } from "./cripto/handler/criptoRoutes.js";
 import { connectMongo } from "./mongo/connectMongo.js";
+import { userRoutes } from "./user/handler/userRoutes.js";
 
 export const server = async () => {
   try {
@@ -21,6 +22,7 @@ export const server = async () => {
 
   alertRoutes(app);
   criptoRoutes(app);
+  userRoutes(app);
 
   app.doc("/doc", {
     openapi: "3.0.0",

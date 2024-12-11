@@ -12,7 +12,7 @@ type BinanceTickerPriceResponse = {
 
 type BinancePriceGetSuccess = {
   success: true;
-  data: BinanceTickerPriceResponse;
+  price: BinanceTickerPriceResponse;
 };
 
 type BinancePriceGetError = {
@@ -37,7 +37,10 @@ export const binancePriceGet = async ({
   );
 
   if (result.success) {
-    return result;
+    return {
+      success: true,
+      price: result.data,
+    };
   }
 
   return {

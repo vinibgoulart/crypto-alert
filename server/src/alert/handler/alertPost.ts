@@ -10,15 +10,15 @@ export const alertPost = (app: OpenAPIHono<Env, {}, "/">) => {
         content: {
           "application/json": {
             schema: z.object({
-              name: z.string().openapi({
-                example: "Buy alert",
+              name: z.string({ message: "Name is required" }).openapi({
+                example: "Create an alert",
                 description: "Name of the alert",
               }),
-              price: z.number().openapi({
+              price: z.number({ message: "Price is required" }).openapi({
                 example: 42,
                 description: "Price to buy in USD",
               }),
-              symbol: z.string().openapi({
+              symbol: z.string({ message: "Symbol is required" }).openapi({
                 example: "BTC",
                 description: "Symbol of the coin",
               }),

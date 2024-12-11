@@ -7,7 +7,7 @@ export const alertGet = (app: OpenAPIHono<Env, {}, "/">) => {
     path: "/alert/{id}",
     request: {
       params: z.object({
-        id: z.string().openapi({
+        id: z.string({ message: "Id is required" }).openapi({
           param: {
             name: "id",
             in: "path",

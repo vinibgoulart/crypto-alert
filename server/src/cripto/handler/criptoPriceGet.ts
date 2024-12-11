@@ -8,7 +8,7 @@ export const criptoPriceGet = (app: OpenAPIHono<Env, {}, "/">) => {
     path: "/cripto/{symbol}",
     request: {
       params: z.object({
-        symbol: z.string().openapi({
+        symbol: z.string({ message: "Symbol is required" }).openapi({
           param: {
             name: "symbol",
             in: "path",
@@ -42,7 +42,7 @@ export const criptoPriceGet = (app: OpenAPIHono<Env, {}, "/">) => {
         content: {
           "application/json": {
             schema: z.object({
-              message: z.string().openapi({
+              error: z.string().openapi({
                 example: "Cripto not found",
               }),
             }),
@@ -56,17 +56,17 @@ export const criptoPriceGet = (app: OpenAPIHono<Env, {}, "/">) => {
   app.openapi(route, async (c) => {
     const { symbol } = c.req.valid("param");
 
-    const price = await priceGet({ symbol });
+    const priceGetResponse = await priceGet({ symbol });
 
-    if (!price.success) {
+    if (!priceGetResponse.success) {
       return c.json(
         {
-          message: price.error,
+          error: priceGetResponse.error,
         },
         404
       );
     }
 
-    return c.json(price.data, 200);
+    return c.json(priceGetResponse.price, 200);
   });
 };
