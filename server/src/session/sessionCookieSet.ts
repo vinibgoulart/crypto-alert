@@ -16,8 +16,7 @@ export const sessionCookieSet = ({
 }: SessionCookieSetArgs) => {
   setCookie(c, cookie, value, {
     path: "/",
-    secure: true,
-    httpOnly: true,
+    httpOnly: false,
     maxAge: date,
     sameSite: "Lax",
   });

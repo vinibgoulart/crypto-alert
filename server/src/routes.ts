@@ -17,7 +17,7 @@ export const routes = () => {
   criptoRoutes(app);
   userRoutes(app);
 
-  app.doc("/doc", {
+  api.doc("/doc", {
     openapi: "3.0.0",
     info: {
       version: "1.0.0",
@@ -25,7 +25,7 @@ export const routes = () => {
     },
   });
 
-  app.get("/swagger", swaggerUI({ url: "/doc" }));
+  api.get("/swagger", swaggerUI({ url: "/doc" }));
 
   api.route("/", auth);
   api.route("/", app);

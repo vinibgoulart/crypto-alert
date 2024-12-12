@@ -18,6 +18,7 @@ export const authLoginPost = (app: OpenAPIHono<Env, {}, "/">) => {
               email: z
                 .string({ message: "Email is required" })
                 .email({ message: "Email is invalid" })
+                .transform((v) => v.toLowerCase())
                 .openapi({
                   example: "user@mail.com",
                   description: "Email of the user",
