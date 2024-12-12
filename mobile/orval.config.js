@@ -1,5 +1,5 @@
 module.exports = {
-  'cripto-alert': {
+  'crypto-alert': {
     input: {
       target: `${process.env.API_URL}/doc`,
     },
@@ -18,7 +18,7 @@ module.exports = {
       },
     },
   },
-  'cripto-alert-zod': {
+  'crypto-alert-zod': {
     input: {
       target: `${process.env.API_URL}/doc`,
     },

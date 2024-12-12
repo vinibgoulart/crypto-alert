@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Cripto Alert",
-    "slug": "cripto-alert",
+    "name": "Crypto Alert",
+    "slug": "crypto-alert",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/logo.png",
@@ -13,7 +13,7 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "cripto-alert"
+      "bundleIdentifier": "crypto-alert"
     },
     "android": {
       "adaptiveIcon": {

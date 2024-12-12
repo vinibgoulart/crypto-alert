@@ -2,10 +2,10 @@ import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
 import type { Env } from "hono";
 import { priceGet } from "../../blockchain-provider/priceGet.js";
 
-export const criptoPriceGet = (app: OpenAPIHono<Env, {}, "/">) => {
+export const cryptoPriceGet = (app: OpenAPIHono<Env, {}, "/">) => {
   const route = createRoute({
     method: "get",
-    path: "/cripto/{symbol}",
+    path: "/crypto/{symbol}",
     request: {
       params: z.object({
         symbol: z.string({ message: "Symbol is required" }).openapi({
@@ -33,22 +33,22 @@ export const criptoPriceGet = (app: OpenAPIHono<Env, {}, "/">) => {
                   example: "2021-10-10T10:10:10Z",
                 }),
               })
-              .openapi("Cripto"),
+              .openapi("Crypto"),
           },
         },
-        description: "Cripto found",
+        description: "Crypto found",
       },
       404: {
         content: {
           "application/json": {
             schema: z.object({
               error: z.string().openapi({
-                example: "Cripto not found",
+                example: "Crypto not found",
               }),
             }),
           },
         },
-        description: "Cripto not found",
+        description: "Crypto not found",
       },
     },
   });
