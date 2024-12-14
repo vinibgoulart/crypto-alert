@@ -5,24 +5,13 @@ import { cryptoGet } from "../../blockchain-provider/cryptoGet.js";
 export const cryptoPriceGet = (app: OpenAPIHono<Env, {}, "/">) => {
   const route = createRoute({
     method: "get",
-    path: "/crypto/{symbol}",
-    request: {
-      params: z.object({
-        symbol: z.string({ message: "Symbol is required" }).openapi({
-          param: {
-            name: "symbol",
-            in: "path",
-          },
-          example: "btc",
-        }),
-      }),
-    },
+    path: "/crypto",
     responses: {
       200: {
         content: {
           "application/json": {
-            schema: z
-              .object({
+            schema: z.array(
+              z.object({
                 symbol: z.string().openapi({
                   example: "btcusdt",
                 }),
@@ -33,7 +22,7 @@ export const cryptoPriceGet = (app: OpenAPIHono<Env, {}, "/">) => {
                   example: "2021-10-10T10:10:10Z",
                 }),
               })
-              .openapi("Crypto"),
+            ),
           },
         },
         description: "Crypto found",
