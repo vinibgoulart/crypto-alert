@@ -16,7 +16,7 @@ export type UserDocument = User & Document;
 const UserSchema = new Schema<UserDocument>(
   {
     name: { type: String, required: true },
-    email: { type: String, required: true },
+    email: { type: String, required: true, index: true, unique: true },
     password: { type: String, required: true },
     removedAt: { type: Date, default: null },
   },

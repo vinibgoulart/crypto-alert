@@ -11,7 +11,7 @@ type BinanceTickerCryptoResponse = {
 
 type BinanceCryptoGetSuccess = {
   success: true;
-  price: BinanceTickerCryptoResponse;
+  cryptos: BinanceTickerCryptoResponse | BinanceTickerCryptoResponse[];
 };
 
 type BinanceCryptoGetError = {
@@ -23,28 +23,35 @@ export type BinanceCryptoGetResponse =
   | BinanceCryptoGetSuccess
   | BinanceCryptoGetError;
 
-export const binanceCryptoGet = async ({
-  symbol,
-}: BinanceCryptoGetArgs): Promise<BinanceCryptoGetResponse> => {
+export const binanceCryptoGet = async (
+  args?: BinanceCryptoGetArgs
+): Promise<BinanceCryptoGetResponse> => {
   const getQueryParams = () => {
-    if (!symbol) {
+    if (!args?.symbol) {
       return "";
     }
 
     return new URLSearchParams({
-      symbol: symbol.toUpperCase(),
+      symbol: args?.symbol.toUpperCase(),
     }).toString();
   };
   const queryParams = getQueryParams();
 
-  const result = await binanceApi<BinanceTickerCryptoResponse>(
+  const result = await binanceApi<BinanceCryptoGetSuccess["cryptos"]>(
     `/ticker/price?${queryParams.toString()}`
   );
 
   if (result.success) {
+    if (Array.isArray(result.data)) {
+      return {
+        success: true,
+        cryptos: result.data,
+      };
+    }
+
     return {
       success: true,
-      price: result.data,
+      cryptos: result.data,
     };
   }
 

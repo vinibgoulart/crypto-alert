@@ -34,11 +34,18 @@ export const cryptoGet = async ({
     };
   }
 
+  if (Array.isArray(binanceCrypto.cryptos)) {
+    return {
+      success: false,
+      error: "Crypto not found",
+    };
+  }
+
   return {
     success: true,
     crypto: {
-      symbol: binanceCrypto.price.symbol,
-      price: binanceCrypto.price.price,
+      symbol: binanceCrypto.cryptos.symbol,
+      price: binanceCrypto.cryptos.price,
       date: new Date().toISOString(),
     },
   };
