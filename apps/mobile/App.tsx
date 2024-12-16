@@ -12,7 +12,7 @@ import { useFonts } from "expo-font";
 import { PoppinsFonts } from "./src/fonts/PoppinsFonts";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
-import "./src/language/i18n.tsx";
+import "./src/language/i18n";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Toast from "react-native-toast-message";
 
