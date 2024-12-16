@@ -1,11 +1,6 @@
 import amqp from "amqplib";
 import { config } from "./config";
-
-const MAIN_QUEUE = "main_queue";
-
-type QueueMessage = {
-  message: string;
-};
+import { MAIN_QUEUE, QueueContent } from "@crypto-alert/jobs";
 
 export const initWorker = async () => {
   try {
@@ -19,7 +14,7 @@ export const initWorker = async () => {
     const consumeMessages = () => {
       channel.consume(MAIN_QUEUE, (msg) => {
         if (msg !== null) {
-          const content: QueueMessage = JSON.parse(msg.content.toString());
+          const content: QueueContent = JSON.parse(msg.content.toString());
           console.log(`Received message: ${content.message}`);
 
           channel.ack(msg);
