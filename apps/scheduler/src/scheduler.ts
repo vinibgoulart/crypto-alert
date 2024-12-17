@@ -1,7 +1,11 @@
 import amqp from "amqplib";
 import cron from "node-cron";
 import { config } from "./config";
-import { MAIN_QUEUE, QueueContent } from "@crypto-alert/jobs";
+import {
+  MAIN_QUEUE,
+  QUEUE_CONTENT_NAME_ENUM,
+  QueueContent,
+} from "@crypto-alert/jobs";
 
 export const initScheduler = async () => {
   try {
@@ -11,10 +15,10 @@ export const initScheduler = async () => {
     await channel.assertQueue(MAIN_QUEUE, { durable: true });
 
     const content: QueueContent = {
-      message: "Scheduled Task",
+      name: QUEUE_CONTENT_NAME_ENUM.SYNCRONIZE,
     };
 
-    cron.schedule("*/30 * * * *", () => {
+    cron.schedule("*/1 * * * *", () => {
       channel.sendToQueue(MAIN_QUEUE, Buffer.from(JSON.stringify(content)));
       console.log("Task sent to MAIN_QUEUE at 30-minute interval.");
     });

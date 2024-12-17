@@ -1,5 +1,5 @@
 import { model, Schema, type Types } from "mongoose";
-import { writeConcern } from "../mongo/writeConcern.js";
+import { writeConcern } from "@crypto-alert/mongo";
 
 type User = {
   _id: Types.ObjectId;

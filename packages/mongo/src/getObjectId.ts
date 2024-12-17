@@ -1,6 +1,5 @@
 import { Model, Types } from "mongoose";
 
-// returns an ObjectId given an param of unknown type
 export const getObjectId = (
   target?: string | Model<any> | Types.ObjectId | null
 ): Types.ObjectId | null => {

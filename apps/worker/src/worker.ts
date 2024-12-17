@@ -15,7 +15,7 @@ export const initWorker = async () => {
       channel.consume(MAIN_QUEUE, (msg) => {
         if (msg !== null) {
           const content: QueueContent = JSON.parse(msg.content.toString());
-          console.log(`Received message: ${content.message}`);
+          console.log(`Received message: ${content.name}`);
 
           channel.ack(msg);
         }
@@ -28,8 +28,6 @@ export const initWorker = async () => {
 
     process.on("SIGINT", async () => {
       console.log("Closing RabbitMQ connection...");
-      await channel.close();
-      await connection.close();
       process.exit(0);
     });
   } catch (error) {

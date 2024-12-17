@@ -1,1 +1,5 @@
-export { MAIN_QUEUE, type QueueContent } from "./queues";
+export {
+  MAIN_QUEUE,
+  type QueueContent,
+  QUEUE_CONTENT_NAME_ENUM,
+} from "./queues";

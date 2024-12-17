@@ -1,0 +1,9 @@
+{
+  "name": "@crypto-alert/crypto",
+  "version": "0.0.0",
+  "main": "src/index.ts",
+  "dependencies": {
+    "@crypto-alert/mongo": "*",
+    "mongoose": "^8.8.4"
+  }
+}
