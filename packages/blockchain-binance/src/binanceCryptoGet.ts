@@ -19,9 +19,7 @@ type BinanceCryptoGetError = {
   error: string;
 };
 
-export type BinanceCryptoGetResponse =
-  | BinanceCryptoGetSuccess
-  | BinanceCryptoGetError;
+type BinanceCryptoGetResponse = BinanceCryptoGetSuccess | BinanceCryptoGetError;
 
 export const binanceCryptoGet = async (
   args?: BinanceCryptoGetArgs

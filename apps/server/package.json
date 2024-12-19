@@ -7,6 +7,10 @@
   },
   "dependencies": {
     "@crypto-alert/mongo": "*",
+    "@crypto-alert/user": "*",
+    "@crypto-alert/blockchain-binance": "*",
+    "@crypto-alert/blockchain-provider": "*",
+    "@crypto-alert/alert": "*",
     "@hono/node-server": "^1.13.7",
     "@hono/swagger-ui": "^0.5.0",
     "@hono/zod-openapi": "^0.18.3",

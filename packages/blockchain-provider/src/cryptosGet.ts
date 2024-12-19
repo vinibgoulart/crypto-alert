@@ -1,4 +1,4 @@
-import { binanceCryptoGet } from "../binance/binanceCryptoGet.js";
+import { binanceCryptoGet } from "@crypto-alert/blockchain-binance";
 
 type CryptosGet = {
   symbol: string;
@@ -16,7 +16,7 @@ type CryptosGetError = {
   error: string;
 };
 
-export type CryptosGetResponse = CryptosGetSuccess | CryptosGetError;
+type CryptosGetResponse = CryptosGetSuccess | CryptosGetError;
 
 export const cryptosGet = async (): Promise<CryptosGetResponse> => {
   const binanceCryptos = await binanceCryptoGet();

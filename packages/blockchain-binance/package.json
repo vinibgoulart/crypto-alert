@@ -1,0 +1,8 @@
+{
+  "name": "@crypto-alert/blockchain-binance",
+  "version": "0.0.0",
+  "main": "src/index.ts",
+  "dependencies": {
+    "@crypto-alert/mongo": "*"
+  }
+}

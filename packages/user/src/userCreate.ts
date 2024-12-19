@@ -1,4 +1,4 @@
-import { UserModel } from "./userModel.js";
+import { UserModel } from "./userModel";
 
 type UserCreateArgs = {
   name: string;

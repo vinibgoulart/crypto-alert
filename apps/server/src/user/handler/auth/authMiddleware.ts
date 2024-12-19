@@ -4,8 +4,8 @@ import { getCookie } from "hono/cookie";
 import { SESSION_USER_COOKIE } from "../../../session/sessionUserCookie.js";
 import jwt from "jsonwebtoken";
 import { config } from "../../../config.js";
-import { UserModel } from "../../userModel.js";
 import { getObjectId } from "@crypto-alert/mongo";
+import { UserModel } from "@crypto-alert/user";
 
 export const authMiddleware = (app: OpenAPIHono<Env, {}, "/">) => {
   app.use("/*", async (c, next) => {

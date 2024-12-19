@@ -1,6 +1,6 @@
 import { serve } from "@hono/node-server";
-import { connectMongo } from "./mongo/connectMongo.js";
 import { routes } from "./routes.js";
+import { connectMongo } from "@crypto-alert/mongo";
 
 export const server = async () => {
   try {

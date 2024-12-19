@@ -8,7 +8,7 @@ type BinanceApiError = {
   error: string;
 };
 
-export type BinanceApiResponse<T> = BinanceApiSuccess<T> | BinanceApiError;
+type BinanceApiResponse<T> = BinanceApiSuccess<T> | BinanceApiError;
 
 export const binanceApi = async <T>(
   endpoint: string,

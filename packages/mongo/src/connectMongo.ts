@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import type { ConnectOptions } from "mongoose";
-import { config } from "../config.js";
+import { config } from "./config";
 
 export const connectMongo = (options?: ConnectOptions) =>
   new Promise<void>((resolve, reject) => {

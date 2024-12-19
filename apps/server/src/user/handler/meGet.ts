@@ -1,6 +1,6 @@
 import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
 import type { Env } from "hono";
-import type { UserDocument } from "../userModel.js";
+import { UserDocument } from "@crypto-alert/user";
 
 export const meGet = (app: OpenAPIHono<Env, {}, "/">) => {
   const route = createRoute({

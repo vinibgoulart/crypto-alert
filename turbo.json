@@ -4,6 +4,10 @@
     "dev": {
       "persistent": true,
       "cache": false
+    },
+    "ios": {
+      "persistent": true,
+      "cache": false
     }
   }
 }
