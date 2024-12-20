@@ -50,29 +50,25 @@ export const postAlertBody = zod.object({
 })
 
 export const postAlertResponse = zod.object({
-  "id": zod.string(),
-  "name": zod.string(),
+  "_id": zod.string(),
   "price": zod.number(),
   "symbol": zod.string()
 })
 
 export const getAlertQueryParams = zod.object({
-  "active": zod.boolean().optional()
+  "active": zod.string().optional()
 })
 
 export const getAlertResponseItem = zod.object({
-  "id": zod.string(),
-  "name": zod.string(),
-  "price": zod.number(),
-  "symbol": zod.string()
-}).and(zod.object({
   "_id": zod.string(),
   "price": zod.number(),
   "symbol": zod.string(),
   "active": zod.boolean(),
+  "currentPrice": zod.string(),
+  "differencePrice": zod.string(),
   "reachedAt": zod.string(),
   "createdAt": zod.string()
-}))
+})
 export const getAlertResponse = zod.array(getAlertResponseItem)
 
 export const getCryptoQueryParams = zod.object({

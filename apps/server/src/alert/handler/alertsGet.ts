@@ -2,6 +2,7 @@ import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
 import type { Env } from "hono";
 import { AlertModel } from "@crypto-alert/alert";
 import { UserDocument } from "@crypto-alert/user";
+import { CryptoModel } from "@crypto-alert/crypto";
 
 export const alertsGet = (app: OpenAPIHono<Env, {}, "/">) => {
   const route = createRoute({
@@ -10,9 +11,9 @@ export const alertsGet = (app: OpenAPIHono<Env, {}, "/">) => {
     request: {
       query: z.object({
         active: z
-          .boolean()
+          .string()
           .openapi({
-            example: true,
+            example: "true",
           })
           .optional(),
       }),
@@ -35,6 +36,12 @@ export const alertsGet = (app: OpenAPIHono<Env, {}, "/">) => {
                   }),
                   active: z.boolean().openapi({
                     example: true,
+                  }),
+                  currentPrice: z.string().openapi({
+                    example: "52",
+                  }),
+                  differencePrice: z.string().openapi({
+                    example: "10",
                   }),
                   reachedAt: z.string().openapi({
                     example: "2021-08-20T19:10:00.000Z",
@@ -66,21 +73,37 @@ export const alertsGet = (app: OpenAPIHono<Env, {}, "/">) => {
 
   app.openapi(route, async (c) => {
     const user = c.get("User") as UserDocument;
-    const active = c.req.query("active") || true;
+    const active = c.req.query("active")
+      ? c.req.query("active") === "true"
+      : true;
 
     const alertsGetResponse = await AlertModel.find({
       userId: user._id,
       active,
     });
 
-    const alerts = alertsGetResponse.map((alert) => ({
-      _id: alert._id,
-      price: alert.price,
-      symbol: alert.symbol,
-      active: alert.active,
-      reachedAt: alert.reachedAt,
-      createdAt: alert.createdAt,
-    }));
+    const alerts = await Promise.all(
+      alertsGetResponse.map(async (alert) => {
+        const currentPrice = await CryptoModel.findOne({
+          symbol: alert.symbol,
+        });
+
+        const differencePrice = (
+          alert.price - (Number(currentPrice?.price) ?? 0)
+        ).toFixed(2);
+
+        return {
+          _id: alert._id,
+          price: alert.price,
+          symbol: alert.symbol,
+          active: alert.active,
+          currentPrice: currentPrice?.price ?? "0",
+          differencePrice: String(differencePrice),
+          reachedAt: alert.reachedAt,
+          createdAt: alert.createdAt,
+        };
+      })
+    );
 
     return c.json(alerts, 200);
   });

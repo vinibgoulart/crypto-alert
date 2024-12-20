@@ -10,12 +10,6 @@ module.exports = {
       client: 'react-query',
       httpClient: 'fetch',
       baseUrl: process.env.API_URL,
-      override: {
-        mutator: {
-          path: './src/lib/fetcher.ts',
-          name: 'fetcher',
-        },
-      },
     },
   },
   'crypto-alert-zod': {

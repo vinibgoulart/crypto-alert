@@ -33,22 +33,17 @@ export const alertPost = (app: OpenAPIHono<Env, {}, "/">) => {
       200: {
         content: {
           "application/json": {
-            schema: z
-              .object({
-                id: z.string().openapi({
-                  example: "123",
-                }),
-                name: z.string().openapi({
-                  example: "Buy alert",
-                }),
-                price: z.number().openapi({
-                  example: 42,
-                }),
-                symbol: z.string().openapi({
-                  example: "BTC",
-                }),
-              })
-              .openapi("Alert"),
+            schema: z.object({
+              _id: z.string().openapi({
+                example: "123",
+              }),
+              price: z.number().openapi({
+                example: 42,
+              }),
+              symbol: z.string().openapi({
+                example: "BTC",
+              }),
+            }),
           },
         },
         description: "Alert created",
@@ -59,8 +54,7 @@ export const alertPost = (app: OpenAPIHono<Env, {}, "/">) => {
   app.openapi(route, (c) => {
     const { name, price, symbol } = c.req.valid("json");
     return c.json({
-      id: "123",
-      name,
+      _id: "123",
       price,
       symbol,
     });

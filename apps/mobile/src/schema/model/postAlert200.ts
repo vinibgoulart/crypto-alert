@@ -5,6 +5,8 @@
  * OpenAPI spec version: 1.0.0
  */
 
-export type GetAlertParams = {
-active?: string;
+export type PostAlert200 = {
+  _id: string;
+  price: number;
+  symbol: string;
 };

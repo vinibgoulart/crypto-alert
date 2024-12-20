@@ -6,8 +6,12 @@
  */
 
 export interface Alert {
-  id: string;
-  name: string;
+  _id: string;
+  active: boolean;
+  createdAt: string;
+  currentPrice: string;
+  differencePrice: string;
   price: number;
+  reachedAt: string;
   symbol: string;
 }

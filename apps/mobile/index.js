@@ -1,4 +1,6 @@
 import App from './App';
+import 'core-js/actual/url';
+import 'core-js/actual/url-search-params';
 
 import { registerRootComponent } from 'expo';
 

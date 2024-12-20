@@ -23,13 +23,13 @@ import type {
 } from '@tanstack/react-query'
 import type {
   Alert,
-  GetAlert200Item,
   GetAlert404,
   GetAlertParams,
   GetCrypto200,
   GetCrypto404,
   GetCryptoParams,
   GetUserMe404,
+  PostAlert200,
   PostAlertBody,
   PostAuthLogin200,
   PostAuthLogin400,
@@ -40,10 +40,7 @@ import type {
   PostAuthRegisterBody,
   User
 } from '.././model'
-import { fetcher } from '../../lib/fetcher';
 
-
-type SecondParameter<T extends (...args: any) => any> = Parameters<T>[1];
 
 
 export type postAuthRegisterResponse = {
@@ -60,7 +57,7 @@ export const getPostAuthRegisterUrl = () => {
 
 export const postAuthRegister = async (postAuthRegisterBody: PostAuthRegisterBody, options?: RequestInit): Promise<postAuthRegisterResponse> => {
   
-  return fetcher<Promise<postAuthRegisterResponse>>(getPostAuthRegisterUrl(),
+  const res = await fetch(getPostAuthRegisterUrl(),
   {      
     ...options,
     method: 'POST',
@@ -68,15 +65,20 @@ export const postAuthRegister = async (postAuthRegisterBody: PostAuthRegisterBod
     body: JSON.stringify(
       postAuthRegisterBody,)
   }
-);}
+
+  )
+  const data = await res.json()
+
+  return { status: res.status, data, headers: res.headers }
+}
 
 
 
 
 export const getPostAuthRegisterMutationOptions = <TError = PostAuthRegister400,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof postAuthRegister>>, TError,{data: PostAuthRegisterBody}, TContext>, request?: SecondParameter<typeof fetcher>}
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof postAuthRegister>>, TError,{data: PostAuthRegisterBody}, TContext>, fetch?: RequestInit}
 ): UseMutationOptions<Awaited<ReturnType<typeof postAuthRegister>>, TError,{data: PostAuthRegisterBody}, TContext> => {
-const {mutation: mutationOptions, request: requestOptions} = options ?? {};
+const {mutation: mutationOptions, fetch: fetchOptions} = options ?? {};
 
       
 
@@ -84,7 +86,7 @@ const {mutation: mutationOptions, request: requestOptions} = options ?? {};
       const mutationFn: MutationFunction<Awaited<ReturnType<typeof postAuthRegister>>, {data: PostAuthRegisterBody}> = (props) => {
           const {data} = props ?? {};
 
-          return  postAuthRegister(data,requestOptions)
+          return  postAuthRegister(data,fetchOptions)
         }
 
         
@@ -97,7 +99,7 @@ const {mutation: mutationOptions, request: requestOptions} = options ?? {};
     export type PostAuthRegisterMutationError = PostAuthRegister400
 
     export const usePostAuthRegister = <TError = PostAuthRegister400,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof postAuthRegister>>, TError,{data: PostAuthRegisterBody}, TContext>, request?: SecondParameter<typeof fetcher>}
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof postAuthRegister>>, TError,{data: PostAuthRegisterBody}, TContext>, fetch?: RequestInit}
 ): UseMutationResult<
         Awaited<ReturnType<typeof postAuthRegister>>,
         TError,
@@ -123,7 +125,7 @@ export const getPostAuthLoginUrl = () => {
 
 export const postAuthLogin = async (postAuthLoginBody: PostAuthLoginBody, options?: RequestInit): Promise<postAuthLoginResponse> => {
   
-  return fetcher<Promise<postAuthLoginResponse>>(getPostAuthLoginUrl(),
+  const res = await fetch(getPostAuthLoginUrl(),
   {      
     ...options,
     method: 'POST',
@@ -131,15 +133,20 @@ export const postAuthLogin = async (postAuthLoginBody: PostAuthLoginBody, option
     body: JSON.stringify(
       postAuthLoginBody,)
   }
-);}
+
+  )
+  const data = await res.json()
+
+  return { status: res.status, data, headers: res.headers }
+}
 
 
 
 
 export const getPostAuthLoginMutationOptions = <TError = PostAuthLogin400,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof postAuthLogin>>, TError,{data: PostAuthLoginBody}, TContext>, request?: SecondParameter<typeof fetcher>}
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof postAuthLogin>>, TError,{data: PostAuthLoginBody}, TContext>, fetch?: RequestInit}
 ): UseMutationOptions<Awaited<ReturnType<typeof postAuthLogin>>, TError,{data: PostAuthLoginBody}, TContext> => {
-const {mutation: mutationOptions, request: requestOptions} = options ?? {};
+const {mutation: mutationOptions, fetch: fetchOptions} = options ?? {};
 
       
 
@@ -147,7 +154,7 @@ const {mutation: mutationOptions, request: requestOptions} = options ?? {};
       const mutationFn: MutationFunction<Awaited<ReturnType<typeof postAuthLogin>>, {data: PostAuthLoginBody}> = (props) => {
           const {data} = props ?? {};
 
-          return  postAuthLogin(data,requestOptions)
+          return  postAuthLogin(data,fetchOptions)
         }
 
         
@@ -160,7 +167,7 @@ const {mutation: mutationOptions, request: requestOptions} = options ?? {};
     export type PostAuthLoginMutationError = PostAuthLogin400
 
     export const usePostAuthLogin = <TError = PostAuthLogin400,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof postAuthLogin>>, TError,{data: PostAuthLoginBody}, TContext>, request?: SecondParameter<typeof fetcher>}
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof postAuthLogin>>, TError,{data: PostAuthLoginBody}, TContext>, fetch?: RequestInit}
 ): UseMutationResult<
         Awaited<ReturnType<typeof postAuthLogin>>,
         TError,
@@ -186,22 +193,27 @@ export const getPostAuthLogoutUrl = () => {
 
 export const postAuthLogout = async ( options?: RequestInit): Promise<postAuthLogoutResponse> => {
   
-  return fetcher<Promise<postAuthLogoutResponse>>(getPostAuthLogoutUrl(),
+  const res = await fetch(getPostAuthLogoutUrl(),
   {      
     ...options,
     method: 'POST'
     
     
   }
-);}
+
+  )
+  const data = await res.json()
+
+  return { status: res.status, data, headers: res.headers }
+}
 
 
 
 
 export const getPostAuthLogoutMutationOptions = <TError = unknown,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof postAuthLogout>>, TError,void, TContext>, request?: SecondParameter<typeof fetcher>}
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof postAuthLogout>>, TError,void, TContext>, fetch?: RequestInit}
 ): UseMutationOptions<Awaited<ReturnType<typeof postAuthLogout>>, TError,void, TContext> => {
-const {mutation: mutationOptions, request: requestOptions} = options ?? {};
+const {mutation: mutationOptions, fetch: fetchOptions} = options ?? {};
 
       
 
@@ -209,7 +221,7 @@ const {mutation: mutationOptions, request: requestOptions} = options ?? {};
       const mutationFn: MutationFunction<Awaited<ReturnType<typeof postAuthLogout>>, void> = () => {
           
 
-          return  postAuthLogout(requestOptions)
+          return  postAuthLogout(fetchOptions)
         }
 
         
@@ -222,7 +234,7 @@ const {mutation: mutationOptions, request: requestOptions} = options ?? {};
     export type PostAuthLogoutMutationError = unknown
 
     export const usePostAuthLogout = <TError = unknown,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof postAuthLogout>>, TError,void, TContext>, request?: SecondParameter<typeof fetcher>}
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof postAuthLogout>>, TError,void, TContext>, fetch?: RequestInit}
 ): UseMutationResult<
         Awaited<ReturnType<typeof postAuthLogout>>,
         TError,
@@ -235,7 +247,7 @@ const {mutation: mutationOptions, request: requestOptions} = options ?? {};
       return useMutation(mutationOptions);
     }
     export type postAlertResponse = {
-  data: Alert;
+  data: PostAlert200;
   status: number;
   headers: Headers;
 }
@@ -248,7 +260,7 @@ export const getPostAlertUrl = () => {
 
 export const postAlert = async (postAlertBody: PostAlertBody, options?: RequestInit): Promise<postAlertResponse> => {
   
-  return fetcher<Promise<postAlertResponse>>(getPostAlertUrl(),
+  const res = await fetch(getPostAlertUrl(),
   {      
     ...options,
     method: 'POST',
@@ -256,15 +268,20 @@ export const postAlert = async (postAlertBody: PostAlertBody, options?: RequestI
     body: JSON.stringify(
       postAlertBody,)
   }
-);}
+
+  )
+  const data = await res.json()
+
+  return { status: res.status, data, headers: res.headers }
+}
 
 
 
 
 export const getPostAlertMutationOptions = <TError = unknown,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof postAlert>>, TError,{data: PostAlertBody}, TContext>, request?: SecondParameter<typeof fetcher>}
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof postAlert>>, TError,{data: PostAlertBody}, TContext>, fetch?: RequestInit}
 ): UseMutationOptions<Awaited<ReturnType<typeof postAlert>>, TError,{data: PostAlertBody}, TContext> => {
-const {mutation: mutationOptions, request: requestOptions} = options ?? {};
+const {mutation: mutationOptions, fetch: fetchOptions} = options ?? {};
 
       
 
@@ -272,7 +289,7 @@ const {mutation: mutationOptions, request: requestOptions} = options ?? {};
       const mutationFn: MutationFunction<Awaited<ReturnType<typeof postAlert>>, {data: PostAlertBody}> = (props) => {
           const {data} = props ?? {};
 
-          return  postAlert(data,requestOptions)
+          return  postAlert(data,fetchOptions)
         }
 
         
@@ -285,7 +302,7 @@ const {mutation: mutationOptions, request: requestOptions} = options ?? {};
     export type PostAlertMutationError = unknown
 
     export const usePostAlert = <TError = unknown,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof postAlert>>, TError,{data: PostAlertBody}, TContext>, request?: SecondParameter<typeof fetcher>}
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof postAlert>>, TError,{data: PostAlertBody}, TContext>, fetch?: RequestInit}
 ): UseMutationResult<
         Awaited<ReturnType<typeof postAlert>>,
         TError,
@@ -298,7 +315,7 @@ const {mutation: mutationOptions, request: requestOptions} = options ?? {};
       return useMutation(mutationOptions);
     }
     export type getAlertResponse = {
-  data: GetAlert200Item[];
+  data: Alert[];
   status: number;
   headers: Headers;
 }
@@ -318,14 +335,19 @@ export const getGetAlertUrl = (params?: GetAlertParams,) => {
 
 export const getAlert = async (params?: GetAlertParams, options?: RequestInit): Promise<getAlertResponse> => {
   
-  return fetcher<Promise<getAlertResponse>>(getGetAlertUrl(params),
+  const res = await fetch(getGetAlertUrl(params),
   {      
     ...options,
     method: 'GET'
     
     
   }
-);}
+
+  )
+  const data = await res.json()
+
+  return { status: res.status, data, headers: res.headers }
+}
 
 
 
@@ -334,16 +356,16 @@ export const getGetAlertQueryKey = (params?: GetAlertParams,) => {
     }
 
     
-export const getGetAlertQueryOptions = <TData = Awaited<ReturnType<typeof getAlert>>, TError = GetAlert404>(params?: GetAlertParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAlert>>, TError, TData>>, request?: SecondParameter<typeof fetcher>}
+export const getGetAlertQueryOptions = <TData = Awaited<ReturnType<typeof getAlert>>, TError = GetAlert404>(params?: GetAlertParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAlert>>, TError, TData>>, fetch?: RequestInit}
 ) => {
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+const {query: queryOptions, fetch: fetchOptions} = options ?? {};
 
   const queryKey =  queryOptions?.queryKey ?? getGetAlertQueryKey(params);
 
   
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getAlert>>> = ({ signal }) => getAlert(params, { signal, ...requestOptions });
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getAlert>>> = ({ signal }) => getAlert(params, { signal, ...fetchOptions });
 
       
 
@@ -363,7 +385,7 @@ export function useGetAlert<TData = Awaited<ReturnType<typeof getAlert>>, TError
           TError,
           TData
         > , 'initialData'
-      >, request?: SecondParameter<typeof fetcher>}
+      >, fetch?: RequestInit}
 
   ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
 export function useGetAlert<TData = Awaited<ReturnType<typeof getAlert>>, TError = GetAlert404>(
@@ -373,16 +395,16 @@ export function useGetAlert<TData = Awaited<ReturnType<typeof getAlert>>, TError
           TError,
           TData
         > , 'initialData'
-      >, request?: SecondParameter<typeof fetcher>}
+      >, fetch?: RequestInit}
 
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
 export function useGetAlert<TData = Awaited<ReturnType<typeof getAlert>>, TError = GetAlert404>(
- params?: GetAlertParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAlert>>, TError, TData>>, request?: SecondParameter<typeof fetcher>}
+ params?: GetAlertParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAlert>>, TError, TData>>, fetch?: RequestInit}
 
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
 
 export function useGetAlert<TData = Awaited<ReturnType<typeof getAlert>>, TError = GetAlert404>(
- params?: GetAlertParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAlert>>, TError, TData>>, request?: SecondParameter<typeof fetcher>}
+ params?: GetAlertParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAlert>>, TError, TData>>, fetch?: RequestInit}
 
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> } {
 
@@ -418,14 +440,19 @@ export const getGetCryptoUrl = (params?: GetCryptoParams,) => {
 
 export const getCrypto = async (params?: GetCryptoParams, options?: RequestInit): Promise<getCryptoResponse> => {
   
-  return fetcher<Promise<getCryptoResponse>>(getGetCryptoUrl(params),
+  const res = await fetch(getGetCryptoUrl(params),
   {      
     ...options,
     method: 'GET'
     
     
   }
-);}
+
+  )
+  const data = await res.json()
+
+  return { status: res.status, data, headers: res.headers }
+}
 
 
 
@@ -434,16 +461,16 @@ export const getGetCryptoQueryKey = (params?: GetCryptoParams,) => {
     }
 
     
-export const getGetCryptoQueryOptions = <TData = Awaited<ReturnType<typeof getCrypto>>, TError = GetCrypto404>(params?: GetCryptoParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getCrypto>>, TError, TData>>, request?: SecondParameter<typeof fetcher>}
+export const getGetCryptoQueryOptions = <TData = Awaited<ReturnType<typeof getCrypto>>, TError = GetCrypto404>(params?: GetCryptoParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getCrypto>>, TError, TData>>, fetch?: RequestInit}
 ) => {
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+const {query: queryOptions, fetch: fetchOptions} = options ?? {};
 
   const queryKey =  queryOptions?.queryKey ?? getGetCryptoQueryKey(params);
 
   
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getCrypto>>> = ({ signal }) => getCrypto(params, { signal, ...requestOptions });
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getCrypto>>> = ({ signal }) => getCrypto(params, { signal, ...fetchOptions });
 
       
 
@@ -463,7 +490,7 @@ export function useGetCrypto<TData = Awaited<ReturnType<typeof getCrypto>>, TErr
           TError,
           TData
         > , 'initialData'
-      >, request?: SecondParameter<typeof fetcher>}
+      >, fetch?: RequestInit}
 
   ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
 export function useGetCrypto<TData = Awaited<ReturnType<typeof getCrypto>>, TError = GetCrypto404>(
@@ -473,16 +500,16 @@ export function useGetCrypto<TData = Awaited<ReturnType<typeof getCrypto>>, TErr
           TError,
           TData
         > , 'initialData'
-      >, request?: SecondParameter<typeof fetcher>}
+      >, fetch?: RequestInit}
 
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
 export function useGetCrypto<TData = Awaited<ReturnType<typeof getCrypto>>, TError = GetCrypto404>(
- params?: GetCryptoParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getCrypto>>, TError, TData>>, request?: SecondParameter<typeof fetcher>}
+ params?: GetCryptoParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getCrypto>>, TError, TData>>, fetch?: RequestInit}
 
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
 
 export function useGetCrypto<TData = Awaited<ReturnType<typeof getCrypto>>, TError = GetCrypto404>(
- params?: GetCryptoParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getCrypto>>, TError, TData>>, request?: SecondParameter<typeof fetcher>}
+ params?: GetCryptoParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getCrypto>>, TError, TData>>, fetch?: RequestInit}
 
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> } {
 
@@ -511,14 +538,19 @@ export const getGetUserMeUrl = () => {
 
 export const getUserMe = async ( options?: RequestInit): Promise<getUserMeResponse> => {
   
-  return fetcher<Promise<getUserMeResponse>>(getGetUserMeUrl(),
+  const res = await fetch(getGetUserMeUrl(),
   {      
     ...options,
     method: 'GET'
     
     
   }
-);}
+
+  )
+  const data = await res.json()
+
+  return { status: res.status, data, headers: res.headers }
+}
 
 
 
@@ -527,16 +559,16 @@ export const getGetUserMeQueryKey = () => {
     }
 
     
-export const getGetUserMeQueryOptions = <TData = Awaited<ReturnType<typeof getUserMe>>, TError = GetUserMe404>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getUserMe>>, TError, TData>>, request?: SecondParameter<typeof fetcher>}
+export const getGetUserMeQueryOptions = <TData = Awaited<ReturnType<typeof getUserMe>>, TError = GetUserMe404>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getUserMe>>, TError, TData>>, fetch?: RequestInit}
 ) => {
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+const {query: queryOptions, fetch: fetchOptions} = options ?? {};
 
   const queryKey =  queryOptions?.queryKey ?? getGetUserMeQueryKey();
 
   
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getUserMe>>> = ({ signal }) => getUserMe({ signal, ...requestOptions });
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getUserMe>>> = ({ signal }) => getUserMe({ signal, ...fetchOptions });
 
       
 
@@ -556,7 +588,7 @@ export function useGetUserMe<TData = Awaited<ReturnType<typeof getUserMe>>, TErr
           TError,
           TData
         > , 'initialData'
-      >, request?: SecondParameter<typeof fetcher>}
+      >, fetch?: RequestInit}
 
   ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
 export function useGetUserMe<TData = Awaited<ReturnType<typeof getUserMe>>, TError = GetUserMe404>(
@@ -566,16 +598,16 @@ export function useGetUserMe<TData = Awaited<ReturnType<typeof getUserMe>>, TErr
           TError,
           TData
         > , 'initialData'
-      >, request?: SecondParameter<typeof fetcher>}
+      >, fetch?: RequestInit}
 
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
 export function useGetUserMe<TData = Awaited<ReturnType<typeof getUserMe>>, TError = GetUserMe404>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getUserMe>>, TError, TData>>, request?: SecondParameter<typeof fetcher>}
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getUserMe>>, TError, TData>>, fetch?: RequestInit}
 
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
 
 export function useGetUserMe<TData = Awaited<ReturnType<typeof getUserMe>>, TError = GetUserMe404>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getUserMe>>, TError, TData>>, request?: SecondParameter<typeof fetcher>}
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getUserMe>>, TError, TData>>, fetch?: RequestInit}
 
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> } {
 

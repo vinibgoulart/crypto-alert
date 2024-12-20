@@ -1,47 +1,104 @@
-import { Button, Text, XStack, YStack } from "tamagui";
+import {
+  ListItem,
+  Separator,
+  Text,
+  View,
+  XStack,
+  YGroup,
+  YStack,
+} from "tamagui";
 import { useGetAlert } from "../schema/default/default";
 import { useTranslation } from "react-i18next";
-import { SquarePlus } from "@tamagui/lucide-icons";
+import {
+  ChevronRight,
+  Coins,
+  TrendingDown,
+  TrendingUp,
+} from "@tamagui/lucide-icons";
 
-type AlertListProps = {
-  active?: boolean;
-};
-
-export const AlertList = ({ active }: AlertListProps) => {
-  const { data: alerts } = useGetAlert({
-    active,
-  });
+export const AlertList = () => {
+  const { data: alerts } = useGetAlert();
 
   const { t } = useTranslation();
 
-  if (!alerts?.data.length) {
-    const label = active ? t("No active alerts") : t("No reached alerts");
+  const contentGet = () => {
+    if (!alerts?.data?.length) {
+      return (
+        <YGroup.Item>
+          <ListItem
+            hoverTheme
+            pressTheme
+            title={<Text color={"$gray11"}>{t("No active alerts")}</Text>}
+            subTitle={<Text fontSize={"$0.5"}>{t("Create alert")}</Text>}
+            iconAfter={<ChevronRight color={"$gray11"} />}
+            backgroundColor={"$secondaryDark"}
+          />
+        </YGroup.Item>
+      );
+    }
 
-    return (
-      <Button
-        w={"$full"}
-        backgroundColor={"$secondaryDark"}
-        borderColor={"$gray6"}
-        h={"$6"}
-      >
-        <YStack>
-          <Text textAlign="center" color={"$gray12"} fontWeight={"$5"}>
-            {label}
-          </Text>
-          <XStack justifyContent="center" alignItems="center" gap="$1">
-            <Text textAlign="center" fontSize={"$0.5"} color={"$gray11"}>
-              {t("Create alert")}
-            </Text>
-            <SquarePlus color={"$gray11"} size={"$1"} />
-          </XStack>
-        </YStack>
-      </Button>
-    );
-  }
+    return alerts.data.map((alert, i) => {
+      const shouldDecreasePrice = alert.differencePrice.includes("-");
+
+      return (
+        <YGroup.Item key={`${alert.symbol}-${i}`}>
+          <ListItem
+            hoverTheme
+            pressTheme
+            icon={Coins}
+            iconAfter={ChevronRight}
+            backgroundColor={"$secondaryDark"}
+          >
+            <YStack width={"$19"} gap={"$2"}>
+              <XStack alignItems="center" justifyContent="space-between">
+                <Text color={"$primary"} fontWeight={"$6"} fontSize={"$2"}>
+                  {alert.symbol}
+                </Text>
+                <XStack>
+                  <Text>{t("Price")}: </Text>
+                  <Text color={"$primary"} fontWeight={"$6"}>
+                    {alert.price}
+                  </Text>
+                </XStack>
+              </XStack>
+              <XStack alignItems="center" justifyContent="space-between">
+                <Text fontSize={"$0.5"}>{alert.currentPrice}</Text>
+                <View
+                  backgroundColor={shouldDecreasePrice ? "$red12" : "$green12"}
+                  paddingVertical={"$1"}
+                  paddingHorizontal={"$2"}
+                  borderRadius={"$1"}
+                >
+                  <XStack
+                    justifyContent="space-between"
+                    alignItems="center"
+                    gap={"$2"}
+                  >
+                    {shouldDecreasePrice ? (
+                      <TrendingDown color={"$red10"} size={"$1"} />
+                    ) : (
+                      <TrendingUp color={"$green10"} size={"$1"} />
+                    )}
+                    <Text
+                      fontSize={"$0.5"}
+                      fontWeight={"$6"}
+                      color={shouldDecreasePrice ? "$red10" : "$green10"}
+                    >
+                      {alert.differencePrice}
+                    </Text>
+                  </XStack>
+                </View>
+              </XStack>
+            </YStack>
+          </ListItem>
+        </YGroup.Item>
+      );
+    });
+  };
 
   return (
-    <XStack>
-      <Text>tachau</Text>
-    </XStack>
+    <YGroup alignSelf="center" bordered size="$5" separator={<Separator />}>
+      {contentGet()}
+    </YGroup>
   );
 };
