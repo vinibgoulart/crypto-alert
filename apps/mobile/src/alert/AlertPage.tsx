@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { INavigationPages } from "../navigation/NavigationPages";
 import { useGetUserMe } from "../schema/default/default";
+import { AlertList } from "./AlertList";
 
 export const AlertPage = () => {
   const { navigate } = useNavigation<NavigationProp<INavigationPages>>();
@@ -18,13 +19,16 @@ export const AlertPage = () => {
       hideBackButton
       marginVertical={"$4"}
     >
-      <YStack>
-        <Text fontSize={"$3"} fontWeight={"$6"}>
-          {t("Alerts")}
-        </Text>
-        <Text fontSize={"$1"} fontWeight={"$4"} color={"$gray10"}>
-          {t("Your configured alerts")}
-        </Text>
+      <YStack gap={"$3"}>
+        <YStack>
+          <Text fontSize={"$3"} fontWeight={"$6"}>
+            {t("Alerts")}
+          </Text>
+          <Text fontSize={"$1"} fontWeight={"$4"} color={"$gray10"}>
+            {t("Your configured alerts")}
+          </Text>
+        </YStack>
+        <AlertList />
       </YStack>
       <Button bg={"$primary"} color={"$white1"}>
         {t("Create alert")}
