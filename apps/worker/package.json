@@ -8,6 +8,8 @@
   },
   "dependencies": {
     "@crypto-alert/jobs": "*",
+    "@crypto-alert/crypto": "*",
+    "@crypto-alert/blockchain-provider": "*",
     "@types/dotenv-safe": "^8.1.6",
     "amqplib": "^0.10.5",
     "dotenv-safe": "^9.1.0",

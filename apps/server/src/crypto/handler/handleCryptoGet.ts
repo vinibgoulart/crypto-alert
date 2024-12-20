@@ -1,6 +1,6 @@
 import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
 import type { Env } from "hono";
-import { cryptoGet, cryptosGet } from "@crypto-alert/blockchain-provider";
+import { CryptoModel } from "@crypto-alert/crypto";
 
 export const handleCryptoGet = (app: OpenAPIHono<Env, {}, "/">) => {
   const route = createRoute({
@@ -11,7 +11,7 @@ export const handleCryptoGet = (app: OpenAPIHono<Env, {}, "/">) => {
         symbol: z
           .string()
           .openapi({
-            example: "btcusdt",
+            example: "BTCUSDT",
           })
           .optional(),
       }),
@@ -29,8 +29,8 @@ export const handleCryptoGet = (app: OpenAPIHono<Env, {}, "/">) => {
                   price: z.string().openapi({
                     example: "97856.00000000",
                   }),
-                  date: z.string().openapi({
-                    example: "2021-10-10T10:10:10Z",
+                  updatedAt: z.string().openapi({
+                    example: "2021-08-20T19:10:00.000Z",
                   }),
                 }),
                 z.array(
@@ -41,8 +41,8 @@ export const handleCryptoGet = (app: OpenAPIHono<Env, {}, "/">) => {
                     price: z.string().openapi({
                       example: "97856.00000000",
                     }),
-                    date: z.string().openapi({
-                      example: "2021-10-10T10:10:10Z",
+                    updatedAt: z.string().openapi({
+                      example: "2021-08-20T19:10:00.000Z",
                     }),
                   })
                 ),
@@ -52,18 +52,18 @@ export const handleCryptoGet = (app: OpenAPIHono<Env, {}, "/">) => {
                   {
                     symbol: "btcusdt",
                     price: "97856.00000000",
-                    date: "2021-10-10T10:10:10Z",
+                    updatedAt: "2021-08-20T19:10:00.000Z",
                   },
                   [
                     {
                       symbol: "btcusdt",
                       price: "97856.00000000",
-                      date: "2021-10-10T10:10:10Z",
+                      updatedAt: "2021-08-20T19:10:00.000Z",
                     },
                     {
                       symbol: "ethusdt",
                       price: "4567.00000000",
-                      date: "2021-10-10T10:10:10Z",
+                      updatedAt: "2021-08-20T19:10:00.000Z",
                     },
                   ],
                 ],
@@ -91,31 +91,38 @@ export const handleCryptoGet = (app: OpenAPIHono<Env, {}, "/">) => {
     const symbol = c.req.query("symbol");
 
     if (symbol) {
-      const cryptoGetResponse = await cryptoGet({ symbol });
+      const cryptoGetResponse = await CryptoModel.findOne({
+        symbol: symbol.toUpperCase(),
+      });
 
-      if (!cryptoGetResponse.success) {
+      if (!cryptoGetResponse) {
         return c.json(
           {
-            error: cryptoGetResponse.error,
+            error: "Crypto not found",
           },
           404
         );
       }
 
-      return c.json(cryptoGetResponse.crypto, 200);
+      const crypto = {
+        symbol: cryptoGetResponse.symbol,
+        price: cryptoGetResponse.price,
+        updatedAt: cryptoGetResponse.updatedAt,
+      };
+
+      return c.json(crypto, 200);
     }
 
-    const cryptoGetResponse = await cryptosGet();
+    const cryptosGetResponse = await CryptoModel.find();
 
-    if (!cryptoGetResponse.success) {
-      return c.json(
-        {
-          error: cryptoGetResponse.error,
-        },
-        404
-      );
-    }
+    const cryptos = cryptosGetResponse.map((crypto) => {
+      return {
+        symbol: crypto.symbol,
+        price: crypto.price,
+        updatedAt: crypto.updatedAt,
+      };
+    });
 
-    return c.json(cryptoGetResponse.cryptos, 200);
+    return c.json(cryptos, 200);
   });
 };

@@ -20,7 +20,9 @@ export const initScheduler = async () => {
 
     cron.schedule("*/1 * * * *", () => {
       channel.sendToQueue(MAIN_QUEUE, Buffer.from(JSON.stringify(content)));
-      console.log("Task sent to MAIN_QUEUE at 30-minute interval.");
+      console.log(
+        `Task sent to MAIN_QUEUE at 1-minute interval. Task: ${content.name}`
+      );
     });
 
     console.log("Scheduler initialized.");

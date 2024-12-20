@@ -1,9 +1,13 @@
 import amqp from "amqplib";
 import { config } from "./config";
 import { MAIN_QUEUE, QueueContent } from "@crypto-alert/jobs";
+import { WORKER_JOBS } from "./workerJobs";
+import { connectMongo } from "@crypto-alert/mongo";
 
 export const initWorker = async () => {
   try {
+    console.log("Connecting to database...");
+    await connectMongo();
     const connection = await amqp.connect(config.RABBITMQ_URL!);
     const channel = await connection.createChannel();
 
@@ -12,10 +16,12 @@ export const initWorker = async () => {
     console.log("Worker initialized, waiting for messages...");
 
     const consumeMessages = () => {
-      channel.consume(MAIN_QUEUE, (msg) => {
+      channel.consume(MAIN_QUEUE, async (msg) => {
         if (msg !== null) {
           const content: QueueContent = JSON.parse(msg.content.toString());
           console.log(`Received message: ${content.name}`);
+          await WORKER_JOBS[content.name](content);
+          console.log(`Task completed: ${content.name}`);
 
           channel.ack(msg);
         }

@@ -3,7 +3,6 @@ import { binanceCryptoGet } from "@crypto-alert/blockchain-binance";
 type CryptosGet = {
   symbol: string;
   price: string;
-  date: string;
 };
 
 type CryptosGetSuccess = {
@@ -38,7 +37,6 @@ export const cryptosGet = async (): Promise<CryptosGetResponse> => {
   const cryptos = binanceCryptos.cryptos.map((crypto) => ({
     symbol: crypto.symbol,
     price: crypto.price,
-    date: new Date().toISOString(),
   }));
 
   return {

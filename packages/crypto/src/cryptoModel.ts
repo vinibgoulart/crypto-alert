@@ -5,6 +5,7 @@ type Crypto = {
   _id: Types.ObjectId;
   symbol: string;
   price: string;
+  deprecated: boolean;
   createdAt: Date;
   updatedAt: Date;
   removedAt: Date;
@@ -16,6 +17,7 @@ const CryptoSchema = new Schema<CryptoDocument>(
   {
     symbol: { type: String, required: true, index: true, unique: true },
     price: { type: String, required: true },
+    deprecated: { type: Boolean, default: false },
     removedAt: { type: Date, default: null },
   },
   {
