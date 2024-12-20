@@ -36,9 +36,6 @@ export const Layout = ({ children, hideBackButton, ...props }: ILayout) => {
         <ArrowLeft color={"$primary"} size={"$3"} onPress={goBack} />
       )}
       <XStack jc={"center"} ai={"center"} gap={"$2"}>
-        <Text color={"$primary"} fontWeight={"$5"} fontSize={"$3"}>
-          Crypto Alert
-        </Text>
         <Image
           source={{
             uri: logoImg,

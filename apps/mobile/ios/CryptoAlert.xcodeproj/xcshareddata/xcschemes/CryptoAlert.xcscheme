@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "CriptoAlert.app"
-               BlueprintName = "CriptoAlert"
-               ReferencedContainer = "container:CriptoAlert.xcodeproj">
+               BuildableName = "CryptoAlert.app"
+               BlueprintName = "CryptoAlert"
+               ReferencedContainer = "container:CryptoAlert.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "CriptoAlertTests.xctest"
-               BlueprintName = "CriptoAlertTests"
-               ReferencedContainer = "container:CriptoAlert.xcodeproj">
+               BuildableName = "CryptoAlertTests.xctest"
+               BlueprintName = "CryptoAlertTests"
+               ReferencedContainer = "container:CryptoAlert.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "CriptoAlert.app"
-            BlueprintName = "CriptoAlert"
-            ReferencedContainer = "container:CriptoAlert.xcodeproj">
+            BuildableName = "CryptoAlert.app"
+            BlueprintName = "CryptoAlert"
+            ReferencedContainer = "container:CryptoAlert.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "CriptoAlert.app"
-            BlueprintName = "CriptoAlert"
-            ReferencedContainer = "container:CriptoAlert.xcodeproj">
+            BuildableName = "CryptoAlert.app"
+            BlueprintName = "CryptoAlert"
+            ReferencedContainer = "container:CryptoAlert.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

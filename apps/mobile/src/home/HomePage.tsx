@@ -1,39 +1,41 @@
-import { Button, Text } from "tamagui";
-import { Layout } from "../components/Layout";
 import { useTranslation } from "react-i18next";
-import { NavigationProp, useNavigation } from "@react-navigation/native";
-import { INavigationPages } from "../navigation/NavigationPages";
-import {
-  postAuthLogout,
-  useGetUserMe,
-  usePostAuthLogout,
-} from "../schema/default/default";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { AlarmClock, User } from "@tamagui/lucide-icons";
+import { UserProfilePage } from "../user/UserProfilePage";
+import { primary, secondary } from "@crypto-alert/ui";
+import { AlertPage } from "../alert/AlertPage";
 
 export const HomePage = () => {
-  const { navigate } = useNavigation<NavigationProp<INavigationPages>>();
-  const { data: user } = useGetUserMe();
-
   const { t } = useTranslation();
-
-  const postAuthLogoutMutation = usePostAuthLogout({
-    mutation: {
-      mutationFn: () => postAuthLogout(),
-      onSuccess() {
-        navigate("AuthWelcomePage");
-      },
-    },
-  });
-
-  const onLogout = async () => {
-    postAuthLogoutMutation.mutate();
-  };
+  const Tab = createBottomTabNavigator();
 
   return (
-    <Layout gap={"$10"} justifyContent="space-evenly" hideBackButton>
-      <Text>Hi {user?.data.name}</Text>
-      <Button bg={"$primary"} color={"$white1"} onPress={onLogout}>
-        {t("Logout")}
-      </Button>
-    </Layout>
+    <Tab.Navigator
+      screenOptions={{
+        headerShown: false,
+        tabBarActiveBackgroundColor: secondary,
+        tabBarInactiveBackgroundColor: secondary,
+        tabBarActiveTintColor: primary,
+      }}
+    >
+      <Tab.Screen
+        name={t("Alerts")}
+        component={AlertPage}
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <AlarmClock color={focused ? "$primary" : "$gray10"} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name={t("Profile")}
+        component={UserProfilePage}
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <User color={focused ? "$primary" : "$gray10"} />
+          ),
+        }}
+      />
+    </Tab.Navigator>
   );
 };

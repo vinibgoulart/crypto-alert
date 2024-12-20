@@ -21,5 +21,9 @@
   "Password must contain a number": "Senha deve conter um número",
   "Passwords do not match": "Senhas não conferem",
   "Password must be at least 6 characters": "Senha deve ter no mínimo 6 caracteres",
-  "Logout": "Sair"
+  "Logout": "Sair",
+  "Alerts": "Alertas",
+  "Profile": "Perfil",
+  "Create alert": "Criar alerta",
+  "Your configured alerts": "Seus alertas configurados"
 }

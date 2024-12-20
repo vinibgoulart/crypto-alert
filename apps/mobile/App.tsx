@@ -15,14 +15,15 @@ import { useEffect } from "react";
 import "./src/language/i18n";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Toast from "react-native-toast-message";
+import { primary, secondary, secondaryDark } from "@crypto-alert/ui";
 
 const tokens = createTokens({
   ...config.tokens,
   color: {
     ...config.tokens.color,
-    primary: "#0BAFE5",
-    secondary: "#0b192e",
-    secondaryDark: "#121d2e",
+    primary,
+    secondary,
+    secondaryDark,
   },
 });
 
