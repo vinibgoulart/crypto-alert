@@ -3,11 +3,20 @@ import { useGetAlert } from "../schema/default/default";
 import { useTranslation } from "react-i18next";
 import { SquarePlus } from "@tamagui/lucide-icons";
 
-export const AlertList = () => {
-  const { data: alerts } = useGetAlert();
+type AlertListProps = {
+  active?: boolean;
+};
+
+export const AlertList = ({ active }: AlertListProps) => {
+  const { data: alerts } = useGetAlert({
+    active,
+  });
+
   const { t } = useTranslation();
 
   if (!alerts?.data.length) {
+    const label = active ? t("No active alerts") : t("No reached alerts");
+
     return (
       <Button
         w={"$full"}
@@ -17,7 +26,7 @@ export const AlertList = () => {
       >
         <YStack>
           <Text textAlign="center" color={"$gray12"} fontWeight={"$5"}>
-            Nenhum alerta configurado
+            {label}
           </Text>
           <XStack justifyContent="center" alignItems="center" gap="$1">
             <Text textAlign="center" fontSize={"$0.5"} color={"$gray11"}>

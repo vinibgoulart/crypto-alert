@@ -4,94 +4,95 @@
  * crypto alert
  * OpenAPI spec version: 1.0.0
  */
-import { z as zod } from "zod";
+import {
+  z as zod
+} from 'zod'
 
 export const postAuthRegisterBodyPasswordMin = 6;
 
+
 export const postAuthRegisterBody = zod.object({
-  name: zod.string(),
-  email: zod.string().email(),
-  password: zod.string().min(postAuthRegisterBodyPasswordMin),
-});
+  "name": zod.string(),
+  "email": zod.string().email(),
+  "password": zod.string().min(postAuthRegisterBodyPasswordMin)
+})
 
 export const postAuthRegisterResponse = zod.object({
-  _id: zod.string(),
-  name: zod.string(),
-  email: zod.string().email(),
-  createdAt: zod.string(),
-});
+  "_id": zod.string(),
+  "name": zod.string(),
+  "email": zod.string().email(),
+  "createdAt": zod.string()
+})
 
 export const postAuthLoginBodyPasswordMin = 6;
 
+
 export const postAuthLoginBody = zod.object({
-  email: zod.string().email(),
-  password: zod.string().min(postAuthLoginBodyPasswordMin),
-});
+  "email": zod.string().email(),
+  "password": zod.string().min(postAuthLoginBodyPasswordMin)
+})
 
 export const postAuthLoginResponse = zod.object({
-  _id: zod.string(),
-  name: zod.string(),
-  email: zod.string().email(),
-  createdAt: zod.string(),
-});
+  "_id": zod.string(),
+  "name": zod.string(),
+  "email": zod.string().email(),
+  "createdAt": zod.string()
+})
 
 export const postAuthLogoutResponse = zod.object({
-  message: zod.string(),
-});
+  "message": zod.string()
+})
 
 export const postAlertBody = zod.object({
-  name: zod.string(),
-  price: zod.number(),
-  symbol: zod.string(),
-});
+  "name": zod.string(),
+  "price": zod.number(),
+  "symbol": zod.string()
+})
 
 export const postAlertResponse = zod.object({
-  id: zod.string(),
-  name: zod.string(),
-  price: zod.number(),
-  symbol: zod.string(),
-});
+  "id": zod.string(),
+  "name": zod.string(),
+  "price": zod.number(),
+  "symbol": zod.string()
+})
 
-export const getAlertResponseItem = zod
-  .object({
-    id: zod.string(),
-    name: zod.string(),
-    price: zod.number(),
-    symbol: zod.string(),
-  })
-  .and(
-    zod.object({
-      _id: zod.string(),
-      price: zod.number(),
-      symbol: zod.string(),
-      createdAt: zod.string(),
-    })
-  );
-export const getAlertResponse = zod.array(getAlertResponseItem);
+export const getAlertQueryParams = zod.object({
+  "active": zod.boolean().optional()
+})
+
+export const getAlertResponseItem = zod.object({
+  "id": zod.string(),
+  "name": zod.string(),
+  "price": zod.number(),
+  "symbol": zod.string()
+}).and(zod.object({
+  "_id": zod.string(),
+  "price": zod.number(),
+  "symbol": zod.string(),
+  "active": zod.boolean(),
+  "reachedAt": zod.string(),
+  "createdAt": zod.string()
+}))
+export const getAlertResponse = zod.array(getAlertResponseItem)
 
 export const getCryptoQueryParams = zod.object({
-  symbol: zod.string().optional(),
-});
+  "symbol": zod.string().optional()
+})
 
-export const getCryptoResponse = zod
-  .object({
-    symbol: zod.string(),
-    price: zod.string(),
-    updatedAt: zod.string(),
-  })
-  .or(
-    zod.array(
-      zod.object({
-        symbol: zod.string(),
-        price: zod.string(),
-        updatedAt: zod.string(),
-      })
-    )
-  );
+export const getCryptoResponse = zod.object({
+  "symbol": zod.string(),
+  "price": zod.string(),
+  "updatedAt": zod.string()
+}).or(zod.array(zod.object({
+  "symbol": zod.string(),
+  "price": zod.string(),
+  "updatedAt": zod.string()
+})))
 
 export const getUserMeResponse = zod.object({
-  _id: zod.string(),
-  name: zod.string(),
-  email: zod.string().email(),
-  createdAt: zod.string(),
-});
+  "_id": zod.string(),
+  "name": zod.string(),
+  "email": zod.string().email(),
+  "createdAt": zod.string()
+})
+

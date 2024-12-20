@@ -6,6 +6,8 @@ type Alert = {
   userId: Types.ObjectId;
   price: number;
   symbol: string;
+  active: boolean;
+  reachedAt: Date;
   createdAt: Date;
   updatedAt: Date;
   removedAt: Date;
@@ -18,6 +20,8 @@ const AlertSchema = new Schema<AlertDocument>(
     userId: { type: Schema.Types.ObjectId, required: true, ref: "User" },
     price: { type: Number, required: true },
     symbol: { type: String, required: true },
+    active: { type: Boolean, default: true },
+    reachedAt: { type: Date, default: null },
     removedAt: { type: Date, default: null },
   },
   {

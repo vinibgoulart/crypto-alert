@@ -25,5 +25,10 @@
   "Alerts": "Alertas",
   "Profile": "Perfil",
   "Create alert": "Criar alerta",
-  "Your configured alerts": "Seus alertas configurados"
+  "Reached": "Alcançados",
+  "You are logged in as": "Você está logado como",
+  "No active alerts": "Nenhum alerta ativo",
+  "Your reached alerts": "Seus alertas alcançados",
+  "No reached alerts": "Nenhum alerta alcançado",
+  "Your active alerts": "Seus alertas ativos"
 }

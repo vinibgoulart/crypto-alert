@@ -7,7 +7,9 @@
 
 export type GetAlert200ItemAllOf = {
   _id: string;
+  active: boolean;
   createdAt: string;
   price: number;
+  reachedAt: string;
   symbol: string;
 };

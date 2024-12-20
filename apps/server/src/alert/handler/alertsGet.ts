@@ -7,6 +7,16 @@ export const alertsGet = (app: OpenAPIHono<Env, {}, "/">) => {
   const route = createRoute({
     method: "get",
     path: "/alert",
+    request: {
+      query: z.object({
+        active: z
+          .boolean()
+          .openapi({
+            example: true,
+          })
+          .optional(),
+      }),
+    },
     responses: {
       200: {
         content: {
@@ -22,6 +32,12 @@ export const alertsGet = (app: OpenAPIHono<Env, {}, "/">) => {
                   }),
                   symbol: z.string().openapi({
                     example: "BTC",
+                  }),
+                  active: z.boolean().openapi({
+                    example: true,
+                  }),
+                  reachedAt: z.string().openapi({
+                    example: "2021-08-20T19:10:00.000Z",
                   }),
                   createdAt: z.string().openapi({
                     example: "2021-08-20T19:10:00.000Z",
@@ -50,15 +66,19 @@ export const alertsGet = (app: OpenAPIHono<Env, {}, "/">) => {
 
   app.openapi(route, async (c) => {
     const user = c.get("User") as UserDocument;
+    const active = c.req.query("active") || true;
 
     const alertsGetResponse = await AlertModel.find({
       userId: user._id,
+      active,
     });
 
     const alerts = alertsGetResponse.map((alert) => ({
       _id: alert._id,
       price: alert.price,
       symbol: alert.symbol,
+      active: alert.active,
+      reachedAt: alert.reachedAt,
       createdAt: alert.createdAt,
     }));
 

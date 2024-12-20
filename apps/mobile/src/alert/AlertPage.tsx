@@ -19,16 +19,29 @@ export const AlertPage = () => {
       hideBackButton
       marginVertical={"$4"}
     >
-      <YStack gap={"$3"}>
-        <YStack>
-          <Text fontSize={"$3"} fontWeight={"$6"}>
-            {t("Alerts")}
-          </Text>
-          <Text fontSize={"$1"} fontWeight={"$4"} color={"$gray10"}>
-            {t("Your configured alerts")}
-          </Text>
+      <YStack gap={"$5"}>
+        <YStack gap={"$3"}>
+          <YStack>
+            <Text fontSize={"$3"} fontWeight={"$6"}>
+              {t("Alerts")}
+            </Text>
+            <Text fontSize={"$1"} fontWeight={"$4"} color={"$gray10"}>
+              {t("Your active alerts")}
+            </Text>
+          </YStack>
+          <AlertList active />
         </YStack>
-        <AlertList />
+        <YStack gap={"$3"}>
+          <YStack>
+            <Text fontSize={"$3"} fontWeight={"$6"}>
+              {t("Reached")}
+            </Text>
+            <Text fontSize={"$1"} fontWeight={"$4"} color={"$gray10"}>
+              {t("Your reached alerts")}
+            </Text>
+          </YStack>
+          <AlertList active={false} />
+        </YStack>
       </YStack>
       <Button bg={"$primary"} color={"$white1"}>
         {t("Create alert")}

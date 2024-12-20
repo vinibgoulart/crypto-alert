@@ -36,18 +36,9 @@ export const UserProfilePage = () => {
       marginVertical={"$4"}
     >
       <YStack>
-        <XStack>
-          <Text color={"$primary"} fontWeight={"$5"}>
-            {t("Name")}:{" "}
-          </Text>
-          <Text>{user?.data.name}</Text>
-        </XStack>
-        <XStack>
-          <Text color={"$primary"} fontWeight={"$5"}>
-            {t("Email")}:{" "}
-          </Text>
-          <Text>{user?.data.email}</Text>
-        </XStack>
+        <Text>
+          {t("You are logged in as")}: {user?.data.email}
+        </Text>
       </YStack>
       <Button bg={"$primary"} color={"$white1"} onPress={onLogout}>
         {t("Logout")}
