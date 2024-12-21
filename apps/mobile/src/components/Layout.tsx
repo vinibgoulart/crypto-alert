@@ -1,4 +1,4 @@
-import { Image, Text, XStack, YStack, YStackProps } from "tamagui";
+import { Image, Text, View, XStack, YStack, YStackProps } from "tamagui";
 
 type ILayout = {
   children: React.ReactNode;
@@ -31,12 +31,21 @@ export const Layout = ({ children, hideBackButton, ...props }: ILayout) => {
   );
 
   return (
-    <YStack bg={"$secondary"} f={1}>
-      {!hideBackButton && (
-        <ArrowLeft color={"$primary"} size={"$3"} onPress={goBack} />
-      )}
-      <XStack jc={"center"} ai={"center"} gap={"$2"}>
+    <YStack bg={"$secondary"} f={1} gap={"$5"} paddingVertical={"$2"}>
+      <XStack
+        jc={"center"}
+        ai={"center"}
+        gap={"$2"}
+        justifyContent="space-between"
+        minHeight={"$3"}
+      >
+        {!hideBackButton && (
+          <ArrowLeft color={"$primary"} size={"$3"} onPress={goBack} />
+        )}
         <Image
+          position="absolute"
+          left={"50%"}
+          transform={"translateX(-17px)"}
           source={{
             uri: logoImg,
             width: 35,

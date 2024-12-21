@@ -5,12 +5,14 @@ import { AuthWelcomePage } from "../auth/AuthWelcomePage";
 import { AuthLoginPage } from "../auth/login/AuthLoginPage";
 import { AuthRegisterPage } from "../auth/register/AuthRegisterPage";
 import { HomePage } from "../home/HomePage";
+import { UserNotificationPage } from "../user/UserNotificationPage";
 
 export type INavigationPages = {
   AuthWelcomePage: undefined;
   AuthLoginPage: undefined;
   AuthRegisterPage: undefined;
   HomePage: undefined;
+  UserNotificationPage: undefined;
 };
 
 const Stack = createNativeStackNavigator<INavigationPages>();
@@ -27,6 +29,10 @@ export const NavigationPages = (): ReactNode => {
         <Stack.Screen name="AuthLoginPage" component={AuthLoginPage} />
         <Stack.Screen name="AuthRegisterPage" component={AuthRegisterPage} />
         <Stack.Screen name="HomePage" component={HomePage} />
+        <Stack.Screen
+          name="UserNotificationPage"
+          component={UserNotificationPage}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

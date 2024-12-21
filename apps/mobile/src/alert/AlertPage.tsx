@@ -8,12 +8,7 @@ export const AlertPage = () => {
   const { t } = useTranslation();
 
   return (
-    <Layout
-      gap={"$10"}
-      justifyContent="space-between"
-      hideBackButton
-      marginVertical={"$4"}
-    >
+    <Layout gap={"$10"} justifyContent="space-between" hideBackButton>
       <ScrollView>
         <YStack gap={"$5"}>
           <YStack gap={"$3"}>

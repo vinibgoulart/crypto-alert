@@ -38,12 +38,7 @@ export const UserProfilePage = () => {
   };
 
   return (
-    <Layout
-      gap={"$10"}
-      justifyContent="space-between"
-      hideBackButton
-      marginVertical={"$4"}
-    >
+    <Layout gap={"$10"} justifyContent="space-between" hideBackButton>
       <YStack gap={"$3"}>
         <XStack gap={"$3"}>
           <CircleUserRound size={"$5"} />
@@ -64,6 +59,7 @@ export const UserProfilePage = () => {
               title={t("Notifications")}
               iconAfter={ChevronRight}
               backgroundColor={"$secondaryDark"}
+              onPress={() => navigate("UserNotificationPage")}
             />
           </YGroup.Item>
         </YGroup>
