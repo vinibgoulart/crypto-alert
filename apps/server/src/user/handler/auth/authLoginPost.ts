@@ -42,21 +42,9 @@ export const authLoginPost = (app: OpenAPIHono<Env, {}, "/">) => {
         content: {
           "application/json": {
             schema: z.object({
-              _id: z.string().openapi({
-                example: "123",
-                description: "Id of the user",
-              }),
-              name: z.string().openapi({
-                example: "John Due",
-                description: "Name of the user",
-              }),
-              email: z.string().email().openapi({
-                example: "user@mail.com",
-                description: "Email of the user",
-              }),
-              createdAt: z.string().openapi({
-                example: "2021-07-01T00:00:00.000Z",
-                description: "Date of creation",
+              message: z.string().openapi({
+                example: "User logged in",
+                description: "Success message",
               }),
             }),
           },
@@ -117,10 +105,7 @@ export const authLoginPost = (app: OpenAPIHono<Env, {}, "/">) => {
 
     return c.json(
       {
-        _id: user._id,
-        name: user.name,
-        email: user.email,
-        createdAt: user.createdAt,
+        message: "User logged in",
       },
       200
     );

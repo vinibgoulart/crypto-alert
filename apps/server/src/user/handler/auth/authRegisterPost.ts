@@ -4,6 +4,7 @@ import { hashSync } from "bcrypt";
 import { sessionCookieGenerate } from "../../../session/sessionCookieGenerate.js";
 import { SESSION_USER_COOKIE } from "../../../session/sessionUserCookie.js";
 import { sessionCookieSet } from "../../../session/sessionCookieSet.js";
+import { phone } from "phone";
 import { userCreate } from "@crypto-alert/user";
 
 export const authRegisterPost = (app: OpenAPIHono<Env, {}, "/">) => {
@@ -27,6 +28,15 @@ export const authRegisterPost = (app: OpenAPIHono<Env, {}, "/">) => {
                   example: "user@mail.com",
                   description: "Email of the user",
                 }),
+              phone: z
+                .string({ message: "Phone is required" })
+                .openapi({
+                  example: "+1234567890",
+                  description: "Phone of the user",
+                })
+                .refine((v) => phone(v).isValid, {
+                  message: "Phone is invalid",
+                }),
               password: z
                 .string({ message: "Password is required" })
                 .min(6, "Password must be at least 6 characters")
@@ -46,21 +56,9 @@ export const authRegisterPost = (app: OpenAPIHono<Env, {}, "/">) => {
         content: {
           "application/json": {
             schema: z.object({
-              _id: z.string().openapi({
-                example: "123",
-                description: "Id of the user",
-              }),
-              name: z.string().openapi({
-                example: "John Due",
-                description: "Name of the user",
-              }),
-              email: z.string().email().openapi({
-                example: "user@mail.com",
-                description: "Email of the user",
-              }),
-              createdAt: z.string().openapi({
-                example: "2021-07-01T00:00:00.000Z",
-                description: "Date of creation",
+              message: z.string().openapi({
+                example: "User created",
+                description: "Success message",
               }),
             }),
           },
@@ -84,11 +82,12 @@ export const authRegisterPost = (app: OpenAPIHono<Env, {}, "/">) => {
   });
 
   app.openapi(route, async (c) => {
-    const { name, email, password } = c.req.valid("json");
+    const { name, email, password, phone } = c.req.valid("json");
 
     const userCreateResponse = await userCreate({
       name,
       email,
+      phone,
       password: hashSync(password, 10),
     });
 
@@ -114,6 +113,11 @@ export const authRegisterPost = (app: OpenAPIHono<Env, {}, "/">) => {
       value: userToken,
     });
 
-    return c.json(user, 200);
+    return c.json(
+      {
+        message: "User created",
+      },
+      200
+    );
   });
 };

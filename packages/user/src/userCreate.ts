@@ -1,22 +1,15 @@
-import { UserModel } from "./userModel";
+import { UserDocument, UserModel } from "./userModel";
 
 type UserCreateArgs = {
   name: string;
   email: string;
+  phone: string;
   password: string;
-};
-
-type UserCreate = {
-  _id: string;
-  name: string;
-  email: string;
-  createdAt: Date;
-  updatedAt: Date;
 };
 
 type UserCreateSuccess = {
   success: true;
-  user: UserCreate;
+  user: UserDocument;
 };
 
 type UserCreateError = {
@@ -38,16 +31,17 @@ export const userCreate = async (
     };
   }
 
-  const user = await UserModel.create(userPayload);
+  const user = await UserModel.create({
+    notification: {
+      email: false,
+      sms: false,
+      pushNotification: true,
+    },
+    ...userPayload,
+  });
 
   return {
     success: true,
-    user: {
-      _id: user._id.toString(),
-      name: user.name,
-      email: user.email,
-      createdAt: user.createdAt,
-      updatedAt: user.updatedAt,
-    },
+    user,
   };
 };

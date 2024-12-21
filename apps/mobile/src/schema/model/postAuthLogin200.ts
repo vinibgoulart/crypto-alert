@@ -6,12 +6,6 @@
  */
 
 export type PostAuthLogin200 = {
-  /** Id of the user */
-  _id: string;
-  /** Date of creation */
-  createdAt: string;
-  /** Email of the user */
-  email: string;
-  /** Name of the user */
-  name: string;
+  /** Success message */
+  message: string;
 };

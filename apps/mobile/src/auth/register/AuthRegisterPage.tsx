@@ -12,6 +12,8 @@ import {
 import { INavigationPages } from "../../navigation/NavigationPages";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import Toast from "react-native-toast-message";
+import { InputPhone } from "../../components/input/InputPhone";
+import phone from "phone";
 
 export const AuthRegisterPage = () => {
   const { t } = useTranslation();
@@ -19,21 +21,42 @@ export const AuthRegisterPage = () => {
 
   const schemaValidation = z
     .object({
-      name: z.string().min(2, { message: t("Name is too short") }),
-      email: z.string().email({ message: t("Invalid email") }),
+      name: z
+        .string({
+          message: t("Name is required"),
+        })
+        .min(2, { message: t("Name is too short") }),
+      email: z
+        .string({
+          message: t("Email is required"),
+        })
+        .email({ message: t("Invalid email") }),
+      phone: z
+        .string({
+          message: t("Phone is required"),
+        })
+        .min(10, { message: t("Phone is too short") }),
       password: z
-        .string()
+        .string({
+          message: t("Password is required"),
+        })
         .min(6, {
           message: t("Password must be at least 6 characters"),
         })
         .regex(/[A-Z]/, { message: t("Password must contain an uppercase") })
         .regex(/[a-z]/, { message: t("Password must contain a lowercase") })
         .regex(/[0-9]/, { message: t("Password must contain a number") }),
-      passwordConfirm: z.string(),
+      passwordConfirm: z.string({
+        message: t("Password confirmation is required"),
+      }),
     })
     .refine((data) => data.password === data.passwordConfirm, {
       message: t("Passwords do not match"),
       path: ["passwordConfirm"],
+    })
+    .refine((data) => phone(data.phone).isValid, {
+      message: t("Invalid phone"),
+      path: ["phone"],
     });
 
   type Values = z.infer<typeof schemaValidation>;
@@ -98,6 +121,7 @@ export const AuthRegisterPage = () => {
           </Text>
           <YStack gap={"$3"}>
             <Input label={t("Name")} placeholder="John Doe" name="name" />
+            <InputPhone label={t("Phone")} name="phone" />
             <Input
               label={t("Email")}
               placeholder="email@email.com"

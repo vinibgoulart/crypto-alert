@@ -4,6 +4,7 @@
  * crypto alert
  * OpenAPI spec version: 1.0.0
  */
+import type { UserNotification } from './userNotification';
 
 export interface User {
   /** Id of the user */
@@ -14,4 +15,7 @@ export interface User {
   email: string;
   /** Name of the user */
   name: string;
+  notification: UserNotification;
+  /** Phone number of the user */
+  phone: string;
 }

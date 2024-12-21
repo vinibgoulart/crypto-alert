@@ -15,4 +15,6 @@ export type PostAuthRegisterBody = {
    * @minLength 6
    */
   password: string;
+  /** Phone of the user */
+  phone: string;
 };

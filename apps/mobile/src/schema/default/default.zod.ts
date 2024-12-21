@@ -14,14 +14,12 @@ export const postAuthRegisterBodyPasswordMin = 6;
 export const postAuthRegisterBody = zod.object({
   "name": zod.string(),
   "email": zod.string().email(),
+  "phone": zod.string(),
   "password": zod.string().min(postAuthRegisterBodyPasswordMin)
 })
 
 export const postAuthRegisterResponse = zod.object({
-  "_id": zod.string(),
-  "name": zod.string(),
-  "email": zod.string().email(),
-  "createdAt": zod.string()
+  "message": zod.string()
 })
 
 export const postAuthLoginBodyPasswordMin = 6;
@@ -33,10 +31,7 @@ export const postAuthLoginBody = zod.object({
 })
 
 export const postAuthLoginResponse = zod.object({
-  "_id": zod.string(),
-  "name": zod.string(),
-  "email": zod.string().email(),
-  "createdAt": zod.string()
+  "message": zod.string()
 })
 
 export const postAuthLogoutResponse = zod.object({
@@ -89,6 +84,12 @@ export const getUserMeResponse = zod.object({
   "_id": zod.string(),
   "name": zod.string(),
   "email": zod.string().email(),
+  "phone": zod.string(),
+  "notification": zod.object({
+  "email": zod.boolean(),
+  "sms": zod.boolean(),
+  "pushNotification": zod.boolean()
+}),
   "createdAt": zod.string()
 })
 

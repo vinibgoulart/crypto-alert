@@ -24,6 +24,24 @@ export const meGet = (app: OpenAPIHono<Env, {}, "/">) => {
                   example: "user@mail.com",
                   description: "Email of the user",
                 }),
+                phone: z.string().openapi({
+                  example: "+1234567890",
+                  description: "Phone number of the user",
+                }),
+                notification: z.object({
+                  email: z.boolean().openapi({
+                    example: true,
+                    description: "Email notification enabled",
+                  }),
+                  sms: z.boolean().openapi({
+                    example: true,
+                    description: "Phone notification enabled",
+                  }),
+                  pushNotification: z.boolean().openapi({
+                    example: true,
+                    description: "Push notification enabled",
+                  }),
+                }),
                 createdAt: z.string().openapi({
                   example: "2021-07-01T00:00:00.000Z",
                   description: "Date of creation",
@@ -66,6 +84,8 @@ export const meGet = (app: OpenAPIHono<Env, {}, "/">) => {
         _id: user._id,
         name: user.name,
         email: user.email,
+        phone: user.phone,
+        notification: user.notification,
         createdAt: user.createdAt.toISOString(),
       },
       200

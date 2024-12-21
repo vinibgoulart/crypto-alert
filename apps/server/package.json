@@ -6,10 +6,10 @@
     "dev": "tsx watch src/index.ts"
   },
   "dependencies": {
+    "@crypto-alert/alert": "*",
+    "@crypto-alert/crypto": "*",
     "@crypto-alert/mongo": "*",
     "@crypto-alert/user": "*",
-    "@crypto-alert/crypto": "*",
-    "@crypto-alert/alert": "*",
     "@hono/node-server": "^1.13.7",
     "@hono/swagger-ui": "^0.5.0",
     "@hono/zod-openapi": "^0.18.3",
@@ -22,6 +22,7 @@
     "moment": "^2.30.1",
     "mongoose": "^8.8.4",
     "node-cron": "^3.0.3",
+    "phone": "^3.1.56",
     "zod": "^3.23.8"
   },
   "devDependencies": {

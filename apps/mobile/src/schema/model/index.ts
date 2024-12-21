@@ -29,3 +29,4 @@ export * from './postAuthRegister200';
 export * from './postAuthRegister400';
 export * from './postAuthRegisterBody';
 export * from './user';
+export * from './userNotification';
