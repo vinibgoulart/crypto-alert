@@ -1,5 +1,4 @@
 import { ScrollView, Separator, YGroup } from "tamagui";
-import { useTranslation } from "react-i18next";
 import { useGetCryptosInfinite } from "../schema/default/default";
 import { CryptoCard, CryptoCardSkeleton } from "./CryptoCard";
 
