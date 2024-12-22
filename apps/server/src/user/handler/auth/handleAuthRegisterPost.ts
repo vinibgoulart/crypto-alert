@@ -7,7 +7,7 @@ import { sessionCookieSet } from "../../../session/sessionCookieSet.js";
 import { phone } from "phone";
 import { userCreate } from "@crypto-alert/user";
 
-export const authRegisterPost = (app: OpenAPIHono<Env, {}, "/">) => {
+export const handleAuthRegisterPost = (app: OpenAPIHono<Env, {}, "/">) => {
   const route = createRoute({
     method: "post",
     path: "/auth/register",

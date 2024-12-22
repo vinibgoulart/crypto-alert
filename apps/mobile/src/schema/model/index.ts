@@ -12,6 +12,8 @@ export * from './getAlert200ItemAllOf';
 export * from './getAlert404';
 export * from './getAlertId404';
 export * from './getAlertParams';
+export * from './getAlerts404';
+export * from './getAlertsParams';
 export * from './getCrypto200';
 export * from './getCrypto200AnyOf';
 export * from './getCrypto200AnyOfTwoItem';

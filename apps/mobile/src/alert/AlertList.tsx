@@ -7,7 +7,7 @@ import {
   YGroup,
   YStack,
 } from "tamagui";
-import { useGetAlert } from "../schema/default/default";
+import { useGetAlerts } from "../schema/default/default";
 import { useTranslation } from "react-i18next";
 import {
   ChevronRight,
@@ -20,7 +20,7 @@ import { INavigationPages } from "../navigation/NavigationPages";
 
 export const AlertList = () => {
   const { navigate } = useNavigation<NavigationProp<INavigationPages>>();
-  const { data: alerts } = useGetAlert();
+  const { data: alerts } = useGetAlerts();
 
   const { t } = useTranslation();
 

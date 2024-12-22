@@ -1,11 +1,11 @@
 import type { Env } from "hono";
 import type { OpenAPIHono } from "@hono/zod-openapi";
-import { authRegisterPost } from "./authRegisterPost.js";
-import { authLoginPost } from "./authLoginPost.js";
-import { authLogoutPost } from "./authLogoutPost.js";
+import { handleAuthRegisterPost } from "./handleAuthRegisterPost.js";
+import { handleAuthLoginPost } from "./handleAuthLoginPost.js";
+import { handleAuthLogoutPost } from "./handleAuthLogoutPost.js";
 
 export const authRoutes = (app: OpenAPIHono<Env, {}, "/">) => {
-  authRegisterPost(app);
-  authLoginPost(app);
-  authLogoutPost(app);
+  handleAuthRegisterPost(app);
+  handleAuthLoginPost(app);
+  handleAuthLogoutPost(app);
 };

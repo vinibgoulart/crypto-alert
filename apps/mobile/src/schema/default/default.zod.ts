@@ -50,11 +50,11 @@ export const postAlertResponse = zod.object({
   "symbol": zod.string()
 })
 
-export const getAlertQueryParams = zod.object({
+export const getAlertsQueryParams = zod.object({
   "active": zod.string().optional()
 })
 
-export const getAlertResponseItem = zod.object({
+export const getAlertsResponseItem = zod.object({
   "_id": zod.string(),
   "price": zod.number(),
   "symbol": zod.string(),
@@ -64,7 +64,7 @@ export const getAlertResponseItem = zod.object({
   "reachedAt": zod.string(),
   "createdAt": zod.string()
 })
-export const getAlertResponse = zod.array(getAlertResponseItem)
+export const getAlertsResponse = zod.array(getAlertsResponseItem)
 
 export const getCryptosQueryParams = zod.object({
   "symbol": zod.string().optional(),

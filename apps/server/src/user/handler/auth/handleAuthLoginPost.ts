@@ -6,7 +6,7 @@ import { SESSION_USER_COOKIE } from "../../../session/sessionUserCookie.js";
 import { sessionCookieSet } from "../../../session/sessionCookieSet.js";
 import { UserModel } from "@crypto-alert/user";
 
-export const authLoginPost = (app: OpenAPIHono<Env, {}, "/">) => {
+export const handleAuthLoginPost = (app: OpenAPIHono<Env, {}, "/">) => {
   const route = createRoute({
     method: "post",
     path: "/auth/login",

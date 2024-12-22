@@ -1,9 +1,9 @@
 import type { Env } from "hono";
-import { alertPost } from "./alertPost.js";
+import { handleAlertPost } from "./handleAlertPost.js";
 import type { OpenAPIHono } from "@hono/zod-openapi";
-import { alertsGet } from "./alertsGet.js";
+import { handleAlertsGet } from "./handleAlertsGet.js";
 
 export const alertRoutes = (app: OpenAPIHono<Env, {}, "/">) => {
-  alertPost(app);
-  alertsGet(app);
+  handleAlertPost(app);
+  handleAlertsGet(app);
 };

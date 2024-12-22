@@ -3,7 +3,7 @@ import type { Env } from "hono";
 import { SESSION_USER_COOKIE } from "../../../session/sessionUserCookie.js";
 import { sessionCookieSet } from "../../../session/sessionCookieSet.js";
 
-export const authLogoutPost = (app: OpenAPIHono<Env, {}, "/">) => {
+export const handleAuthLogoutPost = (app: OpenAPIHono<Env, {}, "/">) => {
   const route = createRoute({
     method: "post",
     path: "/auth/logout",

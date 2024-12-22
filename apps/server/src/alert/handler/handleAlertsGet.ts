@@ -4,10 +4,10 @@ import { AlertModel } from "@crypto-alert/alert";
 import { UserDocument } from "@crypto-alert/user";
 import { CryptoModel } from "@crypto-alert/crypto";
 
-export const alertsGet = (app: OpenAPIHono<Env, {}, "/">) => {
+export const handleAlertsGet = (app: OpenAPIHono<Env, {}, "/">) => {
   const route = createRoute({
     method: "get",
-    path: "/alert",
+    path: "/alerts",
     request: {
       query: z.object({
         active: z
