@@ -1,18 +1,8 @@
-import { Button, ScrollView, Text, YStack } from "tamagui";
+import { ScrollView, Text, YStack } from "tamagui";
 import { Layout } from "../components/Layout";
 import { useTranslation } from "react-i18next";
-import { NavigationProp, useNavigation } from "@react-navigation/native";
-import { INavigationPages } from "../navigation/NavigationPages";
-import {
-  postAuthLogout,
-  useGetUserMe,
-  usePostAuthLogout,
-} from "../schema/default/default";
 
 export const UserNotificationPage = () => {
-  const { navigate } = useNavigation<NavigationProp<INavigationPages>>();
-  const { data: user } = useGetUserMe();
-
   const { t } = useTranslation();
   return (
     <Layout gap={"$10"} justifyContent="space-between">
