@@ -1,19 +1,9 @@
-import {
-  ListItem,
-  ScrollView,
-  Separator,
-  Text,
-  XStack,
-  YGroup,
-  YStack,
-} from "tamagui";
+import { ScrollView, Separator, YGroup } from "tamagui";
 import { useTranslation } from "react-i18next";
 import { useGetCryptosInfinite } from "../schema/default/default";
-import { ChevronRight } from "@tamagui/lucide-icons";
-import moment from "moment";
+import { CryptoCard, CryptoCardSkeleton } from "./CryptoCard";
 
 export const CryptoList = () => {
-  const { t } = useTranslation();
   const {
     data: cryptoResponse,
     isLoading,
@@ -29,56 +19,21 @@ export const CryptoList = () => {
 
   const contentGet = () => {
     if (isLoading || !Array.isArray(cryptoData)) {
-      return (
-        <YGroup.Item>
-          <ListItem
-            hoverTheme
-            pressTheme
-            iconAfter={<ChevronRight color={"$gray11"} />}
-            backgroundColor={"$secondaryDark"}
-          />
-        </YGroup.Item>
-      );
+      return Array.from({ length: 20 }, (_, i) => (
+        <CryptoCardSkeleton key={i} />
+      ));
     }
 
-    return cryptoData.map((crypto, i) => {
-      return (
-        <YGroup.Item key={`${crypto.symbol}-${i}`}>
-          <ListItem
-            hoverTheme
-            pressTheme
-            iconAfter={<ChevronRight color={"$gray11"} />}
-            backgroundColor={"$secondaryDark"}
-          >
-            <YStack width={"100%"} gap={"$2"}>
-              <XStack alignItems="center" justifyContent="space-between">
-                <Text color={"$primary"} fontWeight={"$6"} fontSize={"$2"}>
-                  {crypto.symbol}
-                </Text>
-                <XStack>
-                  <Text>{t("Price")}: </Text>
-                  <Text color={"$primary"} fontWeight={"$6"}>
-                    {crypto.price}
-                  </Text>
-                </XStack>
-              </XStack>
-              <Text fontSize={"$0.5"}>
-                {moment(crypto.updatedAt).format("YYYY-MM-DD HH:mm:ss")}
-              </Text>
-            </YStack>
-          </ListItem>
-        </YGroup.Item>
-      );
-    });
+    return cryptoData.map((crypto, i) => (
+      <CryptoCard key={`${crypto.symbol}-${i}`} crypto={crypto} />
+    ));
   };
 
   return (
-    <ScrollView borderWidth={1} onTouchEnd={() => fetchNextPage()}>
-      <YStack gap={"$5"}>
-        <YGroup alignSelf="center" bordered size="$5" separator={<Separator />}>
-          {contentGet()}
-        </YGroup>
-      </YStack>
+    <ScrollView onTouchEnd={() => fetchNextPage()}>
+      <YGroup alignSelf="center" bordered size="$5" separator={<Separator />}>
+        {contentGet()}
+      </YGroup>
     </ScrollView>
   );
 };

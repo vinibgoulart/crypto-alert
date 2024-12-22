@@ -29,17 +29,19 @@ export const handleCryptosGet = (app: OpenAPIHono<Env, {}, "/">) => {
             schema: z
               .object({
                 data: z.array(
-                  z.object({
-                    symbol: z.string().openapi({
-                      example: "btcusdt",
-                    }),
-                    price: z.string().openapi({
-                      example: "97856.00000000",
-                    }),
-                    updatedAt: z.string().openapi({
-                      example: "2021-08-20T19:10:00.000Z",
-                    }),
-                  })
+                  z
+                    .object({
+                      symbol: z.string().openapi({
+                        example: "btcusdt",
+                      }),
+                      price: z.string().openapi({
+                        example: "97856.00000000",
+                      }),
+                      updatedAt: z.string().openapi({
+                        example: "2021-08-20T19:10:00.000Z",
+                      }),
+                    })
+                    .openapi("Crypto")
                 ),
                 nextPage: z
                   .string()
@@ -81,7 +83,6 @@ export const handleCryptosGet = (app: OpenAPIHono<Env, {}, "/">) => {
 
   app.openapi(route, async (c) => {
     const { page } = c.req.query();
-    console.log("hi", page);
 
     const cryptosGetResponse = await CryptoModel.find()
       .sort({ symbol: 1 })

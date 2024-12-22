@@ -16,42 +16,56 @@ export const handleAlertsGet = (app: OpenAPIHono<Env, {}, "/">) => {
             example: "true",
           })
           .optional(),
+        page: z
+          .string()
+          .openapi({
+            example: "1",
+          })
+          .optional(),
       }),
     },
     responses: {
       200: {
         content: {
           "application/json": {
-            schema: z.array(
-              z
-                .object({
-                  _id: z.string().openapi({
-                    example: "123",
-                  }),
-                  price: z.number().openapi({
-                    example: 42,
-                  }),
-                  symbol: z.string().openapi({
-                    example: "BTC",
-                  }),
-                  active: z.boolean().openapi({
-                    example: true,
-                  }),
-                  currentPrice: z.string().openapi({
-                    example: "52",
-                  }),
-                  differencePrice: z.string().openapi({
-                    example: "10",
-                  }),
-                  reachedAt: z.string().openapi({
-                    example: "2021-08-20T19:10:00.000Z",
-                  }),
-                  createdAt: z.string().openapi({
-                    example: "2021-08-20T19:10:00.000Z",
-                  }),
+            schema: z.object({
+              data: z.array(
+                z
+                  .object({
+                    _id: z.string().openapi({
+                      example: "123",
+                    }),
+                    price: z.number().openapi({
+                      example: 42,
+                    }),
+                    symbol: z.string().openapi({
+                      example: "BTC",
+                    }),
+                    active: z.boolean().openapi({
+                      example: true,
+                    }),
+                    currentPrice: z.string().openapi({
+                      example: "52",
+                    }),
+                    differencePrice: z.string().openapi({
+                      example: "10",
+                    }),
+                    reachedAt: z.string().openapi({
+                      example: "2021-08-20T19:10:00.000Z",
+                    }),
+                    createdAt: z.string().openapi({
+                      example: "2021-08-20T19:10:00.000Z",
+                    }),
+                  })
+                  .openapi("Alert")
+              ),
+              nextPage: z
+                .string()
+                .openapi({
+                  example: "2",
                 })
-                .openapi("Alert")
-            ),
+                .nullable(),
+            }),
           },
         },
         description: "Alert found",
@@ -73,6 +87,7 @@ export const handleAlertsGet = (app: OpenAPIHono<Env, {}, "/">) => {
 
   app.openapi(route, async (c) => {
     const user = c.get("User") as UserDocument;
+    const { page } = c.req.query();
     const active = c.req.query("active")
       ? c.req.query("active") === "true"
       : true;
@@ -80,7 +95,10 @@ export const handleAlertsGet = (app: OpenAPIHono<Env, {}, "/">) => {
     const alertsGetResponse = await AlertModel.find({
       userId: user._id,
       active,
-    });
+    })
+      .sort({ createdAt: -1 })
+      .skip((Number(page) - 1) * 50)
+      .limit(50);
 
     const alerts = await Promise.all(
       alertsGetResponse.map(async (alert) => {
@@ -105,6 +123,15 @@ export const handleAlertsGet = (app: OpenAPIHono<Env, {}, "/">) => {
       })
     );
 
-    return c.json(alerts, 200);
+    const hasNextPage = alerts.length === 50;
+    const nextPage = hasNextPage ? String(Number(page) + 1) : null;
+
+    return c.json(
+      {
+        data: alerts,
+        nextPage,
+      },
+      200
+    );
   });
 };

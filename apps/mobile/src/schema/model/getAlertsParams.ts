@@ -7,4 +7,5 @@
 
 export type GetAlertsParams = {
 active?: string;
+page?: string;
 };

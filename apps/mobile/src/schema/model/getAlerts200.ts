@@ -4,10 +4,10 @@
  * crypto alert
  * OpenAPI spec version: 1.0.0
  */
-import type { Crypto } from './crypto';
+import type { Alert } from './alert';
 
-export type GetCryptos200 = {
-  data: Crypto[];
+export type GetAlerts200 = {
+  data: Alert[];
   /** @nullable */
   nextPage: string | null;
 };

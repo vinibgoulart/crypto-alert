@@ -27,7 +27,7 @@ import type {
   UseQueryResult
 } from '@tanstack/react-query'
 import type {
-  Alert,
+  GetAlerts200,
   GetAlerts404,
   GetAlertsParams,
   GetCryptos200,
@@ -320,7 +320,7 @@ const {mutation: mutationOptions, fetch: fetchOptions} = options ?? {};
       return useMutation(mutationOptions);
     }
     export type getAlertsResponse = {
-  data: Alert[];
+  data: GetAlerts200;
   status: number;
   headers: Headers;
 }

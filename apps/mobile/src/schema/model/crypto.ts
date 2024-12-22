@@ -6,7 +6,7 @@
  */
 
 export interface Crypto {
-  date: string;
   price: string;
   symbol: string;
+  updatedAt: string;
 }

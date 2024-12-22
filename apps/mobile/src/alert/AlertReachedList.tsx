@@ -1,5 +1,13 @@
-import { ListItem, Separator, Text, XStack, YGroup, YStack } from "tamagui";
-import { useGetAlert } from "../schema/default/default";
+import {
+  ListItem,
+  ScrollView,
+  Separator,
+  Text,
+  XStack,
+  YGroup,
+  YStack,
+} from "tamagui";
+import { useGetAlertsInfinite } from "../schema/default/default";
 import { useTranslation } from "react-i18next";
 import { ChevronRight, Coins } from "@tamagui/lucide-icons";
 import moment from "moment";
@@ -8,14 +16,29 @@ import { INavigationPages } from "../navigation/NavigationPages";
 
 export const AlertReachedList = () => {
   const { navigate } = useNavigation<NavigationProp<INavigationPages>>();
-  const { data: alerts } = useGetAlert({
-    active: "false",
-  });
+
+  const {
+    data: alertResponse,
+    isLoading,
+    fetchNextPage,
+  } = useGetAlertsInfinite(
+    {
+      active: "false",
+    },
+    {
+      query: {
+        initialPageParam: "1",
+        getNextPageParam: (lastPage) => lastPage.data.nextPage,
+      },
+    }
+  );
 
   const { t } = useTranslation();
 
+  const alertData = alertResponse?.pages.map((page) => page.data.data).flat();
+
   const contentGet = () => {
-    if (!alerts?.data?.length) {
+    if (!isLoading || !Array.isArray(alertData)) {
       return (
         <YGroup.Item>
           <ListItem
@@ -31,7 +54,7 @@ export const AlertReachedList = () => {
       );
     }
 
-    return alerts.data.map((alert, i) => (
+    return alertData.map((alert, i) => (
       <YGroup.Item key={`${alert.symbol}-${i}`}>
         <ListItem
           hoverTheme
@@ -62,8 +85,10 @@ export const AlertReachedList = () => {
   };
 
   return (
-    <YGroup alignSelf="center" bordered size="$5" separator={<Separator />}>
-      {contentGet()}
-    </YGroup>
+    <ScrollView onTouchEnd={() => fetchNextPage()}>
+      <YGroup alignSelf="center" bordered size="$5" separator={<Separator />}>
+        {contentGet()}
+      </YGroup>
+    </ScrollView>
   );
 };
