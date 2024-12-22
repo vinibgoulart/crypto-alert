@@ -5,7 +5,8 @@
  * OpenAPI spec version: 1.0.0
  */
 
-export type GetCryptoParams = {
-symbol?: string;
-page?: string;
+export type GetCryptos200DataItem = {
+  price: string;
+  symbol: string;
+  updatedAt: string;
 };

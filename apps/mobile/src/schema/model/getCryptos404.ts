@@ -5,7 +5,6 @@
  * OpenAPI spec version: 1.0.0
  */
 
-export type GetCryptoParams = {
-symbol?: string;
-page?: string;
+export type GetCryptos404 = {
+  error: string;
 };

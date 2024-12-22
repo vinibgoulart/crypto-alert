@@ -15,8 +15,11 @@ import {
   TrendingDown,
   TrendingUp,
 } from "@tamagui/lucide-icons";
+import { NavigationProp, useNavigation } from "@react-navigation/native";
+import { INavigationPages } from "../navigation/NavigationPages";
 
 export const AlertList = () => {
+  const { navigate } = useNavigation<NavigationProp<INavigationPages>>();
   const { data: alerts } = useGetAlert();
 
   const { t } = useTranslation();
@@ -32,6 +35,7 @@ export const AlertList = () => {
             subTitle={<Text fontSize={"$0.5"}>{t("Create alert")}</Text>}
             iconAfter={<ChevronRight color={"$gray11"} />}
             backgroundColor={"$secondaryDark"}
+            onPress={() => navigate("AlertCreatePage")}
           />
         </YGroup.Item>
       );

@@ -1,4 +1,4 @@
-import { Image, Text, View, XStack, YStack, YStackProps } from "tamagui";
+import { Image, XStack, YStack, YStackProps } from "tamagui";
 
 type ILayout = {
   children: React.ReactNode;

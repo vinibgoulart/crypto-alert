@@ -10,6 +10,14 @@ module.exports = {
       client: 'react-query',
       httpClient: 'fetch',
       baseUrl: process.env.API_URL,
+      override: {
+        query: {
+          useQuery: true,
+          useInfinite: true,
+          useMutation: true,
+          useInfiniteQueryParam: "page",
+        }
+      }
     },
   },
   'crypto-alert-zod': {

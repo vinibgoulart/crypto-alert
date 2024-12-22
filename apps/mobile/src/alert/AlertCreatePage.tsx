@@ -1,46 +1,25 @@
-import { Button, Text, YStack } from "tamagui";
+import { Text, YStack } from "tamagui";
 import { Layout } from "../components/Layout";
+import { CryptoList } from "../crypto/CryptoList";
 import { useTranslation } from "react-i18next";
-import { AlertList } from "./AlertList";
-import { AlertReachedList } from "./AlertReachedList";
 
 export const AlertCreatePage = () => {
   const { t } = useTranslation();
-
   return (
-    <Layout
-      gap={"$10"}
-      justifyContent="space-between"
-      hideBackButton
-      marginVertical={"$4"}
-    >
-      <YStack gap={"$5"}>
-        <YStack gap={"$3"}>
+    <Layout gap={"$10"} justifyContent="space-between">
+      <YStack gap={"$5"} flex={1}>
+        <YStack gap={"$3"} flex={1}>
           <YStack>
             <Text fontSize={"$3"} fontWeight={"$6"}>
-              {t("Alerts")}
+              {t("Crypto")}
             </Text>
             <Text fontSize={"$1"} fontWeight={"$4"} color={"$gray10"}>
-              {t("Your active alerts")}
+              {t("Select the crypto to receive the alert")}
             </Text>
           </YStack>
-          <AlertList />
-        </YStack>
-        <YStack gap={"$3"}>
-          <YStack>
-            <Text fontSize={"$3"} fontWeight={"$6"}>
-              {t("Reached")}
-            </Text>
-            <Text fontSize={"$1"} fontWeight={"$4"} color={"$gray10"}>
-              {t("Your reached alerts")}
-            </Text>
-          </YStack>
-          <AlertReachedList />
+          <CryptoList />
         </YStack>
       </YStack>
-      <Button bg={"$primary"} color={"$white1"}>
-        {t("Create alert")}
-      </Button>
     </Layout>
   );
 };

@@ -8,7 +8,7 @@
   "scripts": {
     "be:all": "turbo dev",
     "be:worker": "turbo dev --filter=@crypto-alert/worker",
-    "be:api": "turbo dev --filter=@crypto-alert/api",
+    "be:api": "turbo dev --filter=@crypto-alert/server",
     "be:scheduler": "turbo dev --filter=@crypto-alert/scheduler",
     "fe:mobile:ios": "turbo ios --filter=@crypto-alert/mobile"
   },

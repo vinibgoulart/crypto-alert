@@ -6,6 +6,7 @@ import { AuthLoginPage } from "../auth/login/AuthLoginPage";
 import { AuthRegisterPage } from "../auth/register/AuthRegisterPage";
 import { HomePage } from "../home/HomePage";
 import { UserNotificationPage } from "../user/UserNotificationPage";
+import { AlertCreatePage } from "../alert/AlertCreatePage";
 
 export type INavigationPages = {
   AuthWelcomePage: undefined;
@@ -13,6 +14,7 @@ export type INavigationPages = {
   AuthRegisterPage: undefined;
   HomePage: undefined;
   UserNotificationPage: undefined;
+  AlertCreatePage: undefined;
 };
 
 const Stack = createNativeStackNavigator<INavigationPages>();
@@ -33,6 +35,7 @@ export const NavigationPages = (): ReactNode => {
           name="UserNotificationPage"
           component={UserNotificationPage}
         />
+        <Stack.Screen name="AlertCreatePage" component={AlertCreatePage} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -5,17 +5,22 @@
  * OpenAPI spec version: 1.0.0
  */
 import {
+  useInfiniteQuery,
   useMutation,
   useQuery
 } from '@tanstack/react-query'
 import type {
   DataTag,
   DefinedInitialDataOptions,
+  DefinedUseInfiniteQueryResult,
   DefinedUseQueryResult,
+  InfiniteData,
   MutationFunction,
   QueryFunction,
   QueryKey,
   UndefinedInitialDataOptions,
+  UseInfiniteQueryOptions,
+  UseInfiniteQueryResult,
   UseMutationOptions,
   UseMutationResult,
   UseQueryOptions,
@@ -25,9 +30,9 @@ import type {
   Alert,
   GetAlert404,
   GetAlertParams,
-  GetCrypto200,
-  GetCrypto404,
-  GetCryptoParams,
+  GetCryptos200,
+  GetCryptos404,
+  GetCryptosParams,
   GetUserMe404,
   PostAlert200,
   PostAlertBody,
@@ -356,6 +361,69 @@ export const getGetAlertQueryKey = (params?: GetAlertParams,) => {
     }
 
     
+export const getGetAlertInfiniteQueryOptions = <TData = InfiniteData<Awaited<ReturnType<typeof getAlert>>, GetAlertParams['page']>, TError = GetAlert404>(params?: GetAlertParams, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getAlert>>, TError, TData, Awaited<ReturnType<typeof getAlert>>, QueryKey, GetAlertParams['page']>>, fetch?: RequestInit}
+) => {
+
+const {query: queryOptions, fetch: fetchOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetAlertQueryKey(params);
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getAlert>>, QueryKey, GetAlertParams['page']> = ({ signal, pageParam }) => getAlert({...params, page: pageParam || params?.['page']}, { signal, ...fetchOptions });
+
+      
+
+      
+
+   return  { queryKey, queryFn, ...queryOptions} as UseInfiniteQueryOptions<Awaited<ReturnType<typeof getAlert>>, TError, TData, Awaited<ReturnType<typeof getAlert>>, QueryKey, GetAlertParams['page']> & { queryKey: DataTag<QueryKey, TData> }
+}
+
+export type GetAlertInfiniteQueryResult = NonNullable<Awaited<ReturnType<typeof getAlert>>>
+export type GetAlertInfiniteQueryError = GetAlert404
+
+
+export function useGetAlertInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getAlert>>, GetAlertParams['page']>, TError = GetAlert404>(
+ params: undefined |  GetAlertParams, options: { query:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getAlert>>, TError, TData, Awaited<ReturnType<typeof getAlert>>, QueryKey, GetAlertParams['page']>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getAlert>>,
+          TError,
+          TData, QueryKey
+        > , 'initialData'
+      >, fetch?: RequestInit}
+
+  ):  DefinedUseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
+export function useGetAlertInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getAlert>>, GetAlertParams['page']>, TError = GetAlert404>(
+ params?: GetAlertParams, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getAlert>>, TError, TData, Awaited<ReturnType<typeof getAlert>>, QueryKey, GetAlertParams['page']>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getAlert>>,
+          TError,
+          TData, QueryKey
+        > , 'initialData'
+      >, fetch?: RequestInit}
+
+  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
+export function useGetAlertInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getAlert>>, GetAlertParams['page']>, TError = GetAlert404>(
+ params?: GetAlertParams, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getAlert>>, TError, TData, Awaited<ReturnType<typeof getAlert>>, QueryKey, GetAlertParams['page']>>, fetch?: RequestInit}
+
+  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
+
+export function useGetAlertInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getAlert>>, GetAlertParams['page']>, TError = GetAlert404>(
+ params?: GetAlertParams, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getAlert>>, TError, TData, Awaited<ReturnType<typeof getAlert>>, QueryKey, GetAlertParams['page']>>, fetch?: RequestInit}
+
+  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> } {
+
+  const queryOptions = getGetAlertInfiniteQueryOptions(params,options)
+
+  const query = useInfiniteQuery(queryOptions) as  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+
 export const getGetAlertQueryOptions = <TData = Awaited<ReturnType<typeof getAlert>>, TError = GetAlert404>(params?: GetAlertParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAlert>>, TError, TData>>, fetch?: RequestInit}
 ) => {
 
@@ -419,13 +487,13 @@ export function useGetAlert<TData = Awaited<ReturnType<typeof getAlert>>, TError
 
 
 
-export type getCryptoResponse = {
-  data: GetCrypto200;
+export type getCryptosResponse = {
+  data: GetCryptos200;
   status: number;
   headers: Headers;
 }
 
-export const getGetCryptoUrl = (params?: GetCryptoParams,) => {
+export const getGetCryptosUrl = (params?: GetCryptosParams,) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
@@ -435,12 +503,12 @@ export const getGetCryptoUrl = (params?: GetCryptoParams,) => {
     }
   });
 
-  return normalizedParams.size ? `http://localhost:4003/crypto?${normalizedParams.toString()}` : `http://localhost:4003/crypto`
+  return normalizedParams.size ? `http://localhost:4003/cryptos?${normalizedParams.toString()}` : `http://localhost:4003/cryptos`
 }
 
-export const getCrypto = async (params?: GetCryptoParams, options?: RequestInit): Promise<getCryptoResponse> => {
+export const getCryptos = async (params?: GetCryptosParams, options?: RequestInit): Promise<getCryptosResponse> => {
   
-  const res = await fetch(getGetCryptoUrl(params),
+  const res = await fetch(getGetCryptosUrl(params),
   {      
     ...options,
     method: 'GET'
@@ -456,64 +524,127 @@ export const getCrypto = async (params?: GetCryptoParams, options?: RequestInit)
 
 
 
-export const getGetCryptoQueryKey = (params?: GetCryptoParams,) => {
-    return [`http://localhost:4003/crypto`, ...(params ? [params]: [])] as const;
+export const getGetCryptosQueryKey = (params?: GetCryptosParams,) => {
+    return [`http://localhost:4003/cryptos`, ...(params ? [params]: [])] as const;
     }
 
     
-export const getGetCryptoQueryOptions = <TData = Awaited<ReturnType<typeof getCrypto>>, TError = GetCrypto404>(params?: GetCryptoParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getCrypto>>, TError, TData>>, fetch?: RequestInit}
+export const getGetCryptosInfiniteQueryOptions = <TData = InfiniteData<Awaited<ReturnType<typeof getCryptos>>, GetCryptosParams['page']>, TError = GetCryptos404>(params?: GetCryptosParams, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getCryptos>>, TError, TData, Awaited<ReturnType<typeof getCryptos>>, QueryKey, GetCryptosParams['page']>>, fetch?: RequestInit}
 ) => {
 
 const {query: queryOptions, fetch: fetchOptions} = options ?? {};
 
-  const queryKey =  queryOptions?.queryKey ?? getGetCryptoQueryKey(params);
+  const queryKey =  queryOptions?.queryKey ?? getGetCryptosQueryKey(params);
 
   
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getCrypto>>> = ({ signal }) => getCrypto(params, { signal, ...fetchOptions });
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getCryptos>>, QueryKey, GetCryptosParams['page']> = ({ signal, pageParam }) => getCryptos({...params, page: pageParam || params?.['page']}, { signal, ...fetchOptions });
 
       
 
       
 
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getCrypto>>, TError, TData> & { queryKey: DataTag<QueryKey, TData> }
+   return  { queryKey, queryFn, ...queryOptions} as UseInfiniteQueryOptions<Awaited<ReturnType<typeof getCryptos>>, TError, TData, Awaited<ReturnType<typeof getCryptos>>, QueryKey, GetCryptosParams['page']> & { queryKey: DataTag<QueryKey, TData> }
 }
 
-export type GetCryptoQueryResult = NonNullable<Awaited<ReturnType<typeof getCrypto>>>
-export type GetCryptoQueryError = GetCrypto404
+export type GetCryptosInfiniteQueryResult = NonNullable<Awaited<ReturnType<typeof getCryptos>>>
+export type GetCryptosInfiniteQueryError = GetCryptos404
 
 
-export function useGetCrypto<TData = Awaited<ReturnType<typeof getCrypto>>, TError = GetCrypto404>(
- params: undefined |  GetCryptoParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getCrypto>>, TError, TData>> & Pick<
+export function useGetCryptosInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getCryptos>>, GetCryptosParams['page']>, TError = GetCryptos404>(
+ params: undefined |  GetCryptosParams, options: { query:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getCryptos>>, TError, TData, Awaited<ReturnType<typeof getCryptos>>, QueryKey, GetCryptosParams['page']>> & Pick<
         DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getCrypto>>,
+          Awaited<ReturnType<typeof getCryptos>>,
+          TError,
+          TData, QueryKey
+        > , 'initialData'
+      >, fetch?: RequestInit}
+
+  ):  DefinedUseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
+export function useGetCryptosInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getCryptos>>, GetCryptosParams['page']>, TError = GetCryptos404>(
+ params?: GetCryptosParams, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getCryptos>>, TError, TData, Awaited<ReturnType<typeof getCryptos>>, QueryKey, GetCryptosParams['page']>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getCryptos>>,
+          TError,
+          TData, QueryKey
+        > , 'initialData'
+      >, fetch?: RequestInit}
+
+  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
+export function useGetCryptosInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getCryptos>>, GetCryptosParams['page']>, TError = GetCryptos404>(
+ params?: GetCryptosParams, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getCryptos>>, TError, TData, Awaited<ReturnType<typeof getCryptos>>, QueryKey, GetCryptosParams['page']>>, fetch?: RequestInit}
+
+  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
+
+export function useGetCryptosInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getCryptos>>, GetCryptosParams['page']>, TError = GetCryptos404>(
+ params?: GetCryptosParams, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getCryptos>>, TError, TData, Awaited<ReturnType<typeof getCryptos>>, QueryKey, GetCryptosParams['page']>>, fetch?: RequestInit}
+
+  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> } {
+
+  const queryOptions = getGetCryptosInfiniteQueryOptions(params,options)
+
+  const query = useInfiniteQuery(queryOptions) as  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+
+export const getGetCryptosQueryOptions = <TData = Awaited<ReturnType<typeof getCryptos>>, TError = GetCryptos404>(params?: GetCryptosParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getCryptos>>, TError, TData>>, fetch?: RequestInit}
+) => {
+
+const {query: queryOptions, fetch: fetchOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetCryptosQueryKey(params);
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getCryptos>>> = ({ signal }) => getCryptos(params, { signal, ...fetchOptions });
+
+      
+
+      
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getCryptos>>, TError, TData> & { queryKey: DataTag<QueryKey, TData> }
+}
+
+export type GetCryptosQueryResult = NonNullable<Awaited<ReturnType<typeof getCryptos>>>
+export type GetCryptosQueryError = GetCryptos404
+
+
+export function useGetCryptos<TData = Awaited<ReturnType<typeof getCryptos>>, TError = GetCryptos404>(
+ params: undefined |  GetCryptosParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getCryptos>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getCryptos>>,
           TError,
           TData
         > , 'initialData'
       >, fetch?: RequestInit}
 
   ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
-export function useGetCrypto<TData = Awaited<ReturnType<typeof getCrypto>>, TError = GetCrypto404>(
- params?: GetCryptoParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getCrypto>>, TError, TData>> & Pick<
+export function useGetCryptos<TData = Awaited<ReturnType<typeof getCryptos>>, TError = GetCryptos404>(
+ params?: GetCryptosParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getCryptos>>, TError, TData>> & Pick<
         UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getCrypto>>,
+          Awaited<ReturnType<typeof getCryptos>>,
           TError,
           TData
         > , 'initialData'
       >, fetch?: RequestInit}
 
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
-export function useGetCrypto<TData = Awaited<ReturnType<typeof getCrypto>>, TError = GetCrypto404>(
- params?: GetCryptoParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getCrypto>>, TError, TData>>, fetch?: RequestInit}
+export function useGetCryptos<TData = Awaited<ReturnType<typeof getCryptos>>, TError = GetCryptos404>(
+ params?: GetCryptosParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getCryptos>>, TError, TData>>, fetch?: RequestInit}
 
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
 
-export function useGetCrypto<TData = Awaited<ReturnType<typeof getCrypto>>, TError = GetCrypto404>(
- params?: GetCryptoParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getCrypto>>, TError, TData>>, fetch?: RequestInit}
+export function useGetCryptos<TData = Awaited<ReturnType<typeof getCryptos>>, TError = GetCryptos404>(
+ params?: GetCryptosParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getCryptos>>, TError, TData>>, fetch?: RequestInit}
 
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> } {
 
-  const queryOptions = getGetCryptoQueryOptions(params,options)
+  const queryOptions = getGetCryptosQueryOptions(params,options)
 
   const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
 
@@ -559,6 +690,69 @@ export const getGetUserMeQueryKey = () => {
     }
 
     
+export const getGetUserMeInfiniteQueryOptions = <TData = InfiniteData<Awaited<ReturnType<typeof getUserMe>>>, TError = GetUserMe404>( options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getUserMe>>, TError, TData>>, fetch?: RequestInit}
+) => {
+
+const {query: queryOptions, fetch: fetchOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetUserMeQueryKey();
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getUserMe>>> = ({ signal }) => getUserMe({ signal, ...fetchOptions });
+
+      
+
+      
+
+   return  { queryKey, queryFn, ...queryOptions} as UseInfiniteQueryOptions<Awaited<ReturnType<typeof getUserMe>>, TError, TData> & { queryKey: DataTag<QueryKey, TData> }
+}
+
+export type GetUserMeInfiniteQueryResult = NonNullable<Awaited<ReturnType<typeof getUserMe>>>
+export type GetUserMeInfiniteQueryError = GetUserMe404
+
+
+export function useGetUserMeInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getUserMe>>>, TError = GetUserMe404>(
+  options: { query:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getUserMe>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getUserMe>>,
+          TError,
+          TData
+        > , 'initialData'
+      >, fetch?: RequestInit}
+
+  ):  DefinedUseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
+export function useGetUserMeInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getUserMe>>>, TError = GetUserMe404>(
+  options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getUserMe>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getUserMe>>,
+          TError,
+          TData
+        > , 'initialData'
+      >, fetch?: RequestInit}
+
+  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
+export function useGetUserMeInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getUserMe>>>, TError = GetUserMe404>(
+  options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getUserMe>>, TError, TData>>, fetch?: RequestInit}
+
+  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
+
+export function useGetUserMeInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getUserMe>>>, TError = GetUserMe404>(
+  options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getUserMe>>, TError, TData>>, fetch?: RequestInit}
+
+  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> } {
+
+  const queryOptions = getGetUserMeInfiniteQueryOptions(options)
+
+  const query = useInfiniteQuery(queryOptions) as  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+
 export const getGetUserMeQueryOptions = <TData = Awaited<ReturnType<typeof getUserMe>>, TError = GetUserMe404>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getUserMe>>, TError, TData>>, fetch?: RequestInit}
 ) => {
 

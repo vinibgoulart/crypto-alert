@@ -66,19 +66,19 @@ export const getAlertResponseItem = zod.object({
 })
 export const getAlertResponse = zod.array(getAlertResponseItem)
 
-export const getCryptoQueryParams = zod.object({
-  "symbol": zod.string().optional()
+export const getCryptosQueryParams = zod.object({
+  "symbol": zod.string().optional(),
+  "page": zod.string().optional()
 })
 
-export const getCryptoResponse = zod.object({
+export const getCryptosResponse = zod.object({
+  "data": zod.array(zod.object({
   "symbol": zod.string(),
   "price": zod.string(),
   "updatedAt": zod.string()
-}).or(zod.array(zod.object({
-  "symbol": zod.string(),
-  "price": zod.string(),
-  "updatedAt": zod.string()
-})))
+})),
+  "nextPage": zod.string().nullable()
+})
 
 export const getUserMeResponse = zod.object({
   "_id": zod.string(),

@@ -3,8 +3,11 @@ import { Layout } from "../components/Layout";
 import { useTranslation } from "react-i18next";
 import { AlertList } from "./AlertList";
 import { AlertReachedList } from "./AlertReachedList";
+import { NavigationProp, useNavigation } from "@react-navigation/native";
+import { INavigationPages } from "../navigation/NavigationPages";
 
 export const AlertPage = () => {
+  const { navigate } = useNavigation<NavigationProp<INavigationPages>>();
   const { t } = useTranslation();
 
   return (
@@ -35,7 +38,11 @@ export const AlertPage = () => {
           </YStack>
         </YStack>
       </ScrollView>
-      <Button bg={"$primary"} color={"$white1"}>
+      <Button
+        bg={"$primary"}
+        color={"$white1"}
+        onPress={() => navigate("AlertCreatePage")}
+      >
         {t("Create alert")}
       </Button>
     </Layout>

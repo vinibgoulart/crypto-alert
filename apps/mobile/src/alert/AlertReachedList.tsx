@@ -3,8 +3,11 @@ import { useGetAlert } from "../schema/default/default";
 import { useTranslation } from "react-i18next";
 import { ChevronRight, Coins } from "@tamagui/lucide-icons";
 import moment from "moment";
+import { NavigationProp, useNavigation } from "@react-navigation/native";
+import { INavigationPages } from "../navigation/NavigationPages";
 
 export const AlertReachedList = () => {
+  const { navigate } = useNavigation<NavigationProp<INavigationPages>>();
   const { data: alerts } = useGetAlert({
     active: "false",
   });
@@ -22,6 +25,7 @@ export const AlertReachedList = () => {
             subTitle={<Text fontSize={"$0.5"}>{t("Create alert")}</Text>}
             iconAfter={<ChevronRight color={"$gray11"} />}
             backgroundColor={"$secondaryDark"}
+            onPress={() => navigate("AlertCreatePage")}
           />
         </YGroup.Item>
       );

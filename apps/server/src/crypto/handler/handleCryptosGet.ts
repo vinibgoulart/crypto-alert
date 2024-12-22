@@ -2,16 +2,22 @@ import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
 import type { Env } from "hono";
 import { CryptoModel } from "@crypto-alert/crypto";
 
-export const handleCryptoGet = (app: OpenAPIHono<Env, {}, "/">) => {
+export const handleCryptosGet = (app: OpenAPIHono<Env, {}, "/">) => {
   const route = createRoute({
     method: "get",
-    path: "/crypto",
+    path: "/cryptos",
     request: {
       query: z.object({
         symbol: z
           .string()
           .openapi({
             example: "BTCUSDT",
+          })
+          .optional(),
+        page: z
+          .string()
+          .openapi({
+            example: "1",
           })
           .optional(),
       }),
@@ -21,19 +27,8 @@ export const handleCryptoGet = (app: OpenAPIHono<Env, {}, "/">) => {
         content: {
           "application/json": {
             schema: z
-              .union([
-                z.object({
-                  symbol: z.string().openapi({
-                    example: "btcusdt",
-                  }),
-                  price: z.string().openapi({
-                    example: "97856.00000000",
-                  }),
-                  updatedAt: z.string().openapi({
-                    example: "2021-08-20T19:10:00.000Z",
-                  }),
-                }),
-                z.array(
+              .object({
+                data: z.array(
                   z.object({
                     symbol: z.string().openapi({
                       example: "btcusdt",
@@ -46,27 +41,24 @@ export const handleCryptoGet = (app: OpenAPIHono<Env, {}, "/">) => {
                     }),
                   })
                 ),
-              ])
+                nextPage: z
+                  .string()
+                  .openapi({
+                    example: "2",
+                  })
+                  .nullable(),
+              })
               .openapi({
-                examples: [
-                  {
-                    symbol: "btcusdt",
-                    price: "97856.00000000",
-                    updatedAt: "2021-08-20T19:10:00.000Z",
-                  },
-                  [
+                example: {
+                  data: [
                     {
                       symbol: "btcusdt",
                       price: "97856.00000000",
                       updatedAt: "2021-08-20T19:10:00.000Z",
                     },
-                    {
-                      symbol: "ethusdt",
-                      price: "4567.00000000",
-                      updatedAt: "2021-08-20T19:10:00.000Z",
-                    },
                   ],
-                ],
+                  nextPage: "2",
+                },
               }),
           },
         },
@@ -88,32 +80,13 @@ export const handleCryptoGet = (app: OpenAPIHono<Env, {}, "/">) => {
   });
 
   app.openapi(route, async (c) => {
-    const symbol = c.req.query("symbol");
+    const { page } = c.req.query();
+    console.log("hi", page);
 
-    if (symbol) {
-      const cryptoGetResponse = await CryptoModel.findOne({
-        symbol: symbol.toUpperCase(),
-      });
-
-      if (!cryptoGetResponse) {
-        return c.json(
-          {
-            error: "Crypto not found",
-          },
-          404
-        );
-      }
-
-      const crypto = {
-        symbol: cryptoGetResponse.symbol,
-        price: cryptoGetResponse.price,
-        updatedAt: cryptoGetResponse.updatedAt,
-      };
-
-      return c.json(crypto, 200);
-    }
-
-    const cryptosGetResponse = await CryptoModel.find();
+    const cryptosGetResponse = await CryptoModel.find()
+      .sort({ symbol: 1 })
+      .skip((Number(page) - 1) * 50)
+      .limit(50);
 
     const cryptos = cryptosGetResponse.map((crypto) => {
       return {
@@ -123,6 +96,15 @@ export const handleCryptoGet = (app: OpenAPIHono<Env, {}, "/">) => {
       };
     });
 
-    return c.json(cryptos, 200);
+    const hasNextPage = cryptos.length === 50;
+    const nextPage = hasNextPage ? String(Number(page) + 1) : null;
+
+    return c.json(
+      {
+        data: cryptos,
+        nextPage,
+      },
+      200
+    );
   });
 };
