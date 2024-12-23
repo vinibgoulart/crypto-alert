@@ -51,7 +51,7 @@ export const postAlertResponse = zod.object({
 })
 
 export const getAlertsQueryParams = zod.object({
-  "active": zod.string().optional(),
+  "status": zod.string().optional(),
   "page": zod.string().optional()
 })
 
@@ -60,7 +60,7 @@ export const getAlertsResponse = zod.object({
   "_id": zod.string(),
   "price": zod.number(),
   "symbol": zod.string(),
-  "active": zod.boolean(),
+  "status": zod.string(),
   "currentPrice": zod.string(),
   "differencePrice": zod.string(),
   "reachedAt": zod.string(),

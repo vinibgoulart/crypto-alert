@@ -3,6 +3,7 @@ import type { Env } from "hono";
 import { AlertModel } from "@crypto-alert/alert";
 import { UserDocument } from "@crypto-alert/user";
 import { CryptoModel } from "@crypto-alert/crypto";
+import { ALERT_STATUS_ENUM } from "@crypto-alert/enum";
 
 export const handleAlertsGet = (app: OpenAPIHono<Env, {}, "/">) => {
   const route = createRoute({
@@ -10,7 +11,7 @@ export const handleAlertsGet = (app: OpenAPIHono<Env, {}, "/">) => {
     path: "/alerts",
     request: {
       query: z.object({
-        active: z
+        status: z
           .string()
           .openapi({
             example: "true",
@@ -41,8 +42,8 @@ export const handleAlertsGet = (app: OpenAPIHono<Env, {}, "/">) => {
                     symbol: z.string().openapi({
                       example: "BTC",
                     }),
-                    active: z.boolean().openapi({
-                      example: true,
+                    status: z.string().openapi({
+                      example: "ACTIVE",
                     }),
                     currentPrice: z.string().openapi({
                       example: "52",
@@ -88,13 +89,13 @@ export const handleAlertsGet = (app: OpenAPIHono<Env, {}, "/">) => {
   app.openapi(route, async (c) => {
     const user = c.get("User") as UserDocument;
     const { page } = c.req.query();
-    const active = c.req.query("active")
-      ? c.req.query("active") === "true"
-      : true;
+    const status =
+      ALERT_STATUS_ENUM[c.req.query("status") as ALERT_STATUS_ENUM] ??
+      ALERT_STATUS_ENUM.ACTIVE;
 
     const alertsGetResponse = await AlertModel.find({
       userId: user._id,
-      active,
+      status,
     })
       .sort({ createdAt: -1 })
       .skip((Number(page) - 1) * 50)
@@ -114,7 +115,7 @@ export const handleAlertsGet = (app: OpenAPIHono<Env, {}, "/">) => {
           _id: alert._id,
           price: alert.price,
           symbol: alert.symbol,
-          active: alert.active,
+          status: alert.status,
           currentPrice: currentPrice?.price ?? "0",
           differencePrice: String(differencePrice),
           reachedAt: alert.reachedAt,

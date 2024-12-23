@@ -6,6 +6,6 @@
  */
 
 export type GetAlertsParams = {
-active?: string;
+status?: string;
 page?: string;
 };

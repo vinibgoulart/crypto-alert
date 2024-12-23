@@ -13,6 +13,7 @@ import { ChevronRight, Coins } from "@tamagui/lucide-icons";
 import moment from "moment";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { INavigationPages } from "../navigation/NavigationPages";
+import { ALERT_STATUS_ENUM } from "@crypto-alert/enum";
 
 export const AlertReachedList = () => {
   const { navigate } = useNavigation<NavigationProp<INavigationPages>>();
@@ -23,7 +24,7 @@ export const AlertReachedList = () => {
     fetchNextPage,
   } = useGetAlertsInfinite(
     {
-      active: "false",
+      status: ALERT_STATUS_ENUM.ACTIVE,
     },
     {
       query: {

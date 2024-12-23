@@ -1,0 +1,5 @@
+export enum ALERT_STATUS_ENUM {
+  ACTIVE = "ACTIVE",
+  REACHED = "REACHED",
+  REMOVED = "REMOVED",
+}

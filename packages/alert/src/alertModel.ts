@@ -1,12 +1,13 @@
 import { model, Schema, Types } from "mongoose";
 import { writeConcern } from "@crypto-alert/mongo";
+import { ALERT_STATUS_ENUM } from "@crypto-alert/enum";
 
 type Alert = {
   _id: Types.ObjectId;
   userId: Types.ObjectId;
   price: number;
   symbol: string;
-  active: boolean;
+  status: ALERT_STATUS_ENUM;
   reachedAt: Date;
   createdAt: Date;
   updatedAt: Date;
@@ -20,7 +21,12 @@ const AlertSchema = new Schema<AlertDocument>(
     userId: { type: Schema.Types.ObjectId, required: true, ref: "User" },
     price: { type: Number, required: true },
     symbol: { type: String, required: true },
-    active: { type: Boolean, default: true },
+    status: {
+      type: String,
+      required: true,
+      default: ALERT_STATUS_ENUM.ACTIVE,
+      enum: ALERT_STATUS_ENUM,
+    },
     reachedAt: { type: Date, default: null },
     removedAt: { type: Date, default: null },
   },
