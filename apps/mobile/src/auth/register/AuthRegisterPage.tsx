@@ -88,7 +88,7 @@ export const AuthRegisterPage = () => {
           Toast.show({
             type: "error",
             text1: t("Error"),
-            text2: response.data.error,
+            text2: response.data.error as string,
           });
 
           return;

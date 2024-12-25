@@ -7,6 +7,11 @@
 
 export type PostAlert200 = {
   _id: string;
+  createdAt: string;
+  currentPrice: string;
+  differencePrice: string;
   price: number;
+  reachedAt: string;
+  status: string;
   symbol: string;
 };

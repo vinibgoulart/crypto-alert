@@ -6,10 +6,14 @@
  */
 
 export type PostAlertBody = {
-  /** Name of the alert */
-  name: string;
-  /** Price to buy in USD */
-  price: number;
-  /** Symbol of the coin */
+  /**
+   * Price to buy the coin
+   * @minLength 1
+   */
+  price: string;
+  /**
+   * Symbol of the coin
+   * @minLength 1
+   */
   symbol: string;
 };

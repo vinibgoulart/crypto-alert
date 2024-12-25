@@ -15,6 +15,7 @@ export * from './getCryptos404';
 export * from './getCryptosParams';
 export * from './getUserMe404';
 export * from './postAlert200';
+export * from './postAlert400';
 export * from './postAlertBody';
 export * from './postAuthLogin200';
 export * from './postAuthLogin400';

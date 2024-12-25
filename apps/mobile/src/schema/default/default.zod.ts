@@ -39,15 +39,19 @@ export const postAuthLogoutResponse = zod.object({
 })
 
 export const postAlertBody = zod.object({
-  "name": zod.string(),
-  "price": zod.number(),
-  "symbol": zod.string()
+  "price": zod.string().min(1),
+  "symbol": zod.string().min(1)
 })
 
 export const postAlertResponse = zod.object({
   "_id": zod.string(),
   "price": zod.number(),
-  "symbol": zod.string()
+  "symbol": zod.string(),
+  "status": zod.string(),
+  "currentPrice": zod.string(),
+  "differencePrice": zod.string(),
+  "reachedAt": zod.string(),
+  "createdAt": zod.string()
 })
 
 export const getAlertsQueryParams = zod.object({
