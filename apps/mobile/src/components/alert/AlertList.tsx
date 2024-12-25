@@ -12,20 +12,19 @@ export const AlertList = () => {
 
   const { t } = useTranslation();
 
-  const {
-    data: alertResponse,
-    isLoading,
-    fetchNextPage,
-  } = useGetAlertsInfinite(undefined, {
-    query: {
-      initialPageParam: "1",
-      getNextPageParam: (lastPage) => lastPage.data.nextPage,
-    },
-  });
+  const { data: alertResponse, fetchNextPage } = useGetAlertsInfinite(
+    undefined,
+    {
+      query: {
+        initialPageParam: "1",
+        getNextPageParam: (lastPage) => lastPage.data.nextPage,
+      },
+    }
+  );
 
   const alertData = alertResponse?.pages.map((page) => page.data.data).flat();
 
-  if (!isLoading || !Array.isArray(alertData)) {
+  if (!Array.isArray(alertData) || !alertData.length) {
     return (
       <ListItem
         hoverTheme

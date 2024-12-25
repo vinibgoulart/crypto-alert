@@ -11,13 +11,9 @@ import { AlertReachedCard } from "./AlertReachedCard";
 export const AlertReachedList = () => {
   const { navigate } = useNavigation<NavigationProp<INavigationPages>>();
 
-  const {
-    data: alertResponse,
-    isLoading,
-    fetchNextPage,
-  } = useGetAlertsInfinite(
+  const { data: alertResponse, fetchNextPage } = useGetAlertsInfinite(
     {
-      status: ALERT_STATUS_ENUM.ACTIVE,
+      status: ALERT_STATUS_ENUM.REACHED,
     },
     {
       query: {
@@ -31,7 +27,7 @@ export const AlertReachedList = () => {
 
   const alertData = alertResponse?.pages.map((page) => page.data.data).flat();
 
-  if (!isLoading || !Array.isArray(alertData)) {
+  if (!Array.isArray(alertData) || !alertData.length) {
     return (
       <ListItem
         hoverTheme

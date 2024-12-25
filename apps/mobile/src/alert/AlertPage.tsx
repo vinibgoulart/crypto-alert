@@ -1,4 +1,4 @@
-import { Button, ScrollView, Text, YStack } from "tamagui";
+import { Button, Text, YStack } from "tamagui";
 import { Layout } from "../components/Layout";
 import { useTranslation } from "react-i18next";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
@@ -12,32 +12,30 @@ export const AlertPage = () => {
 
   return (
     <Layout gap={"$10"} justifyContent="space-between" hideBackButton>
-      <ScrollView>
-        <YStack gap={"$5"}>
-          <YStack gap={"$3"}>
-            <YStack>
-              <Text fontSize={"$3"} fontWeight={"$6"}>
-                {t("Alerts")}
-              </Text>
-              <Text fontSize={"$1"} fontWeight={"$4"} color={"$gray10"}>
-                {t("Your active alerts")}
-              </Text>
-            </YStack>
-            <AlertList />
+      <YStack gap={"$5"}>
+        <YStack gap={"$3"}>
+          <YStack>
+            <Text fontSize={"$3"} fontWeight={"$6"}>
+              {t("Alerts")}
+            </Text>
+            <Text fontSize={"$1"} fontWeight={"$4"} color={"$gray10"}>
+              {t("Your active alerts")}
+            </Text>
           </YStack>
-          <YStack gap={"$3"}>
-            <YStack>
-              <Text fontSize={"$3"} fontWeight={"$6"}>
-                {t("Reached")}
-              </Text>
-              <Text fontSize={"$1"} fontWeight={"$4"} color={"$gray10"}>
-                {t("Your reached alerts")}
-              </Text>
-            </YStack>
-            <AlertReachedList />
-          </YStack>
+          <AlertList />
         </YStack>
-      </ScrollView>
+        <YStack gap={"$3"}>
+          <YStack>
+            <Text fontSize={"$3"} fontWeight={"$6"}>
+              {t("Reached")}
+            </Text>
+            <Text fontSize={"$1"} fontWeight={"$4"} color={"$gray10"}>
+              {t("Your reached alerts")}
+            </Text>
+          </YStack>
+          <AlertReachedList />
+        </YStack>
+      </YStack>
       <Button
         bg={"$primary"}
         color={"$white1"}
