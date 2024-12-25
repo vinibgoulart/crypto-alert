@@ -1,24 +1,26 @@
 import { ChevronRight } from "@tamagui/lucide-icons";
 import moment from "moment";
-import { ListItem, Text, XStack, YGroup, YStack } from "tamagui";
+import { ListItem, Text, View, XStack, YStack } from "tamagui";
 import { Crypto } from "../schema/model";
 import { useTranslation } from "react-i18next";
 import { Skeleton } from "../components/Skeleton";
 
 type CryptoCardProps = {
   crypto: Crypto;
+  onPress: (item: Crypto) => void;
 };
 
-export const CryptoCard = ({ crypto }: CryptoCardProps) => {
+export const CryptoCard = ({ crypto, onPress }: CryptoCardProps) => {
   const { t } = useTranslation();
 
   return (
-    <YGroup.Item>
+    <View>
       <ListItem
         hoverTheme
         pressTheme
         iconAfter={<ChevronRight color={"$gray11"} />}
         backgroundColor={"$secondaryDark"}
+        onPress={() => onPress(crypto)}
       >
         <YStack width={"100%"} gap={"$2"}>
           <XStack alignItems="center" justifyContent="space-between">
@@ -37,7 +39,7 @@ export const CryptoCard = ({ crypto }: CryptoCardProps) => {
           </Text>
         </YStack>
       </ListItem>
-    </YGroup.Item>
+    </View>
   );
 };
 
@@ -45,7 +47,7 @@ export const CryptoCardSkeleton = () => {
   const { t } = useTranslation();
 
   return (
-    <YGroup.Item>
+    <View>
       <ListItem
         hoverTheme
         pressTheme
@@ -69,6 +71,6 @@ export const CryptoCardSkeleton = () => {
           </Text>
         </YStack>
       </ListItem>
-    </YGroup.Item>
+    </View>
   );
 };
