@@ -1,27 +1,33 @@
-import { ListItem, Separator, Text, View, XStack, YStack } from "tamagui";
-import { useGetAlertsInfinite } from "../schema/default/default";
+import { ListItem, Separator, Text } from "tamagui";
 import { useTranslation } from "react-i18next";
 import { ChevronRight } from "@tamagui/lucide-icons";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
-import { INavigationPages } from "../navigation/NavigationPages";
+import { ALERT_STATUS_ENUM } from "@crypto-alert/enum";
+import { useGetAlertsInfinite } from "../../schema/default/default";
+import { INavigationPages } from "../../navigation/NavigationPages";
 import { FlatList } from "react-native";
-import { AlertCard } from "./AlertCard";
+import { AlertReachedCard } from "./AlertReachedCard";
 
-export const AlertList = () => {
+export const AlertReachedList = () => {
   const { navigate } = useNavigation<NavigationProp<INavigationPages>>();
-
-  const { t } = useTranslation();
 
   const {
     data: alertResponse,
     isLoading,
     fetchNextPage,
-  } = useGetAlertsInfinite(undefined, {
-    query: {
-      initialPageParam: "1",
-      getNextPageParam: (lastPage) => lastPage.data.nextPage,
+  } = useGetAlertsInfinite(
+    {
+      status: ALERT_STATUS_ENUM.ACTIVE,
     },
-  });
+    {
+      query: {
+        initialPageParam: "1",
+        getNextPageParam: (lastPage) => lastPage.data.nextPage,
+      },
+    }
+  );
+
+  const { t } = useTranslation();
 
   const alertData = alertResponse?.pages.map((page) => page.data.data).flat();
 
@@ -30,7 +36,7 @@ export const AlertList = () => {
       <ListItem
         hoverTheme
         pressTheme
-        title={<Text color={"$gray11"}>{t("No active alerts")}</Text>}
+        title={<Text color={"$gray11"}>{t("No reached alerts")}</Text>}
         subTitle={<Text fontSize={"$0.5"}>{t("Create alert")}</Text>}
         iconAfter={<ChevronRight color={"$gray11"} />}
         backgroundColor={"$secondaryDark"}
@@ -42,7 +48,7 @@ export const AlertList = () => {
   return (
     <FlatList
       data={alertData}
-      renderItem={({ item }) => <AlertCard alert={item} />}
+      renderItem={({ item }) => <AlertReachedCard alert={item} />}
       keyExtractor={(item, i) => `${item.symbol}-${i}`}
       onEndReached={() => fetchNextPage()}
       ItemSeparatorComponent={Separator}

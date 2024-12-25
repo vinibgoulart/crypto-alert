@@ -1,9 +1,9 @@
 import { ChevronRight } from "@tamagui/lucide-icons";
 import moment from "moment";
 import { ListItem, Text, View, XStack, YStack } from "tamagui";
-import { Crypto } from "../schema/model";
+import { Crypto } from "../../schema/model";
 import { useTranslation } from "react-i18next";
-import { Skeleton } from "../components/Skeleton";
+import { Skeleton } from "../Skeleton";
 
 type CryptoCardProps = {
   crypto: Crypto;

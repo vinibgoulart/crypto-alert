@@ -1,6 +1,6 @@
 import { Button, Sheet, Text, YStack } from "tamagui";
 import { Layout } from "../components/Layout";
-import { CryptoList } from "../crypto/CryptoList";
+import { CryptoList } from "../components/crypto/CryptoList";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
 

@@ -1,7 +1,7 @@
 import { Separator } from "tamagui";
-import { useGetCryptosInfinite } from "../schema/default/default";
+import { useGetCryptosInfinite } from "../../schema/default/default";
 import { CryptoCard, CryptoCardSkeleton } from "./CryptoCard";
-import { Crypto } from "../schema/model";
+import { Crypto } from "../../schema/model";
 import { FlatList } from "react-native";
 
 type CryptoListProps = {

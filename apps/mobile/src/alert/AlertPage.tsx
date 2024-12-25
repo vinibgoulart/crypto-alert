@@ -1,10 +1,10 @@
 import { Button, ScrollView, Text, YStack } from "tamagui";
 import { Layout } from "../components/Layout";
 import { useTranslation } from "react-i18next";
-import { AlertList } from "./AlertList";
-import { AlertReachedList } from "./AlertReachedList";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { INavigationPages } from "../navigation/NavigationPages";
+import { AlertList } from "../components/alert/AlertList";
+import { AlertReachedList } from "../components/alert/AlertReachedList";
 
 export const AlertPage = () => {
   const { navigate } = useNavigation<NavigationProp<INavigationPages>>();

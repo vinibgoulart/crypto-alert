@@ -5,8 +5,8 @@ import {
   TrendingUp,
 } from "@tamagui/lucide-icons";
 import { ListItem, Text, View, XStack, YStack } from "tamagui";
-import { Alert } from "../schema/model";
 import { useTranslation } from "react-i18next";
+import { Alert } from "../../schema/model";
 
 type AlertCardProps = {
   alert: Alert;
