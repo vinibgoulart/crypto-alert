@@ -1,13 +1,13 @@
-import amqp from "amqplib";
-import { config } from "./config";
-import { JOBS, MAIN_QUEUE, QueueContent } from "@crypto-alert/jobs";
+import { MAIN_QUEUE, QueueContent } from "@crypto-alert/queues";
 import { connectMongo } from "@crypto-alert/mongo";
+import { connectRabbitmq } from "@crypto-alert/rabbitmq";
+import { JOBS } from "@crypto-alert/jobs";
 
 export const initWorker = async () => {
   try {
     console.log("Connecting to database...");
     await connectMongo();
-    const connection = await amqp.connect(config.RABBITMQ_URL!);
+    const connection = await connectRabbitmq();
     const channel = await connection.createChannel();
 
     await channel.assertQueue(MAIN_QUEUE, { durable: true });

@@ -20,9 +20,9 @@ dotenvSafe.config({
   sample: root(".env.example"),
 });
 
-const { NODE_ENV, RABBITMQ_URL } = process.env;
+const { RABBITMQ_URL, NODE_ENV } = process.env;
 
 export const config = {
-  NODE_ENV,
   RABBITMQ_URL,
+  NODE_ENV,
 };

@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "main": "src/index.ts",
   "dependencies": {
+    "@crypto-alert/enum": "*",
+    "@crypto-alert/jobs": "*",
     "@crypto-alert/mongo": "*",
-    "@crypto-alert/enum": "*"
+    "amqplib": "^0.10.5"
   }
 }

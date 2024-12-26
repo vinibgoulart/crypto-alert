@@ -58,6 +58,9 @@ export const AlertDetailsPage = ({ route }: AlertDetailsPageProps) => {
               : t("Not reached")}
           </Text>
         </Card>
+        <Card title={t("Reached price")}>
+          <Text>{alert?.data.reachedPrice || t("Not reached")}</Text>
+        </Card>
       </Section>
     </Layout>
   );

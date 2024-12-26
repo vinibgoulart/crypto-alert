@@ -7,6 +7,7 @@ type Alert = {
   userId: Types.ObjectId;
   price: number;
   initialPrice: string;
+  reachedPrice: string;
   target: ALERT_TARGET_ENUM;
   symbol: string;
   status: ALERT_STATUS_ENUM;
@@ -23,6 +24,7 @@ const AlertSchema = new Schema<AlertDocument>(
     userId: { type: Schema.Types.ObjectId, required: true, ref: "User" },
     price: { type: Number, required: true },
     initialPrice: { type: String, required: true },
+    reachedPrice: { type: String, required: true },
     target: {
       type: String,
       required: true,

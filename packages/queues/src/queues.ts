@@ -5,9 +5,9 @@ export enum QUEUE_CONTENT_NAME_ENUM {
   ALERT_REACHED = "ALERT_REACHED",
 }
 
-export type QueueContent = {
+export type QueueContent<T = any> = {
   name: QUEUE_CONTENT_NAME_ENUM;
-  data?: any;
+  data?: T;
 };
 
 export const MAIN_QUEUE = "main_queue";

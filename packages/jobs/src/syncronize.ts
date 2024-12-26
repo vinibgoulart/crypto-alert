@@ -1,7 +1,12 @@
 import { cryptosGet } from "@crypto-alert/blockchain-provider";
 import { CryptoDocument, CryptoModel } from "@crypto-alert/crypto";
 import { bulkWriteInBatches, BulkWriteOperation } from "@crypto-alert/mongo";
-import { QUEUE_CONTENT_NAME_ENUM, QueueContent } from "./queues";
+import {
+  MAIN_QUEUE,
+  QUEUE_CONTENT_NAME_ENUM,
+  QueueContent,
+} from "@crypto-alert/queues";
+import { connectRabbitmq } from "@crypto-alert/rabbitmq";
 
 export const syncronize = async (content: QueueContent) => {
   console.log("Syncronizing cryptos...");
@@ -47,4 +52,18 @@ export const syncronize = async (content: QueueContent) => {
   } catch (error) {
     console.log({ error });
   }
+
+  const contentSanityCheckAll: QueueContent = {
+    name: QUEUE_CONTENT_NAME_ENUM.SANITY_CHECK_ALL,
+  };
+
+  const connection = await connectRabbitmq();
+  const channel = await connection.createChannel();
+
+  await channel.assertQueue(MAIN_QUEUE, { durable: true });
+
+  channel.sendToQueue(
+    MAIN_QUEUE,
+    Buffer.from(JSON.stringify(contentSanityCheckAll))
+  );
 };

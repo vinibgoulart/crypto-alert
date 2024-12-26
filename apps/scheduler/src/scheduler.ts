@@ -1,15 +1,14 @@
-import amqp from "amqplib";
 import cron from "node-cron";
-import { config } from "./config";
 import {
   MAIN_QUEUE,
   QUEUE_CONTENT_NAME_ENUM,
   QueueContent,
-} from "@crypto-alert/jobs";
+} from "@crypto-alert/queues";
+import { connectRabbitmq } from "@crypto-alert/rabbitmq";
 
 export const initScheduler = async () => {
   try {
-    const connection = await amqp.connect(config.RABBITMQ_URL!);
+    const connection = await connectRabbitmq();
     const channel = await connection.createChannel();
 
     await channel.assertQueue(MAIN_QUEUE, { durable: true });

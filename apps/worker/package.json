@@ -9,6 +9,7 @@
   "dependencies": {
     "@crypto-alert/jobs": "*",
     "@crypto-alert/crypto": "*",
+    "@crypto-alert/rabbitmq": "*",
     "@crypto-alert/blockchain-provider": "*",
     "@types/dotenv-safe": "^8.1.6",
     "amqplib": "^0.10.5",

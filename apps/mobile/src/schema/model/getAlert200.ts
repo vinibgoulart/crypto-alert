@@ -13,6 +13,7 @@ export type GetAlert200 = {
   initialPrice: string;
   price: number;
   reachedAt: string;
+  reachedPrice: string;
   status: string;
   symbol: string;
   target: string;

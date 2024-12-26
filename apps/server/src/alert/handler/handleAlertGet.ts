@@ -44,6 +44,9 @@ export const handleAlertGet = (app: OpenAPIHono<Env, {}, "/">) => {
               initialPrice: z.string().openapi({
                 example: "42",
               }),
+              reachedPrice: z.string().openapi({
+                example: "52",
+              }),
               target: z.string().openapi({
                 example: "HIGHER",
               }),

@@ -1,0 +1,10 @@
+{
+  "name": "@crypto-alert/rabbitmq",
+  "version": "0.0.0",
+  "main": "src/index.ts",
+  "dependencies": {
+    "@types/dotenv-safe": "^8.1.6",
+    "amqplib": "^0.10.5",
+    "dotenv-safe": "^9.1.0"
+  }
+}

@@ -1,0 +1,1 @@
+export { connectRabbitmq } from "./connectRabbitmq";
