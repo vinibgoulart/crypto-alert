@@ -1,7 +1,7 @@
 import { cryptosGet } from "@crypto-alert/blockchain-provider";
-import { QUEUE_CONTENT_NAME_ENUM, QueueContent } from "@crypto-alert/jobs";
 import { CryptoDocument, CryptoModel } from "@crypto-alert/crypto";
 import { bulkWriteInBatches, BulkWriteOperation } from "@crypto-alert/mongo";
+import { QUEUE_CONTENT_NAME_ENUM, QueueContent } from "./queues";
 
 export const syncronize = async (content: QueueContent) => {
   console.log("Syncronizing cryptos...");

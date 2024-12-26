@@ -1,7 +1,6 @@
 import amqp from "amqplib";
 import { config } from "./config";
-import { MAIN_QUEUE, QueueContent } from "@crypto-alert/jobs";
-import { WORKER_JOBS } from "./workerJobs";
+import { JOBS, MAIN_QUEUE, QueueContent } from "@crypto-alert/jobs";
 import { connectMongo } from "@crypto-alert/mongo";
 
 export const initWorker = async () => {
@@ -20,7 +19,7 @@ export const initWorker = async () => {
         if (msg !== null) {
           const content: QueueContent = JSON.parse(msg.content.toString());
           console.log(`Received message: ${content.name}`);
-          await WORKER_JOBS[content.name](content);
+          await JOBS[content.name](content);
           console.log(`Task completed: ${content.name}`);
 
           channel.ack(msg);
