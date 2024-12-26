@@ -1,12 +1,17 @@
 import { Controller, useFormContext } from "react-hook-form";
-import { InputProps, Text, View, Input as _Input } from "tamagui";
+import {
+  InputProps as _InputProps,
+  Text,
+  View,
+  Input as _Input,
+} from "tamagui";
 
-type IInput = {
+export type InputProps = {
   label: string;
   name: string;
-} & InputProps;
+} & _InputProps;
 
-export const Input = (props: IInput) => {
+export const Input = (props: InputProps) => {
   const { label, name, ...rest } = props;
 
   const {

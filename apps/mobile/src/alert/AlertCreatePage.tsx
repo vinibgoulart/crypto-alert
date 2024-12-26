@@ -1,4 +1,4 @@
-import { Button, Sheet, Text, YStack } from "tamagui";
+import { Button, Sheet } from "tamagui";
 import { Layout } from "../components/Layout";
 import { CryptoList } from "../components/crypto/CryptoList";
 import { useTranslation } from "react-i18next";

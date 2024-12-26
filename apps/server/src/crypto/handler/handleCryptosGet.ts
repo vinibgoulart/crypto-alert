@@ -20,6 +20,12 @@ export const handleCryptosGet = (app: OpenAPIHono<Env, {}, "/">) => {
             example: "1",
           })
           .optional(),
+        search: z
+          .string()
+          .openapi({
+            example: "BTC",
+          })
+          .optional(),
       }),
     },
     responses: {
@@ -82,9 +88,21 @@ export const handleCryptosGet = (app: OpenAPIHono<Env, {}, "/">) => {
   });
 
   app.openapi(route, async (c) => {
-    const { page } = c.req.query();
+    const { page, search } = c.req.query();
 
-    const cryptosGetResponse = await CryptoModel.find()
+    const getFilters = () => {
+      if (!search) {
+        return {};
+      }
+
+      return {
+        symbol: new RegExp(`^${search}`, "i"),
+      };
+    };
+
+    const cryptosGetResponse = await CryptoModel.find({
+      ...getFilters(),
+    })
       .sort({ symbol: 1 })
       .skip((Number(page) - 1) * 50)
       .limit(50);

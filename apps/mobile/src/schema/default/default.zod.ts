@@ -96,7 +96,8 @@ export const getAlertsResponse = zod.object({
 
 export const getCryptosQueryParams = zod.object({
   "symbol": zod.string().optional(),
-  "page": zod.string().optional()
+  "page": zod.string().optional(),
+  "search": zod.string().optional()
 })
 
 export const getCryptosResponse = zod.object({

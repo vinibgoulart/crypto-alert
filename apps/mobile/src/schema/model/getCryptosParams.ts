@@ -8,4 +8,5 @@
 export type GetCryptosParams = {
 symbol?: string;
 page?: string;
+search?: string;
 };

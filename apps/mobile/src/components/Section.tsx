@@ -10,7 +10,7 @@ type SectionProps = {
 
 export const Section = ({ title, subtitle, children, right }: SectionProps) => {
   return (
-    <YStack gap={"$3"}>
+    <YStack gap={"$3"} flex={1}>
       <XStack justifyContent="space-between">
         <YStack>
           <Text fontSize={"$3"} fontWeight={"$6"}>
