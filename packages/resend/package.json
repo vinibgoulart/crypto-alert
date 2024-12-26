@@ -1,0 +1,8 @@
+{
+  "name": "@crypto-alert/resend",
+  "version": "0.0.0",
+  "main": "src/index.ts",
+  "dependencies": {
+    "resend": "^4.0.1"
+  }
+}
