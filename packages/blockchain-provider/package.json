@@ -3,6 +3,8 @@
   "version": "0.0.0",
   "main": "src/index.ts",
   "dependencies": {
-    "@crypto-alert/mongo": "*"
+    "@crypto-alert/mongo": "*",
+    "@crypto-alert/blockchain-binance": "*",
+    "@crypto-alert/blockchain-coingecko": "*"
   }
 }

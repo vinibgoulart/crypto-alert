@@ -30,7 +30,7 @@ export const CryptoCard = ({ crypto, onPress }: CryptoCardProps) => {
             <XStack>
               <Text>{t("Price")}: </Text>
               <Text color={"$primary"} fontWeight={"$6"}>
-                {crypto.price}
+                {crypto.price} USD
               </Text>
             </XStack>
           </XStack>

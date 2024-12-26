@@ -1,4 +1,4 @@
-import { binanceCryptoGet } from "@crypto-alert/blockchain-binance";
+import { coingeckoCryptoGet } from "@crypto-alert/blockchain-coingecko";
 
 type CryptosGet = {
   symbol: string;
@@ -18,25 +18,25 @@ type CryptosGetError = {
 type CryptosGetResponse = CryptosGetSuccess | CryptosGetError;
 
 export const cryptosGet = async (): Promise<CryptosGetResponse> => {
-  const binanceCryptos = await binanceCryptoGet();
+  const coingeckoCryptos = await coingeckoCryptoGet();
 
-  if (!binanceCryptos.success) {
+  if (!coingeckoCryptos.success) {
     return {
       success: false,
-      error: binanceCryptos.error,
+      error: coingeckoCryptos.error,
     };
   }
 
-  if (!Array.isArray(binanceCryptos.cryptos)) {
+  if (!Array.isArray(coingeckoCryptos.cryptos)) {
     return {
       success: false,
       error: "Cryptos not found",
     };
   }
 
-  const cryptos = binanceCryptos.cryptos.map((crypto) => ({
+  const cryptos = coingeckoCryptos.cryptos.map((crypto) => ({
     symbol: crypto.symbol,
-    price: crypto.price,
+    price: crypto.current_price,
   }));
 
   return {

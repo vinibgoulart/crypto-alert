@@ -27,7 +27,7 @@ export const AlertDetailsPage = ({ route }: AlertDetailsPageProps) => {
     <Layout gap={"$10"} justifyContent="space-between">
       <Section
         title={`${t("Alert")} - ${alert?.data.symbol}`}
-        subtitle={`${t("Price")}: ${alert?.data.price}`}
+        subtitle={`${t("Price")}: ${alert?.data.price} USD`}
         right={
           <View>
             <AlertStatusTag status={alert?.data.status as ALERT_STATUS_ENUM} />
@@ -35,16 +35,16 @@ export const AlertDetailsPage = ({ route }: AlertDetailsPageProps) => {
         }
       >
         <Card title={t("Alert price")}>
-          <Text>{alert?.data.price}</Text>
+          <Text>{alert?.data.price} USD</Text>
         </Card>
         <Card title={t("Current price")}>
-          <Text>{alert?.data.currentPrice}</Text>
+          <Text>{alert?.data.currentPrice} USD</Text>
         </Card>
         <Card title={t("Difference price")}>
-          <Text>{alert?.data.differencePrice}</Text>
+          <Text>{alert?.data.differencePrice} USD</Text>
         </Card>
         <Card title={t("Initial price")}>
-          <Text>{alert?.data.initialPrice}</Text>
+          <Text>{alert?.data.initialPrice} USD</Text>
         </Card>
         <Card title={t("Target")}>
           <AlertTargetText target={alert?.data.target as ALERT_TARGET_ENUM} />
@@ -62,7 +62,11 @@ export const AlertDetailsPage = ({ route }: AlertDetailsPageProps) => {
           </Text>
         </Card>
         <Card title={t("Reached price")}>
-          <Text>{alert?.data.reachedPrice || t("Not reached")}</Text>
+          <Text>
+            {alert?.data.reachedPrice
+              ? `${alert?.data.reachedPrice} USD`
+              : t("Not reached")}
+          </Text>
         </Card>
       </Section>
     </Layout>

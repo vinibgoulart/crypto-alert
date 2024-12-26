@@ -5,7 +5,7 @@ import { ALERT_STATUS_ENUM, ALERT_TARGET_ENUM } from "@crypto-alert/enum";
 type Alert = {
   _id: Types.ObjectId;
   userId: Types.ObjectId;
-  price: number;
+  price: string;
   initialPrice: string;
   reachedPrice: string;
   target: ALERT_TARGET_ENUM;
@@ -22,7 +22,7 @@ export type AlertDocument = Alert & Document;
 const AlertSchema = new Schema<AlertDocument>(
   {
     userId: { type: Schema.Types.ObjectId, required: true, ref: "User" },
-    price: { type: Number, required: true },
+    price: { type: String, required: true },
     initialPrice: { type: String, required: true },
     reachedPrice: { type: String },
     target: {

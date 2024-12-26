@@ -5,7 +5,7 @@ import { getObjectId } from "@crypto-alert/mongo";
 import { CryptoModel } from "@crypto-alert/crypto";
 
 type AlertCreateArgs = {
-  price: number;
+  price: string;
   symbol: string;
   status: ALERT_STATUS_ENUM;
   user: UserDocument;

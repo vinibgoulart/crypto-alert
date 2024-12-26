@@ -28,7 +28,7 @@ export const AlertReachedCard = ({ alert, onPress }: AlertReachedCardProps) => {
           <XStack>
             <Text>{t("Price")}: </Text>
             <Text color={"$primary"} fontWeight={"$6"}>
-              {alert.price}
+              {alert.price} USD
             </Text>
           </XStack>
         </XStack>

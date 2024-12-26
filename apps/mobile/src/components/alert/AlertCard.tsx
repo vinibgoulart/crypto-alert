@@ -35,12 +35,12 @@ export const AlertCard = ({ alert, onPress }: AlertCardProps) => {
           <XStack>
             <Text>{t("Price")}: </Text>
             <Text color={"$primary"} fontWeight={"$6"}>
-              {alert.price}
+              {alert.price} USD
             </Text>
           </XStack>
         </XStack>
         <XStack alignItems="center" justifyContent="space-between">
-          <Text fontSize={"$0.5"}>{alert.currentPrice}</Text>
+          <Text fontSize={"$0.5"}>{alert.currentPrice} USD</Text>
           <Tag backgroundColor={shouldDecreasePrice ? "$red12" : "$green12"}>
             {shouldDecreasePrice ? (
               <TrendingDown color={"$red10"} size={"$1"} />
