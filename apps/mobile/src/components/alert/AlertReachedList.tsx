@@ -20,6 +20,7 @@ export const AlertReachedList = () => {
       query: {
         initialPageParam: "1",
         getNextPageParam: (lastPage) => lastPage.data.nextPage,
+        staleTime: 1000 * 60 * 5, // 5 minutes
       },
     }
   );
