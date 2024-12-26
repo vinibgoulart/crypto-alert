@@ -25,6 +25,8 @@
   "Profile": "Profile",
   "Alerts": "Alerts",
   "Alert": "Alert",
+  "Alert price": "Alert price",
+  "Reached price": "Reached price",
   "Current price": "Current price",
   "Initial price": "Initial price",
   "Target": "Target",

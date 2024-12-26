@@ -34,6 +34,9 @@ export const AlertDetailsPage = ({ route }: AlertDetailsPageProps) => {
           </View>
         }
       >
+        <Card title={t("Alert price")}>
+          <Text>{alert?.data.price}</Text>
+        </Card>
         <Card title={t("Current price")}>
           <Text>{alert?.data.currentPrice}</Text>
         </Card>

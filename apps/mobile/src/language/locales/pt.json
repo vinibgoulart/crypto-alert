@@ -24,6 +24,8 @@
   "Logout": "Sair",
   "Alerts": "Alertas",
   "Alert": "Alerta",
+  "Alert price": "Preço do alerta",
+  "Reached price": "Preço alcançado",
   "Current price": "Preço atual",
   "Initial price": "Preço inicial",
   "Target": "Alvo",
