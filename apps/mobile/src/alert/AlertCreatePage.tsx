@@ -132,7 +132,7 @@ export const AlertCreatePage = () => {
               disabled={!isValid || isSubmitting}
               onPress={handleSubmit(onSubmit)}
             >
-              {t("Create Alert")}
+              {t("Create alert")}
             </Button>
           </FormProvider>
         </Sheet.Frame>
