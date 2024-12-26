@@ -19,6 +19,7 @@ import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { INavigationPages } from "../navigation/NavigationPages";
 import { Crypto } from "../schema/model";
 import { useUpdateInfiniteQueryWithMutation } from "../hooks/useUpdateInfiniteQueryWithMutation";
+import { Section } from "../components/Section";
 
 type Values = z.infer<typeof postAlertBody>;
 
@@ -86,19 +87,12 @@ export const AlertCreatePage = () => {
 
   return (
     <Layout gap={"$10"} justifyContent="space-between">
-      <YStack gap={"$5"} flex={1}>
-        <YStack gap={"$3"} flex={1}>
-          <YStack>
-            <Text fontSize={"$3"} fontWeight={"$6"}>
-              {t("Crypto")}
-            </Text>
-            <Text fontSize={"$1"} fontWeight={"$4"} color={"$gray10"}>
-              {t("Select the crypto to receive the alert")}
-            </Text>
-          </YStack>
-          <CryptoList onPress={handleOpen} />
-        </YStack>
-      </YStack>
+      <Section
+        title={t("Crypto")}
+        subtitle={t("Select the crypto to receive the alert")}
+      >
+        <CryptoList onPress={handleOpen} />
+      </Section>
       <Sheet
         modal={true}
         snapPoints={[180, 190]}

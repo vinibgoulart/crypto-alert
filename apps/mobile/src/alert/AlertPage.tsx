@@ -5,7 +5,7 @@ import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { INavigationPages } from "../navigation/NavigationPages";
 import { AlertList } from "../components/alert/AlertList";
 import { AlertReachedList } from "../components/alert/AlertReachedList";
-
+import { Section } from "../components/Section";
 export const AlertPage = () => {
   const { navigate } = useNavigation<NavigationProp<INavigationPages>>();
   const { t } = useTranslation();
@@ -13,28 +13,12 @@ export const AlertPage = () => {
   return (
     <Layout gap={"$10"} justifyContent="space-between" hideBackButton>
       <YStack gap={"$5"}>
-        <YStack gap={"$3"}>
-          <YStack>
-            <Text fontSize={"$3"} fontWeight={"$6"}>
-              {t("Alerts")}
-            </Text>
-            <Text fontSize={"$1"} fontWeight={"$4"} color={"$gray10"}>
-              {t("Your active alerts")}
-            </Text>
-          </YStack>
+        <Section title={t("Alerts")} subtitle={t("Your active alerts")}>
           <AlertList />
-        </YStack>
-        <YStack gap={"$3"}>
-          <YStack>
-            <Text fontSize={"$3"} fontWeight={"$6"}>
-              {t("Reached")}
-            </Text>
-            <Text fontSize={"$1"} fontWeight={"$4"} color={"$gray10"}>
-              {t("Your reached alerts")}
-            </Text>
-          </YStack>
+        </Section>
+        <Section title={t("Reached")} subtitle={t("Your reached alerts")}>
           <AlertReachedList />
-        </YStack>
+        </Section>
       </YStack>
       <Button
         bg={"$primary"}
