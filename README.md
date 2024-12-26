@@ -6,9 +6,9 @@ Crypto alert is a project that aims to provide a simple way to monitor the price
 
 ## Notification services
 
-- Email (not implemented yet)
+- Email (working)
 - SMS (not implemented yet)
-- Push notification (working)
+- Push notification (not implemented yet)
 
 ## Running the project
 

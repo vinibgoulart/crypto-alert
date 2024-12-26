@@ -23,7 +23,7 @@ export const UserNotificationPage = () => {
           <RadioGroup.Item value="notification" id="notification">
             <RadioGroup.Indicator />
           </RadioGroup.Item>
-          <Label htmlFor={"notification"}>Push notification</Label>
+          <Label htmlFor={"notification"}>Email</Label>
         </RadioGroup>
       </ScrollView>
     </Layout>
