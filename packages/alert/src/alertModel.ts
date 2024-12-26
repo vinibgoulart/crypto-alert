@@ -24,7 +24,7 @@ const AlertSchema = new Schema<AlertDocument>(
     userId: { type: Schema.Types.ObjectId, required: true, ref: "User" },
     price: { type: Number, required: true },
     initialPrice: { type: String, required: true },
-    reachedPrice: { type: String, required: true },
+    reachedPrice: { type: String },
     target: {
       type: String,
       required: true,
