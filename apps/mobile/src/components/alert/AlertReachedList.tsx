@@ -57,6 +57,8 @@ export const AlertReachedList = () => {
       keyExtractor={(item, i) => `${item.symbol}-${i}`}
       onEndReached={() => fetchNextPage()}
       ItemSeparatorComponent={Separator}
+      nestedScrollEnabled
+      scrollEnabled={false}
     />
   );
 };

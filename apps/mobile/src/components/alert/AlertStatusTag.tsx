@@ -1,6 +1,7 @@
 import { ALERT_STATUS_ENUM } from "@crypto-alert/enum";
 import { Tag } from "../Tag";
 import { Text } from "tamagui";
+import { useTranslation } from "react-i18next";
 
 type AlertStatysTagProps = {
   status?: ALERT_STATUS_ENUM;
@@ -25,6 +26,7 @@ const alertStatusTextColors = {
 };
 
 export const AlertStatusTag = ({ status }: AlertStatysTagProps) => {
+  const { t } = useTranslation();
   if (!status) {
     return null;
   }
@@ -32,7 +34,7 @@ export const AlertStatusTag = ({ status }: AlertStatysTagProps) => {
   return (
     <Tag backgroundColor={alertStatusBackgroundColors[status]}>
       <Text color={alertStatusTextColors[status]}>
-        {alertStatusTexts[status]}
+        {t(alertStatusTexts[status])}
       </Text>
     </Tag>
   );

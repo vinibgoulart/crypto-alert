@@ -17,6 +17,8 @@ export const alertMapper = async (alert: AlertDocument) => {
     status: alert.status,
     currentPrice: currentPrice?.price ?? "0",
     differencePrice: String(differencePrice),
+    initialPrice: alert.initialPrice,
+    target: alert.target,
     reachedAt: alert.reachedAt,
     createdAt: alert.createdAt,
   };

@@ -49,6 +49,7 @@ export const AlertCreatePage = () => {
   const handleOpen = (crypto: Crypto) => {
     setOpen(true);
     setValue("symbol", crypto.symbol);
+    setValue("price", crypto.price.toString());
   };
 
   const postAuthRegisterMutation = usePostAlert({

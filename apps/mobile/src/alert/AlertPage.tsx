@@ -1,4 +1,4 @@
-import { Button, Text, YStack } from "tamagui";
+import { Button, ScrollView, Text, YStack } from "tamagui";
 import { Layout } from "../components/Layout";
 import { useTranslation } from "react-i18next";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
@@ -12,14 +12,16 @@ export const AlertPage = () => {
 
   return (
     <Layout gap={"$10"} justifyContent="space-between" hideBackButton>
-      <YStack gap={"$5"}>
-        <Section title={t("Alerts")} subtitle={t("Your active alerts")}>
-          <AlertList />
-        </Section>
-        <Section title={t("Reached")} subtitle={t("Your reached alerts")}>
-          <AlertReachedList />
-        </Section>
-      </YStack>
+      <ScrollView>
+        <YStack gap={"$5"}>
+          <Section title={t("Alerts")} subtitle={t("Your active alerts")}>
+            <AlertList />
+          </Section>
+          <Section title={t("Reached")} subtitle={t("Your reached alerts")}>
+            <AlertReachedList />
+          </Section>
+        </YStack>
+      </ScrollView>
       <Button
         bg={"$primary"}
         color={"$white1"}

@@ -6,9 +6,10 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { INavigationPages } from "../navigation/NavigationPages";
 import { Text, View } from "tamagui";
 import { AlertStatusTag } from "../components/alert/AlertStatusTag";
-import { ALERT_STATUS_ENUM } from "@crypto-alert/enum";
+import { ALERT_STATUS_ENUM, ALERT_TARGET_ENUM } from "@crypto-alert/enum";
 import moment from "moment";
 import { Card } from "../components/Card";
+import { AlertTargetText } from "../components/alert/AlertTargetText";
 
 type AlertDetailsPageProps = NativeStackScreenProps<
   INavigationPages,
@@ -38,6 +39,12 @@ export const AlertDetailsPage = ({ route }: AlertDetailsPageProps) => {
         </Card>
         <Card title={t("Difference price")}>
           <Text>{alert?.data.differencePrice}</Text>
+        </Card>
+        <Card title={t("Initial price")}>
+          <Text>{alert?.data.initialPrice}</Text>
+        </Card>
+        <Card title={t("Target")}>
+          <AlertTargetText target={alert?.data.target as ALERT_TARGET_ENUM} />
         </Card>
         <Card title={t("Created at")}>
           <Text>

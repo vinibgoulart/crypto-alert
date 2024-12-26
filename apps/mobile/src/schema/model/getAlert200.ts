@@ -10,8 +10,10 @@ export type GetAlert200 = {
   createdAt: string;
   currentPrice: string;
   differencePrice: string;
+  initialPrice: string;
   price: number;
   reachedAt: string;
   status: string;
   symbol: string;
+  target: string;
 };

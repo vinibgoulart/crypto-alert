@@ -52,6 +52,8 @@ export const AlertList = () => {
       keyExtractor={(item, i) => `${item.symbol}-${i}`}
       onEndReached={() => fetchNextPage()}
       ItemSeparatorComponent={Separator}
+      nestedScrollEnabled
+      scrollEnabled={false}
     />
   );
 };

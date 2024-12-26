@@ -65,6 +65,8 @@ export const getAlertResponse = zod.object({
   "status": zod.string(),
   "currentPrice": zod.string(),
   "differencePrice": zod.string(),
+  "initialPrice": zod.string(),
+  "target": zod.string(),
   "reachedAt": zod.string(),
   "createdAt": zod.string()
 })
@@ -82,6 +84,8 @@ export const getAlertsResponse = zod.object({
   "status": zod.string(),
   "currentPrice": zod.string(),
   "differencePrice": zod.string(),
+  "initialPrice": zod.string(),
+  "target": zod.string(),
   "reachedAt": zod.string(),
   "createdAt": zod.string()
 })),
