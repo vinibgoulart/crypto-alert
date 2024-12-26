@@ -4,6 +4,7 @@
   "main": "src/index.ts",
   "dependencies": {
     "@crypto-alert/enum": "*",
+    "@crypto-alert/resend": "*",
     "@crypto-alert/jobs": "*",
     "@crypto-alert/mongo": "*",
     "amqplib": "^0.10.5"

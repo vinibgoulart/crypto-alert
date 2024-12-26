@@ -9,7 +9,6 @@ import {
 import { connectRabbitmq } from "@crypto-alert/rabbitmq";
 
 export const syncronize = async (content: QueueContent) => {
-  console.log("Syncronizing cryptos...");
   if (content.name !== QUEUE_CONTENT_NAME_ENUM.SYNCRONIZE) {
     throw new Error("Invalid job type");
   }
