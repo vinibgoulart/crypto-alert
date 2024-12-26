@@ -6,9 +6,10 @@ import moment from "moment";
 
 type AlertReachedCardProps = {
   alert: Alert;
+  onPress?: (item: Alert) => void;
 };
 
-export const AlertReachedCard = ({ alert }: AlertReachedCardProps) => {
+export const AlertReachedCard = ({ alert, onPress }: AlertReachedCardProps) => {
   const { t } = useTranslation();
   return (
     <ListItem
@@ -17,6 +18,7 @@ export const AlertReachedCard = ({ alert }: AlertReachedCardProps) => {
       icon={Coins}
       iconAfter={ChevronRight}
       backgroundColor={"$secondaryDark"}
+      onPress={() => onPress?.(alert)}
     >
       <YStack width={"$19"} gap={"$2"}>
         <XStack alignItems="center" justifyContent="space-between">

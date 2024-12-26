@@ -4,6 +4,7 @@ import { AlertModel } from "@crypto-alert/alert";
 import { UserDocument } from "@crypto-alert/user";
 import { CryptoModel } from "@crypto-alert/crypto";
 import { ALERT_STATUS_ENUM } from "@crypto-alert/enum";
+import { alertMapper } from "./alertMapper.js";
 
 export const handleAlertsGet = (app: OpenAPIHono<Env, {}, "/">) => {
   const route = createRoute({
@@ -102,26 +103,7 @@ export const handleAlertsGet = (app: OpenAPIHono<Env, {}, "/">) => {
       .limit(50);
 
     const alerts = await Promise.all(
-      alertsGetResponse.map(async (alert) => {
-        const currentPrice = await CryptoModel.findOne({
-          symbol: alert.symbol,
-        });
-
-        const differencePrice = (
-          alert.price - (Number(currentPrice?.price) ?? 0)
-        ).toFixed(2);
-
-        return {
-          _id: alert._id,
-          price: alert.price,
-          symbol: alert.symbol,
-          status: alert.status,
-          currentPrice: currentPrice?.price ?? "0",
-          differencePrice: String(differencePrice),
-          reachedAt: alert.reachedAt,
-          createdAt: alert.createdAt,
-        };
-      })
+      alertsGetResponse.map(async (alert) => alertMapper(alert))
     );
 
     const hasNextPage = alerts.length === 50;

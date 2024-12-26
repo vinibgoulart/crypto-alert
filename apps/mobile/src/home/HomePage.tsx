@@ -23,7 +23,7 @@ export const HomePage = () => {
         component={AlertPage}
         options={{
           tabBarIcon: ({ focused }) => (
-            <AlarmClock color={focused ? "$primary" : "$gray10"} />
+            <AlarmClock color={focused ? "$primary" : "$gray11"} />
           ),
         }}
       />
@@ -32,7 +32,7 @@ export const HomePage = () => {
         component={UserProfilePage}
         options={{
           tabBarIcon: ({ focused }) => (
-            <User color={focused ? "$primary" : "$gray10"} />
+            <User color={focused ? "$primary" : "$gray11"} />
           ),
         }}
       />

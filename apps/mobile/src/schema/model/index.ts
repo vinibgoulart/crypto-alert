@@ -7,6 +7,9 @@
 
 export * from './alert';
 export * from './crypto';
+export * from './getAlert200';
+export * from './getAlert404';
+export * from './getAlertParams';
 export * from './getAlerts200';
 export * from './getAlerts404';
 export * from './getAlertsParams';

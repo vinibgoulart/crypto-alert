@@ -7,6 +7,7 @@ import { useGetAlertsInfinite } from "../../schema/default/default";
 import { INavigationPages } from "../../navigation/NavigationPages";
 import { FlatList } from "react-native";
 import { AlertReachedCard } from "./AlertReachedCard";
+import { Alert } from "../../schema/model";
 
 export const AlertReachedList = () => {
   const { navigate } = useNavigation<NavigationProp<INavigationPages>>();
@@ -41,10 +42,18 @@ export const AlertReachedList = () => {
     );
   }
 
+  const onPress = (alert: Alert) => {
+    navigate("AlertDetailsPage", {
+      _id: alert._id,
+    });
+  };
+
   return (
     <FlatList
       data={alertData}
-      renderItem={({ item }) => <AlertReachedCard alert={item} />}
+      renderItem={({ item }) => (
+        <AlertReachedCard alert={item} onPress={onPress} />
+      )}
       keyExtractor={(item, i) => `${item.symbol}-${i}`}
       onEndReached={() => fetchNextPage()}
       ItemSeparatorComponent={Separator}

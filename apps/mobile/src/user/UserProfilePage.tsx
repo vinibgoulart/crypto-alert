@@ -46,7 +46,7 @@ export const UserProfilePage = () => {
             <Text fontSize={"$3"} fontWeight={"$6"}>
               {user?.data.name}
             </Text>
-            <Text fontSize={"$1"} fontWeight={"$4"} color={"$gray10"}>
+            <Text fontSize={"$1"} fontWeight={"$4"} color={"$gray11"}>
               {user?.data.email}
             </Text>
           </YStack>

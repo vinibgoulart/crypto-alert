@@ -6,6 +6,7 @@ import { FlatList } from "react-native";
 import { AlertCard } from "./AlertCard";
 import { useGetAlertsInfinite } from "../../schema/default/default";
 import { INavigationPages } from "../../navigation/NavigationPages";
+import { Alert } from "../../schema/model";
 
 export const AlertList = () => {
   const { navigate } = useNavigation<NavigationProp<INavigationPages>>();
@@ -38,10 +39,16 @@ export const AlertList = () => {
     );
   }
 
+  const onPress = (alert: Alert) => {
+    navigate("AlertDetailsPage", {
+      _id: alert._id,
+    });
+  };
+
   return (
     <FlatList
       data={alertData}
-      renderItem={({ item }) => <AlertCard alert={item} />}
+      renderItem={({ item }) => <AlertCard alert={item} onPress={onPress} />}
       keyExtractor={(item, i) => `${item.symbol}-${i}`}
       onEndReached={() => fetchNextPage()}
       ItemSeparatorComponent={Separator}
