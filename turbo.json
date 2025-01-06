@@ -8,6 +8,10 @@
     "ios": {
       "persistent": true,
       "cache": false
+    },
+    "build:expo:android": {
+      "persistent": true,
+      "cache": false
     }
   }
 }

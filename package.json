@@ -10,7 +10,8 @@
     "be:worker": "turbo dev --filter=@crypto-alert/worker",
     "be:api": "turbo dev --filter=@crypto-alert/server",
     "be:scheduler": "turbo dev --filter=@crypto-alert/scheduler",
-    "fe:mobile:ios": "turbo ios --filter=@crypto-alert/mobile"
+    "fe:mobile:ios": "turbo ios --filter=@crypto-alert/mobile",
+    "fe:build:expo:android": "turbo build:expo:android --filter=@crypto-alert/mobile"
   },
   "devDependencies": {
     "turbo": "^2.3.3"

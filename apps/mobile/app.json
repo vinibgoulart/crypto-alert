@@ -19,7 +19,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/splash.png",
         "backgroundColor": "#1E3E59"
-      }
+      },
+      "package": "com.vinibgoulart.cryptoalert"
     },
     "web": {
       "favicon": "./assets/logo.png"
@@ -29,11 +30,17 @@
         "expo-font",
         {
           "fonts": [
-            "./assets/fonts/Poppins-Regular.otf"
+            "./assets/fonts/Poppins-Regular.ttf"
           ]
         }
       ],
       "expo-localization"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "c89ccdc7-0cd6-40d2-994c-ff34d3df94b6"
+      }
+    },
+    "owner": "vinibgoulart"
   }
 }
