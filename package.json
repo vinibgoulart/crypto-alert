@@ -12,6 +12,7 @@
     "be:scheduler": "turbo dev --filter=@crypto-alert/scheduler",
     "fe:web": "turbo dev --filter=@crypto-alert/web",
     "fe:mobile:ios": "turbo ios --filter=@crypto-alert/mobile",
+    "fe:mobile:android": "turbo android --filter=@crypto-alert/mobile",
     "fe:build:expo:android": "turbo build:expo:android --filter=@crypto-alert/mobile"
   },
   "devDependencies": {

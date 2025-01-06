@@ -29,6 +29,7 @@ export const AuthWelcomePage = () => {
           </Text>
         </YStack>
         <Image
+          my={"$5"}
           source={{
             uri: timerGif,
             cache: "force-cache",
