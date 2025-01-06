@@ -113,7 +113,7 @@ export const AuthRegisterPage = () => {
   };
 
   return (
-    <AuthLayout gap={"$10"} justifyContent="space-evenly">
+    <AuthLayout gap={"$5"} justifyContent="space-evenly">
       <FormProvider {...formConfig}>
         <YStack f={1} gap={"$5"}>
           <Text ta={"center"} fontSize={"$4"} fontWeight={"$6"}>

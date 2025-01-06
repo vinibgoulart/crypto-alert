@@ -42,7 +42,7 @@ export const AuthLoginPage = () => {
           Toast.show({
             type: "error",
             text1: t("Error"),
-            text2: response.data.error,
+            text2: response.data.error as string,
           });
           return;
         }
@@ -64,7 +64,7 @@ export const AuthLoginPage = () => {
   };
 
   return (
-    <AuthLayout gap={"$10"} justifyContent="space-evenly">
+    <AuthLayout gap={"$5"} justifyContent="space-evenly">
       <FormProvider {...formConfig}>
         <YStack f={1} gap={"$5"}>
           <Text ta={"center"} fontSize={"$4"} fontWeight={"$6"}>

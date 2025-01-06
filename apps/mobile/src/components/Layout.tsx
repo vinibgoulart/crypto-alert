@@ -31,7 +31,7 @@ export const Layout = ({ children, hideBackButton, ...props }: ILayout) => {
   );
 
   return (
-    <YStack bg={"$secondary"} f={1} gap={"$5"} paddingVertical={"$2"}>
+    <YStack bg={"$secondary"} f={1} gap={"$5"} py={"$2"}>
       <XStack
         jc={"center"}
         ai={"center"}

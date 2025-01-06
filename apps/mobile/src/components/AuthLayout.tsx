@@ -34,7 +34,7 @@ export const AuthLayout = ({
   );
 
   return (
-    <YStack bg={"$secondary"} f={1}>
+    <YStack bg={"$secondary"} f={1} gap={"$5"} py={"$2"}>
       {!hideBackButton && (
         <ArrowLeft color={"$primary"} size={"$3"} onPress={goBack} />
       )}

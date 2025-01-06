@@ -68,7 +68,9 @@ export const handleAuthLoginPost = (app: OpenAPIHono<Env, {}, "/">) => {
   });
 
   app.openapi(route, async (c) => {
+    console.log("osi");
     const { email, password } = c.req.valid("json");
+    console.log("osi");
 
     const user = await UserModel.findOne({
       email,
@@ -102,6 +104,8 @@ export const handleAuthLoginPost = (app: OpenAPIHono<Env, {}, "/">) => {
       cookie: SESSION_USER_COOKIE,
       value: userToken,
     });
+
+    console.log("oi");
 
     return c.json(
       {

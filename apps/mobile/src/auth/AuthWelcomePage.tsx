@@ -11,7 +11,7 @@ export const AuthWelcomePage = () => {
   const { navigate } = useNavigation<NavigationProp<INavigationPages>>();
 
   return (
-    <AuthLayout gap={"$10"} justifyContent="space-evenly" hideBackButton>
+    <AuthLayout gap={"$5"} justifyContent="space-evenly" hideBackButton>
       <YStack f={1}>
         <YStack gap={"$2"}>
           <Text
@@ -29,7 +29,6 @@ export const AuthWelcomePage = () => {
           </Text>
         </YStack>
         <Image
-          my={"$5"}
           source={{
             uri: timerGif,
             cache: "force-cache",

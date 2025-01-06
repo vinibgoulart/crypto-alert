@@ -4,11 +4,7 @@
  * crypto alert
  * OpenAPI spec version: 1.0.0
  */
-import {
-  useInfiniteQuery,
-  useMutation,
-  useQuery
-} from '@tanstack/react-query'
+import { useInfiniteQuery, useMutation, useQuery } from "@tanstack/react-query";
 import type {
   DataTag,
   DefinedInitialDataOptions,
@@ -24,8 +20,8 @@ import type {
   UseMutationOptions,
   UseMutationResult,
   UseQueryOptions,
-  UseQueryResult
-} from '@tanstack/react-query'
+  UseQueryResult,
+} from "@tanstack/react-query";
 import type {
   GetAlert200,
   GetAlert404,
@@ -47,944 +43,1553 @@ import type {
   PostAuthRegister200,
   PostAuthRegister400,
   PostAuthRegisterBody,
-  User
-} from '.././model'
-
-
+  User,
+} from ".././model";
 
 export type postAuthRegisterResponse = {
   data: PostAuthRegister200;
   status: number;
   headers: Headers;
-}
+};
 
 export const getPostAuthRegisterUrl = () => {
+  return `http://localhost:4003/auth/register`;
+};
 
-
-  return `http://localhost:4003/auth/register`
-}
-
-export const postAuthRegister = async (postAuthRegisterBody: PostAuthRegisterBody, options?: RequestInit): Promise<postAuthRegisterResponse> => {
-  
-  const res = await fetch(getPostAuthRegisterUrl(),
-  {      
+export const postAuthRegister = async (
+  postAuthRegisterBody: PostAuthRegisterBody,
+  options?: RequestInit
+): Promise<postAuthRegisterResponse> => {
+  const res = await fetch(getPostAuthRegisterUrl(), {
     ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(
-      postAuthRegisterBody,)
-  }
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...options?.headers },
+    body: JSON.stringify(postAuthRegisterBody),
+  });
+  const data = await res.json();
 
-  )
-  const data = await res.json()
+  return { status: res.status, data, headers: res.headers };
+};
 
-  return { status: res.status, data, headers: res.headers }
-}
+export const getPostAuthRegisterMutationOptions = <
+  TError = PostAuthRegister400,
+  TContext = unknown
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof postAuthRegister>>,
+    TError,
+    { data: PostAuthRegisterBody },
+    TContext
+  >;
+  fetch?: RequestInit;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof postAuthRegister>>,
+  TError,
+  { data: PostAuthRegisterBody },
+  TContext
+> => {
+  const { mutation: mutationOptions, fetch: fetchOptions } = options ?? {};
 
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof postAuthRegister>>,
+    { data: PostAuthRegisterBody }
+  > = (props) => {
+    const { data } = props ?? {};
 
+    return postAuthRegister(data, fetchOptions);
+  };
 
+  return { mutationFn, ...mutationOptions };
+};
 
-export const getPostAuthRegisterMutationOptions = <TError = PostAuthRegister400,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof postAuthRegister>>, TError,{data: PostAuthRegisterBody}, TContext>, fetch?: RequestInit}
-): UseMutationOptions<Awaited<ReturnType<typeof postAuthRegister>>, TError,{data: PostAuthRegisterBody}, TContext> => {
-const {mutation: mutationOptions, fetch: fetchOptions} = options ?? {};
+export type PostAuthRegisterMutationResult = NonNullable<
+  Awaited<ReturnType<typeof postAuthRegister>>
+>;
+export type PostAuthRegisterMutationBody = PostAuthRegisterBody;
+export type PostAuthRegisterMutationError = PostAuthRegister400;
 
-      
+export const usePostAuthRegister = <
+  TError = PostAuthRegister400,
+  TContext = unknown
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof postAuthRegister>>,
+    TError,
+    { data: PostAuthRegisterBody },
+    TContext
+  >;
+  fetch?: RequestInit;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof postAuthRegister>>,
+  TError,
+  { data: PostAuthRegisterBody },
+  TContext
+> => {
+  const mutationOptions = getPostAuthRegisterMutationOptions(options);
 
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof postAuthRegister>>, {data: PostAuthRegisterBody}> = (props) => {
-          const {data} = props ?? {};
-
-          return  postAuthRegister(data,fetchOptions)
-        }
-
-        
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type PostAuthRegisterMutationResult = NonNullable<Awaited<ReturnType<typeof postAuthRegister>>>
-    export type PostAuthRegisterMutationBody = PostAuthRegisterBody
-    export type PostAuthRegisterMutationError = PostAuthRegister400
-
-    export const usePostAuthRegister = <TError = PostAuthRegister400,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof postAuthRegister>>, TError,{data: PostAuthRegisterBody}, TContext>, fetch?: RequestInit}
-): UseMutationResult<
-        Awaited<ReturnType<typeof postAuthRegister>>,
-        TError,
-        {data: PostAuthRegisterBody},
-        TContext
-      > => {
-
-      const mutationOptions = getPostAuthRegisterMutationOptions(options);
-
-      return useMutation(mutationOptions);
-    }
-    export type postAuthLoginResponse = {
+  return useMutation(mutationOptions);
+};
+export type postAuthLoginResponse = {
   data: PostAuthLogin200;
   status: number;
   headers: Headers;
-}
+};
 
 export const getPostAuthLoginUrl = () => {
+  return `http://localhost:4003/auth/login`;
+};
 
-
-  return `http://localhost:4003/auth/login`
-}
-
-export const postAuthLogin = async (postAuthLoginBody: PostAuthLoginBody, options?: RequestInit): Promise<postAuthLoginResponse> => {
-  
-  const res = await fetch(getPostAuthLoginUrl(),
-  {      
+export const postAuthLogin = async (
+  postAuthLoginBody: PostAuthLoginBody,
+  options?: RequestInit
+): Promise<postAuthLoginResponse> => {
+  const res = await fetch(getPostAuthLoginUrl(), {
     ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(
-      postAuthLoginBody,)
-  }
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...options?.headers },
+    body: JSON.stringify(postAuthLoginBody),
+  });
+  const data = await res.json();
 
-  )
-  const data = await res.json()
+  return { status: res.status, data, headers: res.headers };
+};
 
-  return { status: res.status, data, headers: res.headers }
-}
+export const getPostAuthLoginMutationOptions = <
+  TError = PostAuthLogin400,
+  TContext = unknown
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof postAuthLogin>>,
+    TError,
+    { data: PostAuthLoginBody },
+    TContext
+  >;
+  fetch?: RequestInit;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof postAuthLogin>>,
+  TError,
+  { data: PostAuthLoginBody },
+  TContext
+> => {
+  const { mutation: mutationOptions, fetch: fetchOptions } = options ?? {};
 
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof postAuthLogin>>,
+    { data: PostAuthLoginBody }
+  > = (props) => {
+    const { data } = props ?? {};
 
+    return postAuthLogin(data, fetchOptions);
+  };
 
+  return { mutationFn, ...mutationOptions };
+};
 
-export const getPostAuthLoginMutationOptions = <TError = PostAuthLogin400,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof postAuthLogin>>, TError,{data: PostAuthLoginBody}, TContext>, fetch?: RequestInit}
-): UseMutationOptions<Awaited<ReturnType<typeof postAuthLogin>>, TError,{data: PostAuthLoginBody}, TContext> => {
-const {mutation: mutationOptions, fetch: fetchOptions} = options ?? {};
+export type PostAuthLoginMutationResult = NonNullable<
+  Awaited<ReturnType<typeof postAuthLogin>>
+>;
+export type PostAuthLoginMutationBody = PostAuthLoginBody;
+export type PostAuthLoginMutationError = PostAuthLogin400;
 
-      
+export const usePostAuthLogin = <
+  TError = PostAuthLogin400,
+  TContext = unknown
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof postAuthLogin>>,
+    TError,
+    { data: PostAuthLoginBody },
+    TContext
+  >;
+  fetch?: RequestInit;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof postAuthLogin>>,
+  TError,
+  { data: PostAuthLoginBody },
+  TContext
+> => {
+  const mutationOptions = getPostAuthLoginMutationOptions(options);
 
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof postAuthLogin>>, {data: PostAuthLoginBody}> = (props) => {
-          const {data} = props ?? {};
-
-          return  postAuthLogin(data,fetchOptions)
-        }
-
-        
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type PostAuthLoginMutationResult = NonNullable<Awaited<ReturnType<typeof postAuthLogin>>>
-    export type PostAuthLoginMutationBody = PostAuthLoginBody
-    export type PostAuthLoginMutationError = PostAuthLogin400
-
-    export const usePostAuthLogin = <TError = PostAuthLogin400,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof postAuthLogin>>, TError,{data: PostAuthLoginBody}, TContext>, fetch?: RequestInit}
-): UseMutationResult<
-        Awaited<ReturnType<typeof postAuthLogin>>,
-        TError,
-        {data: PostAuthLoginBody},
-        TContext
-      > => {
-
-      const mutationOptions = getPostAuthLoginMutationOptions(options);
-
-      return useMutation(mutationOptions);
-    }
-    export type postAuthLogoutResponse = {
+  return useMutation(mutationOptions);
+};
+export type postAuthLogoutResponse = {
   data: PostAuthLogout200;
   status: number;
   headers: Headers;
-}
+};
 
 export const getPostAuthLogoutUrl = () => {
+  return `http://localhost:4003/auth/logout`;
+};
 
-
-  return `http://localhost:4003/auth/logout`
-}
-
-export const postAuthLogout = async ( options?: RequestInit): Promise<postAuthLogoutResponse> => {
-  
-  const res = await fetch(getPostAuthLogoutUrl(),
-  {      
+export const postAuthLogout = async (
+  options?: RequestInit
+): Promise<postAuthLogoutResponse> => {
+  const res = await fetch(getPostAuthLogoutUrl(), {
     ...options,
-    method: 'POST'
-    
-    
-  }
+    method: "POST",
+  });
+  const data = await res.json();
 
-  )
-  const data = await res.json()
+  return { status: res.status, data, headers: res.headers };
+};
 
-  return { status: res.status, data, headers: res.headers }
-}
+export const getPostAuthLogoutMutationOptions = <
+  TError = unknown,
+  TContext = unknown
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof postAuthLogout>>,
+    TError,
+    void,
+    TContext
+  >;
+  fetch?: RequestInit;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof postAuthLogout>>,
+  TError,
+  void,
+  TContext
+> => {
+  const { mutation: mutationOptions, fetch: fetchOptions } = options ?? {};
 
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof postAuthLogout>>,
+    void
+  > = () => {
+    return postAuthLogout(fetchOptions);
+  };
 
+  return { mutationFn, ...mutationOptions };
+};
 
+export type PostAuthLogoutMutationResult = NonNullable<
+  Awaited<ReturnType<typeof postAuthLogout>>
+>;
 
-export const getPostAuthLogoutMutationOptions = <TError = unknown,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof postAuthLogout>>, TError,void, TContext>, fetch?: RequestInit}
-): UseMutationOptions<Awaited<ReturnType<typeof postAuthLogout>>, TError,void, TContext> => {
-const {mutation: mutationOptions, fetch: fetchOptions} = options ?? {};
+export type PostAuthLogoutMutationError = unknown;
 
-      
+export const usePostAuthLogout = <
+  TError = unknown,
+  TContext = unknown
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof postAuthLogout>>,
+    TError,
+    void,
+    TContext
+  >;
+  fetch?: RequestInit;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof postAuthLogout>>,
+  TError,
+  void,
+  TContext
+> => {
+  const mutationOptions = getPostAuthLogoutMutationOptions(options);
 
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof postAuthLogout>>, void> = () => {
-          
-
-          return  postAuthLogout(fetchOptions)
-        }
-
-        
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type PostAuthLogoutMutationResult = NonNullable<Awaited<ReturnType<typeof postAuthLogout>>>
-    
-    export type PostAuthLogoutMutationError = unknown
-
-    export const usePostAuthLogout = <TError = unknown,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof postAuthLogout>>, TError,void, TContext>, fetch?: RequestInit}
-): UseMutationResult<
-        Awaited<ReturnType<typeof postAuthLogout>>,
-        TError,
-        void,
-        TContext
-      > => {
-
-      const mutationOptions = getPostAuthLogoutMutationOptions(options);
-
-      return useMutation(mutationOptions);
-    }
-    export type postAlertResponse = {
+  return useMutation(mutationOptions);
+};
+export type postAlertResponse = {
   data: PostAlert200;
   status: number;
   headers: Headers;
-}
+};
 
 export const getPostAlertUrl = () => {
+  return `http://localhost:4003/alert`;
+};
 
-
-  return `http://localhost:4003/alert`
-}
-
-export const postAlert = async (postAlertBody: PostAlertBody, options?: RequestInit): Promise<postAlertResponse> => {
-  
-  const res = await fetch(getPostAlertUrl(),
-  {      
+export const postAlert = async (
+  postAlertBody: PostAlertBody,
+  options?: RequestInit
+): Promise<postAlertResponse> => {
+  const res = await fetch(getPostAlertUrl(), {
     ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(
-      postAlertBody,)
-  }
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...options?.headers },
+    body: JSON.stringify(postAlertBody),
+  });
+  const data = await res.json();
 
-  )
-  const data = await res.json()
+  return { status: res.status, data, headers: res.headers };
+};
 
-  return { status: res.status, data, headers: res.headers }
-}
+export const getPostAlertMutationOptions = <
+  TError = PostAlert400,
+  TContext = unknown
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof postAlert>>,
+    TError,
+    { data: PostAlertBody },
+    TContext
+  >;
+  fetch?: RequestInit;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof postAlert>>,
+  TError,
+  { data: PostAlertBody },
+  TContext
+> => {
+  const { mutation: mutationOptions, fetch: fetchOptions } = options ?? {};
 
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof postAlert>>,
+    { data: PostAlertBody }
+  > = (props) => {
+    const { data } = props ?? {};
 
+    return postAlert(data, fetchOptions);
+  };
 
+  return { mutationFn, ...mutationOptions };
+};
 
-export const getPostAlertMutationOptions = <TError = PostAlert400,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof postAlert>>, TError,{data: PostAlertBody}, TContext>, fetch?: RequestInit}
-): UseMutationOptions<Awaited<ReturnType<typeof postAlert>>, TError,{data: PostAlertBody}, TContext> => {
-const {mutation: mutationOptions, fetch: fetchOptions} = options ?? {};
+export type PostAlertMutationResult = NonNullable<
+  Awaited<ReturnType<typeof postAlert>>
+>;
+export type PostAlertMutationBody = PostAlertBody;
+export type PostAlertMutationError = PostAlert400;
 
-      
+export const usePostAlert = <
+  TError = PostAlert400,
+  TContext = unknown
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof postAlert>>,
+    TError,
+    { data: PostAlertBody },
+    TContext
+  >;
+  fetch?: RequestInit;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof postAlert>>,
+  TError,
+  { data: PostAlertBody },
+  TContext
+> => {
+  const mutationOptions = getPostAlertMutationOptions(options);
 
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof postAlert>>, {data: PostAlertBody}> = (props) => {
-          const {data} = props ?? {};
-
-          return  postAlert(data,fetchOptions)
-        }
-
-        
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type PostAlertMutationResult = NonNullable<Awaited<ReturnType<typeof postAlert>>>
-    export type PostAlertMutationBody = PostAlertBody
-    export type PostAlertMutationError = PostAlert400
-
-    export const usePostAlert = <TError = PostAlert400,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof postAlert>>, TError,{data: PostAlertBody}, TContext>, fetch?: RequestInit}
-): UseMutationResult<
-        Awaited<ReturnType<typeof postAlert>>,
-        TError,
-        {data: PostAlertBody},
-        TContext
-      > => {
-
-      const mutationOptions = getPostAlertMutationOptions(options);
-
-      return useMutation(mutationOptions);
-    }
-    export type getAlertResponse = {
+  return useMutation(mutationOptions);
+};
+export type getAlertResponse = {
   data: GetAlert200;
   status: number;
   headers: Headers;
-}
+};
 
-export const getGetAlertUrl = (params?: GetAlertParams,) => {
+export const getGetAlertUrl = (params?: GetAlertParams) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
-  return normalizedParams.size ? `http://localhost:4003/alert?${normalizedParams.toString()}` : `http://localhost:4003/alert`
-}
+  return normalizedParams.size
+    ? `http://localhost:4003/alert?${normalizedParams.toString()}`
+    : `http://localhost:4003/alert`;
+};
 
-export const getAlert = async (params?: GetAlertParams, options?: RequestInit): Promise<getAlertResponse> => {
-  
-  const res = await fetch(getGetAlertUrl(params),
-  {      
+export const getAlert = async (
+  params?: GetAlertParams,
+  options?: RequestInit
+): Promise<getAlertResponse> => {
+  const res = await fetch(getGetAlertUrl(params), {
     ...options,
-    method: 'GET'
-    
-    
+    method: "GET",
+  });
+  const data = await res.json();
+
+  return { status: res.status, data, headers: res.headers };
+};
+
+export const getGetAlertQueryKey = (params?: GetAlertParams) => {
+  return [`http://localhost:4003/alert`, ...(params ? [params] : [])] as const;
+};
+
+export const getGetAlertInfiniteQueryOptions = <
+  TData = InfiniteData<
+    Awaited<ReturnType<typeof getAlert>>,
+    GetAlertParams["page"]
+  >,
+  TError = GetAlert404
+>(
+  params?: GetAlertParams,
+  options?: {
+    query?: Partial<
+      UseInfiniteQueryOptions<
+        Awaited<ReturnType<typeof getAlert>>,
+        TError,
+        TData,
+        Awaited<ReturnType<typeof getAlert>>,
+        QueryKey,
+        GetAlertParams["page"]
+      >
+    >;
+    fetch?: RequestInit;
   }
-
-  )
-  const data = await res.json()
-
-  return { status: res.status, data, headers: res.headers }
-}
-
-
-
-export const getGetAlertQueryKey = (params?: GetAlertParams,) => {
-    return [`http://localhost:4003/alert`, ...(params ? [params]: [])] as const;
-    }
-
-    
-export const getGetAlertInfiniteQueryOptions = <TData = InfiniteData<Awaited<ReturnType<typeof getAlert>>, GetAlertParams['page']>, TError = GetAlert404>(params?: GetAlertParams, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getAlert>>, TError, TData, Awaited<ReturnType<typeof getAlert>>, QueryKey, GetAlertParams['page']>>, fetch?: RequestInit}
 ) => {
+  const { query: queryOptions, fetch: fetchOptions } = options ?? {};
 
-const {query: queryOptions, fetch: fetchOptions} = options ?? {};
+  const queryKey = queryOptions?.queryKey ?? getGetAlertQueryKey(params);
 
-  const queryKey =  queryOptions?.queryKey ?? getGetAlertQueryKey(params);
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof getAlert>>,
+    QueryKey,
+    GetAlertParams["page"]
+  > = ({ signal, pageParam }) =>
+    getAlert(
+      { ...params, page: pageParam || params?.["page"] },
+      { signal, ...fetchOptions }
+    );
 
-  
+  return { queryKey, queryFn, ...queryOptions } as UseInfiniteQueryOptions<
+    Awaited<ReturnType<typeof getAlert>>,
+    TError,
+    TData,
+    Awaited<ReturnType<typeof getAlert>>,
+    QueryKey,
+    GetAlertParams["page"]
+  > & { queryKey: DataTag<QueryKey, TData> };
+};
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getAlert>>, QueryKey, GetAlertParams['page']> = ({ signal, pageParam }) => getAlert({...params, page: pageParam || params?.['page']}, { signal, ...fetchOptions });
+export type GetAlertInfiniteQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getAlert>>
+>;
+export type GetAlertInfiniteQueryError = GetAlert404;
 
-      
-
-      
-
-   return  { queryKey, queryFn, ...queryOptions} as UseInfiniteQueryOptions<Awaited<ReturnType<typeof getAlert>>, TError, TData, Awaited<ReturnType<typeof getAlert>>, QueryKey, GetAlertParams['page']> & { queryKey: DataTag<QueryKey, TData> }
-}
-
-export type GetAlertInfiniteQueryResult = NonNullable<Awaited<ReturnType<typeof getAlert>>>
-export type GetAlertInfiniteQueryError = GetAlert404
-
-
-export function useGetAlertInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getAlert>>, GetAlertParams['page']>, TError = GetAlert404>(
- params: undefined |  GetAlertParams, options: { query:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getAlert>>, TError, TData, Awaited<ReturnType<typeof getAlert>>, QueryKey, GetAlertParams['page']>> & Pick<
+export function useGetAlertInfinite<
+  TData = InfiniteData<
+    Awaited<ReturnType<typeof getAlert>>,
+    GetAlertParams["page"]
+  >,
+  TError = GetAlert404
+>(
+  params: undefined | GetAlertParams,
+  options: {
+    query: Partial<
+      UseInfiniteQueryOptions<
+        Awaited<ReturnType<typeof getAlert>>,
+        TError,
+        TData,
+        Awaited<ReturnType<typeof getAlert>>,
+        QueryKey,
+        GetAlertParams["page"]
+      >
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof getAlert>>,
           TError,
-          TData, QueryKey
-        > , 'initialData'
-      >, fetch?: RequestInit}
-
-  ):  DefinedUseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
-export function useGetAlertInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getAlert>>, GetAlertParams['page']>, TError = GetAlert404>(
- params?: GetAlertParams, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getAlert>>, TError, TData, Awaited<ReturnType<typeof getAlert>>, QueryKey, GetAlertParams['page']>> & Pick<
+          TData,
+          QueryKey
+        >,
+        "initialData"
+      >;
+    fetch?: RequestInit;
+  }
+): DefinedUseInfiniteQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData>;
+};
+export function useGetAlertInfinite<
+  TData = InfiniteData<
+    Awaited<ReturnType<typeof getAlert>>,
+    GetAlertParams["page"]
+  >,
+  TError = GetAlert404
+>(
+  params?: GetAlertParams,
+  options?: {
+    query?: Partial<
+      UseInfiniteQueryOptions<
+        Awaited<ReturnType<typeof getAlert>>,
+        TError,
+        TData,
+        Awaited<ReturnType<typeof getAlert>>,
+        QueryKey,
+        GetAlertParams["page"]
+      >
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof getAlert>>,
           TError,
-          TData, QueryKey
-        > , 'initialData'
-      >, fetch?: RequestInit}
+          TData,
+          QueryKey
+        >,
+        "initialData"
+      >;
+    fetch?: RequestInit;
+  }
+): UseInfiniteQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData>;
+};
+export function useGetAlertInfinite<
+  TData = InfiniteData<
+    Awaited<ReturnType<typeof getAlert>>,
+    GetAlertParams["page"]
+  >,
+  TError = GetAlert404
+>(
+  params?: GetAlertParams,
+  options?: {
+    query?: Partial<
+      UseInfiniteQueryOptions<
+        Awaited<ReturnType<typeof getAlert>>,
+        TError,
+        TData,
+        Awaited<ReturnType<typeof getAlert>>,
+        QueryKey,
+        GetAlertParams["page"]
+      >
+    >;
+    fetch?: RequestInit;
+  }
+): UseInfiniteQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData>;
+};
 
-  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
-export function useGetAlertInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getAlert>>, GetAlertParams['page']>, TError = GetAlert404>(
- params?: GetAlertParams, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getAlert>>, TError, TData, Awaited<ReturnType<typeof getAlert>>, QueryKey, GetAlertParams['page']>>, fetch?: RequestInit}
+export function useGetAlertInfinite<
+  TData = InfiniteData<
+    Awaited<ReturnType<typeof getAlert>>,
+    GetAlertParams["page"]
+  >,
+  TError = GetAlert404
+>(
+  params?: GetAlertParams,
+  options?: {
+    query?: Partial<
+      UseInfiniteQueryOptions<
+        Awaited<ReturnType<typeof getAlert>>,
+        TError,
+        TData,
+        Awaited<ReturnType<typeof getAlert>>,
+        QueryKey,
+        GetAlertParams["page"]
+      >
+    >;
+    fetch?: RequestInit;
+  }
+): UseInfiniteQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData>;
+} {
+  const queryOptions = getGetAlertInfiniteQueryOptions(params, options);
 
-  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
+  const query = useInfiniteQuery(queryOptions) as UseInfiniteQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData> };
 
-export function useGetAlertInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getAlert>>, GetAlertParams['page']>, TError = GetAlert404>(
- params?: GetAlertParams, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getAlert>>, TError, TData, Awaited<ReturnType<typeof getAlert>>, QueryKey, GetAlertParams['page']>>, fetch?: RequestInit}
-
-  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> } {
-
-  const queryOptions = getGetAlertInfiniteQueryOptions(params,options)
-
-  const query = useInfiniteQuery(queryOptions) as  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
-
-  query.queryKey = queryOptions.queryKey ;
+  query.queryKey = queryOptions.queryKey;
 
   return query;
 }
 
-
-
-export const getGetAlertQueryOptions = <TData = Awaited<ReturnType<typeof getAlert>>, TError = GetAlert404>(params?: GetAlertParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAlert>>, TError, TData>>, fetch?: RequestInit}
+export const getGetAlertQueryOptions = <
+  TData = Awaited<ReturnType<typeof getAlert>>,
+  TError = GetAlert404
+>(
+  params?: GetAlertParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof getAlert>>, TError, TData>
+    >;
+    fetch?: RequestInit;
+  }
 ) => {
+  const { query: queryOptions, fetch: fetchOptions } = options ?? {};
 
-const {query: queryOptions, fetch: fetchOptions} = options ?? {};
+  const queryKey = queryOptions?.queryKey ?? getGetAlertQueryKey(params);
 
-  const queryKey =  queryOptions?.queryKey ?? getGetAlertQueryKey(params);
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getAlert>>> = ({
+    signal,
+  }) => getAlert(params, { signal, ...fetchOptions });
 
-  
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof getAlert>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData> };
+};
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getAlert>>> = ({ signal }) => getAlert(params, { signal, ...fetchOptions });
+export type GetAlertQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getAlert>>
+>;
+export type GetAlertQueryError = GetAlert404;
 
-      
-
-      
-
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getAlert>>, TError, TData> & { queryKey: DataTag<QueryKey, TData> }
-}
-
-export type GetAlertQueryResult = NonNullable<Awaited<ReturnType<typeof getAlert>>>
-export type GetAlertQueryError = GetAlert404
-
-
-export function useGetAlert<TData = Awaited<ReturnType<typeof getAlert>>, TError = GetAlert404>(
- params: undefined |  GetAlertParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAlert>>, TError, TData>> & Pick<
+export function useGetAlert<
+  TData = Awaited<ReturnType<typeof getAlert>>,
+  TError = GetAlert404
+>(
+  params: undefined | GetAlertParams,
+  options: {
+    query: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof getAlert>>, TError, TData>
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof getAlert>>,
           TError,
           TData
-        > , 'initialData'
-      >, fetch?: RequestInit}
-
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
-export function useGetAlert<TData = Awaited<ReturnType<typeof getAlert>>, TError = GetAlert404>(
- params?: GetAlertParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAlert>>, TError, TData>> & Pick<
+        >,
+        "initialData"
+      >;
+    fetch?: RequestInit;
+  }
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData>;
+};
+export function useGetAlert<
+  TData = Awaited<ReturnType<typeof getAlert>>,
+  TError = GetAlert404
+>(
+  params?: GetAlertParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof getAlert>>, TError, TData>
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof getAlert>>,
           TError,
           TData
-        > , 'initialData'
-      >, fetch?: RequestInit}
+        >,
+        "initialData"
+      >;
+    fetch?: RequestInit;
+  }
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
+export function useGetAlert<
+  TData = Awaited<ReturnType<typeof getAlert>>,
+  TError = GetAlert404
+>(
+  params?: GetAlertParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof getAlert>>, TError, TData>
+    >;
+    fetch?: RequestInit;
+  }
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
 
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
-export function useGetAlert<TData = Awaited<ReturnType<typeof getAlert>>, TError = GetAlert404>(
- params?: GetAlertParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAlert>>, TError, TData>>, fetch?: RequestInit}
+export function useGetAlert<
+  TData = Awaited<ReturnType<typeof getAlert>>,
+  TError = GetAlert404
+>(
+  params?: GetAlertParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof getAlert>>, TError, TData>
+    >;
+    fetch?: RequestInit;
+  }
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> } {
+  const queryOptions = getGetAlertQueryOptions(params, options);
 
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: DataTag<QueryKey, TData>;
+  };
 
-export function useGetAlert<TData = Awaited<ReturnType<typeof getAlert>>, TError = GetAlert404>(
- params?: GetAlertParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAlert>>, TError, TData>>, fetch?: RequestInit}
-
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> } {
-
-  const queryOptions = getGetAlertQueryOptions(params,options)
-
-  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
-
-  query.queryKey = queryOptions.queryKey ;
+  query.queryKey = queryOptions.queryKey;
 
   return query;
 }
-
-
 
 export type getAlertsResponse = {
   data: GetAlerts200;
   status: number;
   headers: Headers;
-}
+};
 
-export const getGetAlertsUrl = (params?: GetAlertsParams,) => {
+export const getGetAlertsUrl = (params?: GetAlertsParams) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
-  return normalizedParams.size ? `http://localhost:4003/alerts?${normalizedParams.toString()}` : `http://localhost:4003/alerts`
-}
+  return normalizedParams.size
+    ? `http://localhost:4003/alerts?${normalizedParams.toString()}`
+    : `http://localhost:4003/alerts`;
+};
 
-export const getAlerts = async (params?: GetAlertsParams, options?: RequestInit): Promise<getAlertsResponse> => {
-  
-  const res = await fetch(getGetAlertsUrl(params),
-  {      
+export const getAlerts = async (
+  params?: GetAlertsParams,
+  options?: RequestInit
+): Promise<getAlertsResponse> => {
+  const res = await fetch(getGetAlertsUrl(params), {
     ...options,
-    method: 'GET'
-    
-    
+    method: "GET",
+  });
+  const data = await res.json();
+
+  return { status: res.status, data, headers: res.headers };
+};
+
+export const getGetAlertsQueryKey = (params?: GetAlertsParams) => {
+  return [`http://localhost:4003/alerts`, ...(params ? [params] : [])] as const;
+};
+
+export const getGetAlertsInfiniteQueryOptions = <
+  TData = InfiniteData<
+    Awaited<ReturnType<typeof getAlerts>>,
+    GetAlertsParams["page"]
+  >,
+  TError = GetAlerts404
+>(
+  params?: GetAlertsParams,
+  options?: {
+    query?: Partial<
+      UseInfiniteQueryOptions<
+        Awaited<ReturnType<typeof getAlerts>>,
+        TError,
+        TData,
+        Awaited<ReturnType<typeof getAlerts>>,
+        QueryKey,
+        GetAlertsParams["page"]
+      >
+    >;
+    fetch?: RequestInit;
   }
-
-  )
-  const data = await res.json()
-
-  return { status: res.status, data, headers: res.headers }
-}
-
-
-
-export const getGetAlertsQueryKey = (params?: GetAlertsParams,) => {
-    return [`http://localhost:4003/alerts`, ...(params ? [params]: [])] as const;
-    }
-
-    
-export const getGetAlertsInfiniteQueryOptions = <TData = InfiniteData<Awaited<ReturnType<typeof getAlerts>>, GetAlertsParams['page']>, TError = GetAlerts404>(params?: GetAlertsParams, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getAlerts>>, TError, TData, Awaited<ReturnType<typeof getAlerts>>, QueryKey, GetAlertsParams['page']>>, fetch?: RequestInit}
 ) => {
+  const { query: queryOptions, fetch: fetchOptions } = options ?? {};
 
-const {query: queryOptions, fetch: fetchOptions} = options ?? {};
+  const queryKey = queryOptions?.queryKey ?? getGetAlertsQueryKey(params);
 
-  const queryKey =  queryOptions?.queryKey ?? getGetAlertsQueryKey(params);
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof getAlerts>>,
+    QueryKey,
+    GetAlertsParams["page"]
+  > = ({ signal, pageParam }) =>
+    getAlerts(
+      { ...params, page: pageParam || params?.["page"] },
+      { signal, ...fetchOptions }
+    );
 
-  
+  return { queryKey, queryFn, ...queryOptions } as UseInfiniteQueryOptions<
+    Awaited<ReturnType<typeof getAlerts>>,
+    TError,
+    TData,
+    Awaited<ReturnType<typeof getAlerts>>,
+    QueryKey,
+    GetAlertsParams["page"]
+  > & { queryKey: DataTag<QueryKey, TData> };
+};
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getAlerts>>, QueryKey, GetAlertsParams['page']> = ({ signal, pageParam }) => getAlerts({...params, page: pageParam || params?.['page']}, { signal, ...fetchOptions });
+export type GetAlertsInfiniteQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getAlerts>>
+>;
+export type GetAlertsInfiniteQueryError = GetAlerts404;
 
-      
-
-      
-
-   return  { queryKey, queryFn, ...queryOptions} as UseInfiniteQueryOptions<Awaited<ReturnType<typeof getAlerts>>, TError, TData, Awaited<ReturnType<typeof getAlerts>>, QueryKey, GetAlertsParams['page']> & { queryKey: DataTag<QueryKey, TData> }
-}
-
-export type GetAlertsInfiniteQueryResult = NonNullable<Awaited<ReturnType<typeof getAlerts>>>
-export type GetAlertsInfiniteQueryError = GetAlerts404
-
-
-export function useGetAlertsInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getAlerts>>, GetAlertsParams['page']>, TError = GetAlerts404>(
- params: undefined |  GetAlertsParams, options: { query:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getAlerts>>, TError, TData, Awaited<ReturnType<typeof getAlerts>>, QueryKey, GetAlertsParams['page']>> & Pick<
+export function useGetAlertsInfinite<
+  TData = InfiniteData<
+    Awaited<ReturnType<typeof getAlerts>>,
+    GetAlertsParams["page"]
+  >,
+  TError = GetAlerts404
+>(
+  params: undefined | GetAlertsParams,
+  options: {
+    query: Partial<
+      UseInfiniteQueryOptions<
+        Awaited<ReturnType<typeof getAlerts>>,
+        TError,
+        TData,
+        Awaited<ReturnType<typeof getAlerts>>,
+        QueryKey,
+        GetAlertsParams["page"]
+      >
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof getAlerts>>,
           TError,
-          TData, QueryKey
-        > , 'initialData'
-      >, fetch?: RequestInit}
-
-  ):  DefinedUseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
-export function useGetAlertsInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getAlerts>>, GetAlertsParams['page']>, TError = GetAlerts404>(
- params?: GetAlertsParams, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getAlerts>>, TError, TData, Awaited<ReturnType<typeof getAlerts>>, QueryKey, GetAlertsParams['page']>> & Pick<
+          TData,
+          QueryKey
+        >,
+        "initialData"
+      >;
+    fetch?: RequestInit;
+  }
+): DefinedUseInfiniteQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData>;
+};
+export function useGetAlertsInfinite<
+  TData = InfiniteData<
+    Awaited<ReturnType<typeof getAlerts>>,
+    GetAlertsParams["page"]
+  >,
+  TError = GetAlerts404
+>(
+  params?: GetAlertsParams,
+  options?: {
+    query?: Partial<
+      UseInfiniteQueryOptions<
+        Awaited<ReturnType<typeof getAlerts>>,
+        TError,
+        TData,
+        Awaited<ReturnType<typeof getAlerts>>,
+        QueryKey,
+        GetAlertsParams["page"]
+      >
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof getAlerts>>,
           TError,
-          TData, QueryKey
-        > , 'initialData'
-      >, fetch?: RequestInit}
+          TData,
+          QueryKey
+        >,
+        "initialData"
+      >;
+    fetch?: RequestInit;
+  }
+): UseInfiniteQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData>;
+};
+export function useGetAlertsInfinite<
+  TData = InfiniteData<
+    Awaited<ReturnType<typeof getAlerts>>,
+    GetAlertsParams["page"]
+  >,
+  TError = GetAlerts404
+>(
+  params?: GetAlertsParams,
+  options?: {
+    query?: Partial<
+      UseInfiniteQueryOptions<
+        Awaited<ReturnType<typeof getAlerts>>,
+        TError,
+        TData,
+        Awaited<ReturnType<typeof getAlerts>>,
+        QueryKey,
+        GetAlertsParams["page"]
+      >
+    >;
+    fetch?: RequestInit;
+  }
+): UseInfiniteQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData>;
+};
 
-  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
-export function useGetAlertsInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getAlerts>>, GetAlertsParams['page']>, TError = GetAlerts404>(
- params?: GetAlertsParams, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getAlerts>>, TError, TData, Awaited<ReturnType<typeof getAlerts>>, QueryKey, GetAlertsParams['page']>>, fetch?: RequestInit}
+export function useGetAlertsInfinite<
+  TData = InfiniteData<
+    Awaited<ReturnType<typeof getAlerts>>,
+    GetAlertsParams["page"]
+  >,
+  TError = GetAlerts404
+>(
+  params?: GetAlertsParams,
+  options?: {
+    query?: Partial<
+      UseInfiniteQueryOptions<
+        Awaited<ReturnType<typeof getAlerts>>,
+        TError,
+        TData,
+        Awaited<ReturnType<typeof getAlerts>>,
+        QueryKey,
+        GetAlertsParams["page"]
+      >
+    >;
+    fetch?: RequestInit;
+  }
+): UseInfiniteQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData>;
+} {
+  const queryOptions = getGetAlertsInfiniteQueryOptions(params, options);
 
-  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
+  const query = useInfiniteQuery(queryOptions) as UseInfiniteQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData> };
 
-export function useGetAlertsInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getAlerts>>, GetAlertsParams['page']>, TError = GetAlerts404>(
- params?: GetAlertsParams, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getAlerts>>, TError, TData, Awaited<ReturnType<typeof getAlerts>>, QueryKey, GetAlertsParams['page']>>, fetch?: RequestInit}
-
-  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> } {
-
-  const queryOptions = getGetAlertsInfiniteQueryOptions(params,options)
-
-  const query = useInfiniteQuery(queryOptions) as  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
-
-  query.queryKey = queryOptions.queryKey ;
+  query.queryKey = queryOptions.queryKey;
 
   return query;
 }
 
-
-
-export const getGetAlertsQueryOptions = <TData = Awaited<ReturnType<typeof getAlerts>>, TError = GetAlerts404>(params?: GetAlertsParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAlerts>>, TError, TData>>, fetch?: RequestInit}
+export const getGetAlertsQueryOptions = <
+  TData = Awaited<ReturnType<typeof getAlerts>>,
+  TError = GetAlerts404
+>(
+  params?: GetAlertsParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof getAlerts>>, TError, TData>
+    >;
+    fetch?: RequestInit;
+  }
 ) => {
+  const { query: queryOptions, fetch: fetchOptions } = options ?? {};
 
-const {query: queryOptions, fetch: fetchOptions} = options ?? {};
+  const queryKey = queryOptions?.queryKey ?? getGetAlertsQueryKey(params);
 
-  const queryKey =  queryOptions?.queryKey ?? getGetAlertsQueryKey(params);
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getAlerts>>> = ({
+    signal,
+  }) => getAlerts(params, { signal, ...fetchOptions });
 
-  
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof getAlerts>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData> };
+};
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getAlerts>>> = ({ signal }) => getAlerts(params, { signal, ...fetchOptions });
+export type GetAlertsQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getAlerts>>
+>;
+export type GetAlertsQueryError = GetAlerts404;
 
-      
-
-      
-
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getAlerts>>, TError, TData> & { queryKey: DataTag<QueryKey, TData> }
-}
-
-export type GetAlertsQueryResult = NonNullable<Awaited<ReturnType<typeof getAlerts>>>
-export type GetAlertsQueryError = GetAlerts404
-
-
-export function useGetAlerts<TData = Awaited<ReturnType<typeof getAlerts>>, TError = GetAlerts404>(
- params: undefined |  GetAlertsParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAlerts>>, TError, TData>> & Pick<
+export function useGetAlerts<
+  TData = Awaited<ReturnType<typeof getAlerts>>,
+  TError = GetAlerts404
+>(
+  params: undefined | GetAlertsParams,
+  options: {
+    query: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof getAlerts>>, TError, TData>
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof getAlerts>>,
           TError,
           TData
-        > , 'initialData'
-      >, fetch?: RequestInit}
-
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
-export function useGetAlerts<TData = Awaited<ReturnType<typeof getAlerts>>, TError = GetAlerts404>(
- params?: GetAlertsParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAlerts>>, TError, TData>> & Pick<
+        >,
+        "initialData"
+      >;
+    fetch?: RequestInit;
+  }
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData>;
+};
+export function useGetAlerts<
+  TData = Awaited<ReturnType<typeof getAlerts>>,
+  TError = GetAlerts404
+>(
+  params?: GetAlertsParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof getAlerts>>, TError, TData>
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof getAlerts>>,
           TError,
           TData
-        > , 'initialData'
-      >, fetch?: RequestInit}
+        >,
+        "initialData"
+      >;
+    fetch?: RequestInit;
+  }
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
+export function useGetAlerts<
+  TData = Awaited<ReturnType<typeof getAlerts>>,
+  TError = GetAlerts404
+>(
+  params?: GetAlertsParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof getAlerts>>, TError, TData>
+    >;
+    fetch?: RequestInit;
+  }
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
 
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
-export function useGetAlerts<TData = Awaited<ReturnType<typeof getAlerts>>, TError = GetAlerts404>(
- params?: GetAlertsParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAlerts>>, TError, TData>>, fetch?: RequestInit}
+export function useGetAlerts<
+  TData = Awaited<ReturnType<typeof getAlerts>>,
+  TError = GetAlerts404
+>(
+  params?: GetAlertsParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof getAlerts>>, TError, TData>
+    >;
+    fetch?: RequestInit;
+  }
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> } {
+  const queryOptions = getGetAlertsQueryOptions(params, options);
 
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: DataTag<QueryKey, TData>;
+  };
 
-export function useGetAlerts<TData = Awaited<ReturnType<typeof getAlerts>>, TError = GetAlerts404>(
- params?: GetAlertsParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAlerts>>, TError, TData>>, fetch?: RequestInit}
-
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> } {
-
-  const queryOptions = getGetAlertsQueryOptions(params,options)
-
-  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
-
-  query.queryKey = queryOptions.queryKey ;
+  query.queryKey = queryOptions.queryKey;
 
   return query;
 }
-
-
 
 export type getCryptosResponse = {
   data: GetCryptos200;
   status: number;
   headers: Headers;
-}
+};
 
-export const getGetCryptosUrl = (params?: GetCryptosParams,) => {
+export const getGetCryptosUrl = (params?: GetCryptosParams) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
-  return normalizedParams.size ? `http://localhost:4003/cryptos?${normalizedParams.toString()}` : `http://localhost:4003/cryptos`
-}
+  return normalizedParams.size
+    ? `http://localhost:4003/cryptos?${normalizedParams.toString()}`
+    : `http://localhost:4003/cryptos`;
+};
 
-export const getCryptos = async (params?: GetCryptosParams, options?: RequestInit): Promise<getCryptosResponse> => {
-  
-  const res = await fetch(getGetCryptosUrl(params),
-  {      
+export const getCryptos = async (
+  params?: GetCryptosParams,
+  options?: RequestInit
+): Promise<getCryptosResponse> => {
+  const res = await fetch(getGetCryptosUrl(params), {
     ...options,
-    method: 'GET'
-    
-    
+    method: "GET",
+  });
+  const data = await res.json();
+
+  return { status: res.status, data, headers: res.headers };
+};
+
+export const getGetCryptosQueryKey = (params?: GetCryptosParams) => {
+  return [
+    `http://localhost:4003/cryptos`,
+    ...(params ? [params] : []),
+  ] as const;
+};
+
+export const getGetCryptosInfiniteQueryOptions = <
+  TData = InfiniteData<
+    Awaited<ReturnType<typeof getCryptos>>,
+    GetCryptosParams["page"]
+  >,
+  TError = GetCryptos404
+>(
+  params?: GetCryptosParams,
+  options?: {
+    query?: Partial<
+      UseInfiniteQueryOptions<
+        Awaited<ReturnType<typeof getCryptos>>,
+        TError,
+        TData,
+        Awaited<ReturnType<typeof getCryptos>>,
+        QueryKey,
+        GetCryptosParams["page"]
+      >
+    >;
+    fetch?: RequestInit;
   }
-
-  )
-  const data = await res.json()
-
-  return { status: res.status, data, headers: res.headers }
-}
-
-
-
-export const getGetCryptosQueryKey = (params?: GetCryptosParams,) => {
-    return [`http://localhost:4003/cryptos`, ...(params ? [params]: [])] as const;
-    }
-
-    
-export const getGetCryptosInfiniteQueryOptions = <TData = InfiniteData<Awaited<ReturnType<typeof getCryptos>>, GetCryptosParams['page']>, TError = GetCryptos404>(params?: GetCryptosParams, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getCryptos>>, TError, TData, Awaited<ReturnType<typeof getCryptos>>, QueryKey, GetCryptosParams['page']>>, fetch?: RequestInit}
 ) => {
+  const { query: queryOptions, fetch: fetchOptions } = options ?? {};
 
-const {query: queryOptions, fetch: fetchOptions} = options ?? {};
+  const queryKey = queryOptions?.queryKey ?? getGetCryptosQueryKey(params);
 
-  const queryKey =  queryOptions?.queryKey ?? getGetCryptosQueryKey(params);
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof getCryptos>>,
+    QueryKey,
+    GetCryptosParams["page"]
+  > = ({ signal, pageParam }) =>
+    getCryptos(
+      { ...params, page: pageParam || params?.["page"] },
+      { signal, ...fetchOptions }
+    );
 
-  
+  return { queryKey, queryFn, ...queryOptions } as UseInfiniteQueryOptions<
+    Awaited<ReturnType<typeof getCryptos>>,
+    TError,
+    TData,
+    Awaited<ReturnType<typeof getCryptos>>,
+    QueryKey,
+    GetCryptosParams["page"]
+  > & { queryKey: DataTag<QueryKey, TData> };
+};
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getCryptos>>, QueryKey, GetCryptosParams['page']> = ({ signal, pageParam }) => getCryptos({...params, page: pageParam || params?.['page']}, { signal, ...fetchOptions });
+export type GetCryptosInfiniteQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getCryptos>>
+>;
+export type GetCryptosInfiniteQueryError = GetCryptos404;
 
-      
-
-      
-
-   return  { queryKey, queryFn, ...queryOptions} as UseInfiniteQueryOptions<Awaited<ReturnType<typeof getCryptos>>, TError, TData, Awaited<ReturnType<typeof getCryptos>>, QueryKey, GetCryptosParams['page']> & { queryKey: DataTag<QueryKey, TData> }
-}
-
-export type GetCryptosInfiniteQueryResult = NonNullable<Awaited<ReturnType<typeof getCryptos>>>
-export type GetCryptosInfiniteQueryError = GetCryptos404
-
-
-export function useGetCryptosInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getCryptos>>, GetCryptosParams['page']>, TError = GetCryptos404>(
- params: undefined |  GetCryptosParams, options: { query:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getCryptos>>, TError, TData, Awaited<ReturnType<typeof getCryptos>>, QueryKey, GetCryptosParams['page']>> & Pick<
+export function useGetCryptosInfinite<
+  TData = InfiniteData<
+    Awaited<ReturnType<typeof getCryptos>>,
+    GetCryptosParams["page"]
+  >,
+  TError = GetCryptos404
+>(
+  params: undefined | GetCryptosParams,
+  options: {
+    query: Partial<
+      UseInfiniteQueryOptions<
+        Awaited<ReturnType<typeof getCryptos>>,
+        TError,
+        TData,
+        Awaited<ReturnType<typeof getCryptos>>,
+        QueryKey,
+        GetCryptosParams["page"]
+      >
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof getCryptos>>,
           TError,
-          TData, QueryKey
-        > , 'initialData'
-      >, fetch?: RequestInit}
-
-  ):  DefinedUseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
-export function useGetCryptosInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getCryptos>>, GetCryptosParams['page']>, TError = GetCryptos404>(
- params?: GetCryptosParams, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getCryptos>>, TError, TData, Awaited<ReturnType<typeof getCryptos>>, QueryKey, GetCryptosParams['page']>> & Pick<
+          TData,
+          QueryKey
+        >,
+        "initialData"
+      >;
+    fetch?: RequestInit;
+  }
+): DefinedUseInfiniteQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData>;
+};
+export function useGetCryptosInfinite<
+  TData = InfiniteData<
+    Awaited<ReturnType<typeof getCryptos>>,
+    GetCryptosParams["page"]
+  >,
+  TError = GetCryptos404
+>(
+  params?: GetCryptosParams,
+  options?: {
+    query?: Partial<
+      UseInfiniteQueryOptions<
+        Awaited<ReturnType<typeof getCryptos>>,
+        TError,
+        TData,
+        Awaited<ReturnType<typeof getCryptos>>,
+        QueryKey,
+        GetCryptosParams["page"]
+      >
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof getCryptos>>,
           TError,
-          TData, QueryKey
-        > , 'initialData'
-      >, fetch?: RequestInit}
+          TData,
+          QueryKey
+        >,
+        "initialData"
+      >;
+    fetch?: RequestInit;
+  }
+): UseInfiniteQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData>;
+};
+export function useGetCryptosInfinite<
+  TData = InfiniteData<
+    Awaited<ReturnType<typeof getCryptos>>,
+    GetCryptosParams["page"]
+  >,
+  TError = GetCryptos404
+>(
+  params?: GetCryptosParams,
+  options?: {
+    query?: Partial<
+      UseInfiniteQueryOptions<
+        Awaited<ReturnType<typeof getCryptos>>,
+        TError,
+        TData,
+        Awaited<ReturnType<typeof getCryptos>>,
+        QueryKey,
+        GetCryptosParams["page"]
+      >
+    >;
+    fetch?: RequestInit;
+  }
+): UseInfiniteQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData>;
+};
 
-  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
-export function useGetCryptosInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getCryptos>>, GetCryptosParams['page']>, TError = GetCryptos404>(
- params?: GetCryptosParams, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getCryptos>>, TError, TData, Awaited<ReturnType<typeof getCryptos>>, QueryKey, GetCryptosParams['page']>>, fetch?: RequestInit}
+export function useGetCryptosInfinite<
+  TData = InfiniteData<
+    Awaited<ReturnType<typeof getCryptos>>,
+    GetCryptosParams["page"]
+  >,
+  TError = GetCryptos404
+>(
+  params?: GetCryptosParams,
+  options?: {
+    query?: Partial<
+      UseInfiniteQueryOptions<
+        Awaited<ReturnType<typeof getCryptos>>,
+        TError,
+        TData,
+        Awaited<ReturnType<typeof getCryptos>>,
+        QueryKey,
+        GetCryptosParams["page"]
+      >
+    >;
+    fetch?: RequestInit;
+  }
+): UseInfiniteQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData>;
+} {
+  const queryOptions = getGetCryptosInfiniteQueryOptions(params, options);
 
-  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
+  const query = useInfiniteQuery(queryOptions) as UseInfiniteQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData> };
 
-export function useGetCryptosInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getCryptos>>, GetCryptosParams['page']>, TError = GetCryptos404>(
- params?: GetCryptosParams, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getCryptos>>, TError, TData, Awaited<ReturnType<typeof getCryptos>>, QueryKey, GetCryptosParams['page']>>, fetch?: RequestInit}
-
-  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> } {
-
-  const queryOptions = getGetCryptosInfiniteQueryOptions(params,options)
-
-  const query = useInfiniteQuery(queryOptions) as  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
-
-  query.queryKey = queryOptions.queryKey ;
+  query.queryKey = queryOptions.queryKey;
 
   return query;
 }
 
-
-
-export const getGetCryptosQueryOptions = <TData = Awaited<ReturnType<typeof getCryptos>>, TError = GetCryptos404>(params?: GetCryptosParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getCryptos>>, TError, TData>>, fetch?: RequestInit}
+export const getGetCryptosQueryOptions = <
+  TData = Awaited<ReturnType<typeof getCryptos>>,
+  TError = GetCryptos404
+>(
+  params?: GetCryptosParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof getCryptos>>, TError, TData>
+    >;
+    fetch?: RequestInit;
+  }
 ) => {
+  const { query: queryOptions, fetch: fetchOptions } = options ?? {};
 
-const {query: queryOptions, fetch: fetchOptions} = options ?? {};
+  const queryKey = queryOptions?.queryKey ?? getGetCryptosQueryKey(params);
 
-  const queryKey =  queryOptions?.queryKey ?? getGetCryptosQueryKey(params);
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getCryptos>>> = ({
+    signal,
+  }) => getCryptos(params, { signal, ...fetchOptions });
 
-  
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof getCryptos>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData> };
+};
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getCryptos>>> = ({ signal }) => getCryptos(params, { signal, ...fetchOptions });
+export type GetCryptosQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getCryptos>>
+>;
+export type GetCryptosQueryError = GetCryptos404;
 
-      
-
-      
-
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getCryptos>>, TError, TData> & { queryKey: DataTag<QueryKey, TData> }
-}
-
-export type GetCryptosQueryResult = NonNullable<Awaited<ReturnType<typeof getCryptos>>>
-export type GetCryptosQueryError = GetCryptos404
-
-
-export function useGetCryptos<TData = Awaited<ReturnType<typeof getCryptos>>, TError = GetCryptos404>(
- params: undefined |  GetCryptosParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getCryptos>>, TError, TData>> & Pick<
+export function useGetCryptos<
+  TData = Awaited<ReturnType<typeof getCryptos>>,
+  TError = GetCryptos404
+>(
+  params: undefined | GetCryptosParams,
+  options: {
+    query: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof getCryptos>>, TError, TData>
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof getCryptos>>,
           TError,
           TData
-        > , 'initialData'
-      >, fetch?: RequestInit}
-
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
-export function useGetCryptos<TData = Awaited<ReturnType<typeof getCryptos>>, TError = GetCryptos404>(
- params?: GetCryptosParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getCryptos>>, TError, TData>> & Pick<
+        >,
+        "initialData"
+      >;
+    fetch?: RequestInit;
+  }
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData>;
+};
+export function useGetCryptos<
+  TData = Awaited<ReturnType<typeof getCryptos>>,
+  TError = GetCryptos404
+>(
+  params?: GetCryptosParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof getCryptos>>, TError, TData>
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof getCryptos>>,
           TError,
           TData
-        > , 'initialData'
-      >, fetch?: RequestInit}
+        >,
+        "initialData"
+      >;
+    fetch?: RequestInit;
+  }
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
+export function useGetCryptos<
+  TData = Awaited<ReturnType<typeof getCryptos>>,
+  TError = GetCryptos404
+>(
+  params?: GetCryptosParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof getCryptos>>, TError, TData>
+    >;
+    fetch?: RequestInit;
+  }
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
 
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
-export function useGetCryptos<TData = Awaited<ReturnType<typeof getCryptos>>, TError = GetCryptos404>(
- params?: GetCryptosParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getCryptos>>, TError, TData>>, fetch?: RequestInit}
+export function useGetCryptos<
+  TData = Awaited<ReturnType<typeof getCryptos>>,
+  TError = GetCryptos404
+>(
+  params?: GetCryptosParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof getCryptos>>, TError, TData>
+    >;
+    fetch?: RequestInit;
+  }
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> } {
+  const queryOptions = getGetCryptosQueryOptions(params, options);
 
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: DataTag<QueryKey, TData>;
+  };
 
-export function useGetCryptos<TData = Awaited<ReturnType<typeof getCryptos>>, TError = GetCryptos404>(
- params?: GetCryptosParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getCryptos>>, TError, TData>>, fetch?: RequestInit}
-
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> } {
-
-  const queryOptions = getGetCryptosQueryOptions(params,options)
-
-  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
-
-  query.queryKey = queryOptions.queryKey ;
+  query.queryKey = queryOptions.queryKey;
 
   return query;
 }
-
-
 
 export type getUserMeResponse = {
   data: User;
   status: number;
   headers: Headers;
-}
+};
 
 export const getGetUserMeUrl = () => {
+  return `http://localhost:4003/user/me`;
+};
 
-
-  return `http://localhost:4003/user/me`
-}
-
-export const getUserMe = async ( options?: RequestInit): Promise<getUserMeResponse> => {
-  
-  const res = await fetch(getGetUserMeUrl(),
-  {      
+export const getUserMe = async (
+  options?: RequestInit
+): Promise<getUserMeResponse> => {
+  const res = await fetch(getGetUserMeUrl(), {
     ...options,
-    method: 'GET'
-    
-    
-  }
+    method: "GET",
+  });
+  const data = await res.json();
 
-  )
-  const data = await res.json()
-
-  return { status: res.status, data, headers: res.headers }
-}
-
-
+  return { status: res.status, data, headers: res.headers };
+};
 
 export const getGetUserMeQueryKey = () => {
-    return [`http://localhost:4003/user/me`] as const;
-    }
+  return [`http://localhost:4003/user/me`] as const;
+};
 
-    
-export const getGetUserMeInfiniteQueryOptions = <TData = InfiniteData<Awaited<ReturnType<typeof getUserMe>>>, TError = GetUserMe404>( options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getUserMe>>, TError, TData>>, fetch?: RequestInit}
-) => {
+export const getGetUserMeInfiniteQueryOptions = <
+  TData = InfiniteData<Awaited<ReturnType<typeof getUserMe>>>,
+  TError = GetUserMe404
+>(options?: {
+  query?: Partial<
+    UseInfiniteQueryOptions<
+      Awaited<ReturnType<typeof getUserMe>>,
+      TError,
+      TData
+    >
+  >;
+  fetch?: RequestInit;
+}) => {
+  const { query: queryOptions, fetch: fetchOptions } = options ?? {};
 
-const {query: queryOptions, fetch: fetchOptions} = options ?? {};
+  const queryKey = queryOptions?.queryKey ?? getGetUserMeQueryKey();
 
-  const queryKey =  queryOptions?.queryKey ?? getGetUserMeQueryKey();
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getUserMe>>> = ({
+    signal,
+  }) => getUserMe({ signal, ...fetchOptions });
 
-  
+  return { queryKey, queryFn, ...queryOptions } as UseInfiniteQueryOptions<
+    Awaited<ReturnType<typeof getUserMe>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData> };
+};
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getUserMe>>> = ({ signal }) => getUserMe({ signal, ...fetchOptions });
+export type GetUserMeInfiniteQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getUserMe>>
+>;
+export type GetUserMeInfiniteQueryError = GetUserMe404;
 
-      
+export function useGetUserMeInfinite<
+  TData = InfiniteData<Awaited<ReturnType<typeof getUserMe>>>,
+  TError = GetUserMe404
+>(options: {
+  query: Partial<
+    UseInfiniteQueryOptions<
+      Awaited<ReturnType<typeof getUserMe>>,
+      TError,
+      TData
+    >
+  > &
+    Pick<
+      DefinedInitialDataOptions<
+        Awaited<ReturnType<typeof getUserMe>>,
+        TError,
+        TData
+      >,
+      "initialData"
+    >;
+  fetch?: RequestInit;
+}): DefinedUseInfiniteQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData>;
+};
+export function useGetUserMeInfinite<
+  TData = InfiniteData<Awaited<ReturnType<typeof getUserMe>>>,
+  TError = GetUserMe404
+>(options?: {
+  query?: Partial<
+    UseInfiniteQueryOptions<
+      Awaited<ReturnType<typeof getUserMe>>,
+      TError,
+      TData
+    >
+  > &
+    Pick<
+      UndefinedInitialDataOptions<
+        Awaited<ReturnType<typeof getUserMe>>,
+        TError,
+        TData
+      >,
+      "initialData"
+    >;
+  fetch?: RequestInit;
+}): UseInfiniteQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData>;
+};
+export function useGetUserMeInfinite<
+  TData = InfiniteData<Awaited<ReturnType<typeof getUserMe>>>,
+  TError = GetUserMe404
+>(options?: {
+  query?: Partial<
+    UseInfiniteQueryOptions<
+      Awaited<ReturnType<typeof getUserMe>>,
+      TError,
+      TData
+    >
+  >;
+  fetch?: RequestInit;
+}): UseInfiniteQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData>;
+};
 
-      
+export function useGetUserMeInfinite<
+  TData = InfiniteData<Awaited<ReturnType<typeof getUserMe>>>,
+  TError = GetUserMe404
+>(options?: {
+  query?: Partial<
+    UseInfiniteQueryOptions<
+      Awaited<ReturnType<typeof getUserMe>>,
+      TError,
+      TData
+    >
+  >;
+  fetch?: RequestInit;
+}): UseInfiniteQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData>;
+} {
+  const queryOptions = getGetUserMeInfiniteQueryOptions(options);
 
-   return  { queryKey, queryFn, ...queryOptions} as UseInfiniteQueryOptions<Awaited<ReturnType<typeof getUserMe>>, TError, TData> & { queryKey: DataTag<QueryKey, TData> }
-}
+  const query = useInfiniteQuery(queryOptions) as UseInfiniteQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData> };
 
-export type GetUserMeInfiniteQueryResult = NonNullable<Awaited<ReturnType<typeof getUserMe>>>
-export type GetUserMeInfiniteQueryError = GetUserMe404
-
-
-export function useGetUserMeInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getUserMe>>>, TError = GetUserMe404>(
-  options: { query:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getUserMe>>, TError, TData>> & Pick<
-        DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getUserMe>>,
-          TError,
-          TData
-        > , 'initialData'
-      >, fetch?: RequestInit}
-
-  ):  DefinedUseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
-export function useGetUserMeInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getUserMe>>>, TError = GetUserMe404>(
-  options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getUserMe>>, TError, TData>> & Pick<
-        UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getUserMe>>,
-          TError,
-          TData
-        > , 'initialData'
-      >, fetch?: RequestInit}
-
-  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
-export function useGetUserMeInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getUserMe>>>, TError = GetUserMe404>(
-  options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getUserMe>>, TError, TData>>, fetch?: RequestInit}
-
-  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
-
-export function useGetUserMeInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getUserMe>>>, TError = GetUserMe404>(
-  options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getUserMe>>, TError, TData>>, fetch?: RequestInit}
-
-  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> } {
-
-  const queryOptions = getGetUserMeInfiniteQueryOptions(options)
-
-  const query = useInfiniteQuery(queryOptions) as  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
-
-  query.queryKey = queryOptions.queryKey ;
-
-  return query;
-}
-
-
-
-export const getGetUserMeQueryOptions = <TData = Awaited<ReturnType<typeof getUserMe>>, TError = GetUserMe404>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getUserMe>>, TError, TData>>, fetch?: RequestInit}
-) => {
-
-const {query: queryOptions, fetch: fetchOptions} = options ?? {};
-
-  const queryKey =  queryOptions?.queryKey ?? getGetUserMeQueryKey();
-
-  
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getUserMe>>> = ({ signal }) => getUserMe({ signal, ...fetchOptions });
-
-      
-
-      
-
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getUserMe>>, TError, TData> & { queryKey: DataTag<QueryKey, TData> }
-}
-
-export type GetUserMeQueryResult = NonNullable<Awaited<ReturnType<typeof getUserMe>>>
-export type GetUserMeQueryError = GetUserMe404
-
-
-export function useGetUserMe<TData = Awaited<ReturnType<typeof getUserMe>>, TError = GetUserMe404>(
-  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getUserMe>>, TError, TData>> & Pick<
-        DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getUserMe>>,
-          TError,
-          TData
-        > , 'initialData'
-      >, fetch?: RequestInit}
-
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
-export function useGetUserMe<TData = Awaited<ReturnType<typeof getUserMe>>, TError = GetUserMe404>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getUserMe>>, TError, TData>> & Pick<
-        UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getUserMe>>,
-          TError,
-          TData
-        > , 'initialData'
-      >, fetch?: RequestInit}
-
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
-export function useGetUserMe<TData = Awaited<ReturnType<typeof getUserMe>>, TError = GetUserMe404>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getUserMe>>, TError, TData>>, fetch?: RequestInit}
-
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
-
-export function useGetUserMe<TData = Awaited<ReturnType<typeof getUserMe>>, TError = GetUserMe404>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getUserMe>>, TError, TData>>, fetch?: RequestInit}
-
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> } {
-
-  const queryOptions = getGetUserMeQueryOptions(options)
-
-  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
-
-  query.queryKey = queryOptions.queryKey ;
+  query.queryKey = queryOptions.queryKey;
 
   return query;
 }
 
+export const getGetUserMeQueryOptions = <
+  TData = Awaited<ReturnType<typeof getUserMe>>,
+  TError = GetUserMe404
+>(options?: {
+  query?: Partial<
+    UseQueryOptions<Awaited<ReturnType<typeof getUserMe>>, TError, TData>
+  >;
+  fetch?: RequestInit;
+}) => {
+  const { query: queryOptions, fetch: fetchOptions } = options ?? {};
 
+  const queryKey = queryOptions?.queryKey ?? getGetUserMeQueryKey();
 
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getUserMe>>> = ({
+    signal,
+  }) => getUserMe({ signal, ...fetchOptions });
+
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof getUserMe>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData> };
+};
+
+export type GetUserMeQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getUserMe>>
+>;
+export type GetUserMeQueryError = GetUserMe404;
+
+export function useGetUserMe<
+  TData = Awaited<ReturnType<typeof getUserMe>>,
+  TError = GetUserMe404
+>(options: {
+  query: Partial<
+    UseQueryOptions<Awaited<ReturnType<typeof getUserMe>>, TError, TData>
+  > &
+    Pick<
+      DefinedInitialDataOptions<
+        Awaited<ReturnType<typeof getUserMe>>,
+        TError,
+        TData
+      >,
+      "initialData"
+    >;
+  fetch?: RequestInit;
+}): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData>;
+};
+export function useGetUserMe<
+  TData = Awaited<ReturnType<typeof getUserMe>>,
+  TError = GetUserMe404
+>(options?: {
+  query?: Partial<
+    UseQueryOptions<Awaited<ReturnType<typeof getUserMe>>, TError, TData>
+  > &
+    Pick<
+      UndefinedInitialDataOptions<
+        Awaited<ReturnType<typeof getUserMe>>,
+        TError,
+        TData
+      >,
+      "initialData"
+    >;
+  fetch?: RequestInit;
+}): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
+export function useGetUserMe<
+  TData = Awaited<ReturnType<typeof getUserMe>>,
+  TError = GetUserMe404
+>(options?: {
+  query?: Partial<
+    UseQueryOptions<Awaited<ReturnType<typeof getUserMe>>, TError, TData>
+  >;
+  fetch?: RequestInit;
+}): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
+
+export function useGetUserMe<
+  TData = Awaited<ReturnType<typeof getUserMe>>,
+  TError = GetUserMe404
+>(options?: {
+  query?: Partial<
+    UseQueryOptions<Awaited<ReturnType<typeof getUserMe>>, TError, TData>
+  >;
+  fetch?: RequestInit;
+}): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> } {
+  const queryOptions = getGetUserMeQueryOptions(options);
+
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: DataTag<QueryKey, TData>;
+  };
+
+  query.queryKey = queryOptions.queryKey;
+
+  return query;
+}
