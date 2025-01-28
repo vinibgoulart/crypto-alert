@@ -103,8 +103,6 @@ export const handleAuthLoginPost = (app: OpenAPIHono<Env, {}, "/">) => {
       value: userToken,
     });
 
-    console.log("oi");
-
     return c.json(
       {
         message: "User logged in",
